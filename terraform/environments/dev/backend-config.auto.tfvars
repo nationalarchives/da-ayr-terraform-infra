@@ -1,0 +1,6 @@
+region = "eu-west-2"
+bucket = "da-ayr-tf-state"
+encrypt = "false"
+key = "da-vpc/dev/terraform.tfstate"
+acl = "bucket-owner-full-control"
+dynamodb_table = "da-ayr-tf-state-locks"

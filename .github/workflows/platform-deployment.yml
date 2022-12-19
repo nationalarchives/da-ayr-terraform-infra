@@ -12,7 +12,7 @@ jobs:
   terraform-deployment:
     uses: nationalarchives/da-ayr-gthub-actions/.github/workflows/terraform-enviromements-action.yml@feature/AYR-139
     with:
-      environment: Dev 
-      tf_dir: Dev
+      environment: ${{ inputs.environment }}
+      tf_dir: ${{ inputs.environment }}
 #    secrets:
 #      token: ${{ secrets.TOKEN }}

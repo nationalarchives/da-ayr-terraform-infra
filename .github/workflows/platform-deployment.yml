@@ -5,10 +5,9 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        type: choice
-        description: Choose the environment you want to deploy to from the dropdown list
-        options:
-          - dev
+        description: Env is 
+        default: dev
+
 
 jobs:
   terraform-deployment:

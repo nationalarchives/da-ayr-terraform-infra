@@ -1,0 +1,15 @@
+name: Terraform platform deployment
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Choose the environment you want to deploy to from the dropdown list
+        options:
+          - dev
+jobs:
+  terraform-deployment:
+    uses: nationalarchives/tre-github-actions/.github/workflows/tf-plan-approve-apply.yml@main
+    with:
+      environment: ${{ inputs.environment }}
+      tf_dir: ${{ inputs.environment }}

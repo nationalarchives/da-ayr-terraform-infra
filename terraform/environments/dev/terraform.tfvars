@@ -1,10 +1,10 @@
 # Environment configuration
-region      = "eu-west-2"
-environment = "dev"
-project_name = "da-ayr"
-aws_account_id = "281072317055"
+region      = "xx-xx-x"
+environment = "xxx"
+project_name = "xx-xx"
+aws_account_id = "xxxxxxxxxxx"
 
 # VPC configuration
-vpc_cidr = "10.0.0.0/21"
-enable_vpn_gateway = false
-enable_nat_gateway = true
+vpc_cidr = "xx.x.x.x/xx"
+enable_vpn_gateway = "xxxx"
+enable_nat_gateway = "xxxx"

@@ -1,0 +1,6 @@
+region = "xxxxxxxx"
+bucket = "xxxxxxxxxx"
+encrypt = "xxxxxx"
+key = "xxxx/xxxx/xxxx"
+acl = "xxxxxxxxx"
+dynamodb_table = "xxxxxxxx"

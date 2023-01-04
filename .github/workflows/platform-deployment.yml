@@ -16,3 +16,5 @@ jobs:
       tf_dir: ${{ inputs.environment }}
     secrets:
       AWS_ROLE: ${{ secrets.AWS_ROLE }}
+      AWS_BUCKET_NAME: ${{ secrets. AWS_BUCKET_NAME }}
+      AWS_BUCKET_KEY_NAME: $ {{ secrets.AWS_BUCEKT_KEY_NAME }}

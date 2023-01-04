@@ -14,5 +14,5 @@ jobs:
     with:
       environment: ${{ inputs.environment }}
       tf_dir: ${{ inputs.environment }}
-#    secrets:
-#      token: ${{ secrets.TOKEN }}
+    secrets:
+      AWS_ROLE: ${{ secrets.AWS_ROLE }}

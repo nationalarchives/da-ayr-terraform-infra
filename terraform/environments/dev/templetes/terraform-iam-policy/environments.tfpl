@@ -1,0 +1,34 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "iam:DeleteRolePolicy",
+                "iam:PutRolePermissionsBoundary",
+                "iam:CreateRole",
+                "iam:AttachRolePolicy",
+                "iam:DetachRolePolicy",
+                "iam:PutRolePolicy"
+            ],
+            "Resource": "arn:aws:iam::${account_id}:role/*-${prefix}*",
+            "Condition": {
+                "StringEquals": {
+                    "iam:PermissionsBoundary": "${ayr_da_permission_boundary_policy_arn}"
+                }
+            }
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "iam:PassRole",
+                "iam:Get*",
+                "iam:List*",
+                "iam:DeleteRole"
+            ],
+            "Resource": "*"            
+        }
+    ]
+}

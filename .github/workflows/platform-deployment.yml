@@ -1,0 +1,20 @@
+name: Terraform platform deployment
+on:
+  push:
+    branches: [feature/AYR-139-new,dev]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Env is 
+        default: dev
+
+jobs:
+  terraform-deployment:
+    uses: nationalarchives/da-ayr-gthub-actions/.github/workflows/terraform-enviromements-action.yml@dev
+    with:
+      environment: ${{ inputs.environment }}
+      tf_dir: ${{ inputs.environment }}
+    secrets:
+      AWS_ROLE: ${{ secrets.AWS_ROLE }}
+      AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
+      AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCEKT_KEY_NAME }}

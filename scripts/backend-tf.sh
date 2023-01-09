@@ -1,11 +1,6 @@
 #!/bin/bash
 
-<<<<<<< HEAD
-#Get values from parameter store and generate backend-config.auto.tfvars
-=======
-#!/bin/bash
-
-#Get values from parameter store and generate backend-config.auto.tfvars and terraform.tf vars
+#Get values from parameter store and generate backend-config.auto.tfvars and terraform.tfvars
 
 #sudo apt-get install jq -y
 pwd
@@ -20,6 +15,4 @@ echo $TF_AUTO_VARS > backend-config.auto.tfvars
 cat backend-config.auto.tfvars
 
 pwd
-
 ls -alt
->>>>>>> feature/AYR-139-new

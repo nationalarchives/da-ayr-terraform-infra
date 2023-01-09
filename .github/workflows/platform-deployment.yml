@@ -10,7 +10,7 @@ on:
 
 jobs:
   terraform-deployment:
-    uses: nationalarchives/da-ayr-gthub-actions/.github/workflows/terraform-enviromements-action.yml@feature/dev
+    uses: nationalarchives/da-ayr-gthub-actions/.github/workflows/terraform-enviromements-action.yml@dev
     with:
       environment: ${{ inputs.environment }}
       tf_dir: ${{ inputs.environment }}

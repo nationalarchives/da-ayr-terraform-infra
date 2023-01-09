@@ -1,7 +1,7 @@
 name: Terraform platform deployment
 on:
   push:
-    branches: [feature/AYR-139-new]
+    branches: [feature/AYR-139-new,dev]
   workflow_dispatch:
     inputs:
       environment:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   terraform-deployment:
-    uses: nationalarchives/da-ayr-gthub-actions/.github/workflows/terraform-enviromements-action.yml@feature/AYR-139
+    uses: nationalarchives/da-ayr-gthub-actions/.github/workflows/terraform-enviromements-action.yml@feature/dev
     with:
       environment: ${{ inputs.environment }}
       tf_dir: ${{ inputs.environment }}

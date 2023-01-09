@@ -1,7 +1,6 @@
 #!/bin/bash
 
 #Get values from parameter store and generate backend-config.auto.tfvars and terraform.tfvars to be used in build
-
 #sudo apt-get install jq -y
 pwd
 cd terraform/environments/dev

@@ -3,7 +3,10 @@ provider "aws" {
   ## done in the environment, to use a profile for local testing
   ## set the `AWS_PROFILE` environment variable appropriately
   region = "eu-west-2"
-  role_arn = var.role_arn
+  assume_role {
+    role_arn =  var.role_arn
+  }
+  
   ## All resources that can be tagged should have a base set of metadata
   ## included as tags - this is an example:
   default_tags {

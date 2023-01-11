@@ -15,6 +15,23 @@ provider "aws" {
     }
   }
 
+provider "aws" {
+  alias = "nonprod"
+  ## Default to using London region - all AWS configuration should be
+  ## done in the environment, to use a profile for local testing
+  ## set the `AWS_PROFILE` environment variable appropriately
+  region = "eu-west-2"
+
+  ## All resources that can be tagged should have a base set of metadata
+  ## included as tags - this is an example:
+  default_tags {
+    tags = {
+      Environment = var.environment
+      Owner = "Terraform"
+      StateBucket = var.bucket
+      StatePrefix = var.key
+    }
+  }
   ## OPTIONAL - in some environments we make use of CloudCustodian to tag all 
   ##            resources with the id of its creator.  This section will
   ##            ignore those tag changes so TF doesn't want to update things

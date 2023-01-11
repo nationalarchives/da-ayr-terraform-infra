@@ -4,9 +4,9 @@ provider "aws" {
   ## set the `AWS_PROFILE` environment variable appropriately
   region = "eu-west-2"
   assume_role {
-    role_arn =  var.role_arn
+    role_arn =  var.assume_role.nonprod
   }
-  
+
   ## All resources that can be tagged should have a base set of metadata
   ## included as tags - this is an example:
   default_tags {

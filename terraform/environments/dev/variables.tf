@@ -61,3 +61,11 @@ variable "acl" {
 variable "dynamodb_table" {
   description = "State dynamodb"
 }
+
+variable "assume_role" {
+  description = "The role to be assumed by terraform"
+  type        = object({
+    management = string
+    nonprod    = string
+  })
+}

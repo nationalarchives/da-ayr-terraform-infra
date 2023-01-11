@@ -14,6 +14,7 @@ provider "aws" {
       StatePrefix = var.key
     }
   }
+}
 
 provider "aws" {
   alias = "nonprod"

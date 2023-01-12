@@ -1,1 +1,1 @@
-Apply 
+Instructions on Terraform Setup and maintenance

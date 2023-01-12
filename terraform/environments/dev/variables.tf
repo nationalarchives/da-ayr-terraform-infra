@@ -15,6 +15,25 @@ variable "aws_account_id" {
   type = string
 }
 
+#################
+# ECS Task Config
+#################
+variable "image" {
+  type = string
+  description = "location and name of the container image for the ECS task"
+}
+
+variable "image_tag" {
+  type = string
+  description = "The tag (e.g. version or 'latest') to retrieve for this environment"
+}
+
+variable "app_port" {
+  type = number
+  description = "The port the application will listen on within its container"
+  default = 8000
+}
+
 ##################
 # Application VPC
 ##################

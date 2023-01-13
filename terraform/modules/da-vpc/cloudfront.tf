@@ -13,7 +13,7 @@ resource "random_string" "cloudfront_identifier" {
 
 #tfsec:ignore:aws-s3-enable-bucket-logging #tfsec:ignore:aws-s3-enable-versioning
 resource "aws_s3_bucket" "cloudfront_logs" {
-  bucket_prefix = "${var.environment}-cloudfront-logs"
+  bucket_prefix = "${var.project_name}-${var.environment}-cloudfront-logs"
 }
 
 resource "aws_s3_bucket_acl" "cloudfront_logs" {

@@ -4,7 +4,7 @@ resource "aws_db_subnet_group" "public_subnet_group" {
 }
 
 resource "aws_db_subnet_group" "private_subnet_group" {
-  name       = "${var.project_name}-${var.environment}-public-subnet-group"
+  name       = "${var.project_name}-${var.environment}-private-subnet-group"
   subnet_ids = module.vpc.private_subnets
 }
 
@@ -44,7 +44,7 @@ resource "aws_db_instance" "db_keycloak" {
   # db_subnet_group_name     = "${var.rds_public_subnet_group}"
   engine                   = "postgres"
   engine_version           = "14.5"
-  identifier               = "${var.project_name}db-keycloak-${var.environment}"
+  identifier               = "${var.project_name}-db-keycloak-${var.environment}"
   #subnet_ids              =  aws_db_subnet_group.db_subnet_group_name.subnet_group.id
   db_subnet_group_name     = aws_db_subnet_group.public_subnet_group.id
   # instance_class         = "db.r5.large"

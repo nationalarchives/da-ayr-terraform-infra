@@ -32,6 +32,7 @@ resource "aws_db_instance" "db_webapp" {
   username                 = "zaiziuser"
   vpc_security_group_ids   = ["${aws_security_group.db_sg.id}"]
   skip_final_snapshot      = true
+  final_snapshot_identifier = "${var.project_name}-db-webapp-snapshot-${var.environment}"
 }
 
 
@@ -59,6 +60,7 @@ resource "aws_db_instance" "db_keycloak" {
   username                 = "zaiziuser"
   vpc_security_group_ids   = ["${aws_security_group.db_sg.id}"]
   skip_final_snapshot      = true
+  final_snapshot_identifier = "${var.project_name}-db-keycloak-snapshot-${var.environment}"
 }
 
 resource "aws_security_group" "db_sg" {

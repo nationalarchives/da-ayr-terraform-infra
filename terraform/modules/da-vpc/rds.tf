@@ -15,22 +15,22 @@ resource "aws_db_instance" "db_webapp" {
   # db_subnet_group_name     = "${var.rds_public_subnet_group}"
   engine                   = "postgres"
   engine_version           = "14.5"
-  identifier               = "${var.project_name}-db_webapp-${var.environment}"
+  identifier               = "${var.project_name}-db-webapp-${var.environment}"
   #subnet_ids              =  aws_db_subnet_group.db_subnet_group_name.subnet_group.id
   db_subnet_group_name     = aws_db_subnet_group.public_subnet_group.id
   # instance_class         = "db.r5.large"
   instance_class           = "db.m6g.large"
   multi_az                 = false
-  db_name                  = "${var.project_name}-db_webapp-${var.environment}"
+  db_name                  = "${var.project_name}-db-webapp-${var.environment}"
   # parameter_group_name     = "mydbparamgroup1" # if you have tuned it
   # password               = "${trimspace(file("${path.module}/secrets/mydb1-password.txt"))}"
-  password                 = "Zaizi-Org##.."
+  #password                 = "Zaizi-Org##.."
   port                     = 5432
   publicly_accessible      = true
   storage_encrypted        = true # you should always do this
   storage_type             = "gp2"
   username                 = "zaiziuser"
-  vpc_security_group_ids   = ["${aws_security_group.db_webapp-sg.id}"]
+  vpc_security_group_ids   = ["${aws_security_group.db_sg.id}"]
 }
 
 
@@ -41,25 +41,25 @@ resource "aws_db_instance" "db_keycloak" {
   # db_subnet_group_name     = "${var.rds_public_subnet_group}"
   engine                   = "postgres"
   engine_version           = "14.5"
-  identifier               = "${var.project_name}-db_keycloak-${var.environment}"
+  identifier               = "${var.project_name}-db-keycloak-${var.environment}"
   #subnet_ids              =  aws_db_subnet_group.db_subnet_group_name.subnet_group.id
   db_subnet_group_name     = aws_db_subnet_group.public_subnet_group.id
   # instance_class         = "db.r5.large"
   instance_class           = "db.m6g.large"
   multi_az                 = false
-  db_name                  = "${var.project_name}-db_keycloak-${var.environment}"
+  db_name                  = "${var.project_name}-db-keycloak-${var.environment}"
   # parameter_group_name     = "mydbparamgroup1" # if you have tuned it
-  # password               = "${trimspace(file("${path.module}/secrets/mydb1-password.txt"))}"
-  password                 = "Zaizi-Org##.."
+  #password                 = "${trimspace(file("${path.module}/secrets/mydb1-password.txt"))}"
+  #password                 = "Zaizi-Org##.."
   port                     = 5432
   publicly_accessible      = true
   storage_encrypted        = true # you should always do this
   storage_type             = "gp2"
   username                 = "zaiziuser"
-  vpc_security_group_ids   = ["${aws_security_group.db_webapp-sg.id}"]
+  vpc_security_group_ids   = ["${aws_security_group.db_sg.id}"]
 }
 
-resource "aws_security_group" "db_webapp-sg" {
+resource "aws_security_group" "db_sg" {
   name = "db_webapp-sg"
 
   description = "RDS postgres servers (terraform-managed)"

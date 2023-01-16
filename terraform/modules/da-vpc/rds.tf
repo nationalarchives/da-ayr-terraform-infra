@@ -9,8 +9,8 @@ resource "aws_db_subnet_group" "private_subnet_group" {
 }
 
 resource "aws_db_instance" "db_webapp" {
-  allocated_storage        = 256 # gigabytes
-  backup_retention_period  = 7   # in days
+  allocated_storage        = 100 # gigabytes
+  # backup_retention_period  = 7   # in days
   # db_subnet_group_name     = module.vpc.private_subnets
   # db_subnet_group_name     = "${var.rds_public_subnet_group}"
   engine                   = "postgres"
@@ -31,14 +31,14 @@ resource "aws_db_instance" "db_webapp" {
   storage_type             = "gp2"
   username                 = "zaiziuser"
   vpc_security_group_ids   = ["${aws_security_group.db_sg.id}"]
-  skip_final_snapshot      = false
-  final_snapshot_identifier = "${var.project_name}-db-webapp-snapshot-${var.environment}"
+  skip_final_snapshot      = true
+  # final_snapshot_identifier = "${var.project_name}-db-webapp-snapshot-${var.environment}"
 }
 
 
 resource "aws_db_instance" "db_keycloak" {
-  allocated_storage        = 256 # gigabytes
-  backup_retention_period  = 7   # in days
+  allocated_storage        = 100 # gigabytes
+  #backup_retention_period  = 7   # in days
   # db_subnet_group_name     = module.vpc.private_subnets
   # db_subnet_group_name     = "${var.rds_public_subnet_group}"
   engine                   = "postgres"
@@ -59,8 +59,8 @@ resource "aws_db_instance" "db_keycloak" {
   storage_type             = "gp2"
   username                 = "zaiziuser"
   vpc_security_group_ids   = ["${aws_security_group.db_sg.id}"]
-  skip_final_snapshot      = false
-  final_snapshot_identifier = "${var.project_name}-db-keycloak-snapshot-${var.environment}"
+  skip_final_snapshot      = true
+  # final_snapshot_identifier = "${var.project_name}-db-keycloak-snapshot-${var.environment}"
 }
 
 resource "aws_security_group" "db_sg" {

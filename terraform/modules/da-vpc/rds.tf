@@ -4,7 +4,7 @@ resource "aws_db_instance" "mydb1" {
   # db_subnet_group_name     = module.vpc.private_subnets
   # db_subnet_group_name     = "${var.rds_public_subnet_group}"
   engine                   = "postgres"
-  engine_version           = "13.7-R1"
+  # engine_version           = "13.7-R1"
   identifier               = "mydb1"
   instance_class           = "db.m5d.large"
   multi_az                 = false

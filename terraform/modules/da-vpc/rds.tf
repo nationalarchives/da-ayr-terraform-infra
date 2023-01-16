@@ -31,7 +31,7 @@ resource "aws_db_instance" "db_webapp" {
   storage_type             = "gp2"
   username                 = "zaiziuser"
   vpc_security_group_ids   = ["${aws_security_group.db_sg.id}"]
-  skip_final_snapshot      = true
+  skip_final_snapshot      = false
   final_snapshot_identifier = "${var.project_name}-db-webapp-snapshot-${var.environment}"
 }
 
@@ -59,7 +59,7 @@ resource "aws_db_instance" "db_keycloak" {
   storage_type             = "gp2"
   username                 = "zaiziuser"
   vpc_security_group_ids   = ["${aws_security_group.db_sg.id}"]
-  skip_final_snapshot      = true
+  skip_final_snapshot      = false
   final_snapshot_identifier = "${var.project_name}-db-keycloak-snapshot-${var.environment}"
 }
 

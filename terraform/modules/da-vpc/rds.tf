@@ -8,7 +8,7 @@ resource "aws_db_instance" "mydb1" {
   identifier               = "mydb1"
   instance_class           = "db.r3.large"
   multi_az                 = false
-  name                     = "mydb1"
+  db_name                     = "mydb1"
   parameter_group_name     = "mydbparamgroup1" # if you have tuned it
   # password                 = "${trimspace(file("${path.module}/secrets/mydb1-password.txt"))}"
   password                 = "Zaizi-Org##.."

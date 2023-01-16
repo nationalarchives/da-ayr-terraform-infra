@@ -31,6 +31,7 @@ resource "aws_db_instance" "db_webapp" {
   storage_type             = "gp2"
   username                 = "zaiziuser"
   vpc_security_group_ids   = ["${aws_security_group.db_sg.id}"]
+  skip_final_snapshot      = true
 }
 
 
@@ -57,6 +58,7 @@ resource "aws_db_instance" "db_keycloak" {
   storage_type             = "gp2"
   username                 = "zaiziuser"
   vpc_security_group_ids   = ["${aws_security_group.db_sg.id}"]
+  skip_final_snapshot      = true
 }
 
 resource "aws_security_group" "db_sg" {

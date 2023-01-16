@@ -25,7 +25,7 @@ resource "aws_db_instance" "db_webapp" {
   db_name                  = "${var.project_name}-db-webapp-${var.environment}"
   # parameter_group_name     = "mydbparamgroup1" # if you have tuned it
   # password               = "${trimspace(file("${path.module}/secrets/mydb1-password.txt"))}"
-  #password                 = "Zaizi-Org##.."
+  password                 = "TestZaizi1234..##"
   port                     = 5432
   publicly_accessible      = true
   storage_encrypted        = true # you should always do this
@@ -53,7 +53,7 @@ resource "aws_db_instance" "db_keycloak" {
   db_name                  = "${var.project_name}-db-keycloak-${var.environment}"
   # parameter_group_name     = "mydbparamgroup1" # if you have tuned it
   #password                 = "${trimspace(file("${path.module}/secrets/mydb1-password.txt"))}"
-  #password                 = "Zaizi-Org##.."
+  password                 = "TestZaizi1234..##"
   port                     = 5432
   publicly_accessible      = true
   storage_encrypted        = true # you should always do this

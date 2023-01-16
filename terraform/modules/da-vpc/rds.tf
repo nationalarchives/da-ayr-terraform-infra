@@ -10,7 +10,8 @@ resource "aws_db_subnet_group" "private_subnet_group" {
 
 resource "aws_db_instance" "db_webapp" {
   allocated_storage        = 100 # gigabytes
-  # backup_retention_period  = 7   # in days
+  backup_retention_period  = 0   # in days
+  apply_immediately        = true
   # db_subnet_group_name     = module.vpc.private_subnets
   # db_subnet_group_name     = "${var.rds_public_subnet_group}"
   engine                   = "postgres"
@@ -38,7 +39,8 @@ resource "aws_db_instance" "db_webapp" {
 
 resource "aws_db_instance" "db_keycloak" {
   allocated_storage        = 100 # gigabytes
-  #backup_retention_period  = 7   # in days
+  backup_retention_period  = 0   # in days
+  apply_immediately        = true
   # db_subnet_group_name     = module.vpc.private_subnets
   # db_subnet_group_name     = "${var.rds_public_subnet_group}"
   engine                   = "postgres"

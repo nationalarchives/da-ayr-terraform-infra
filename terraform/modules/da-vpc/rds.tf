@@ -1,7 +1,7 @@
 resource "aws_db_instance" "mydb1" {
   allocated_storage        = 256 # gigabytes
   backup_retention_period  = 7   # in days
-  db_subnet_group_name     = "db_subnet_group"
+  db_subnet_group_name     = module.vpc.private_subnets
   # db_subnet_group_name     = "${var.rds_public_subnet_group}"
   engine                   = "postgres"
   engine_version           = "9.5.4"

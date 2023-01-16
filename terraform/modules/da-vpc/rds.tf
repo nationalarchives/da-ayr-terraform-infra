@@ -22,7 +22,7 @@ resource "aws_db_instance" "db_webapp" {
   # instance_class         = "db.r5.large"
   instance_class           = "db.m6g.large"
   multi_az                 = false
-  db_name                  = "${var.project_name}-db-webapp-${var.environment}"
+  db_name                  = "${var.project_name}webapp${var.environment}"
   # parameter_group_name     = "mydbparamgroup1" # if you have tuned it
   # password               = "${trimspace(file("${path.module}/secrets/mydb1-password.txt"))}"
   password                 = "TestZaizi1234..##"
@@ -44,13 +44,13 @@ resource "aws_db_instance" "db_keycloak" {
   # db_subnet_group_name     = "${var.rds_public_subnet_group}"
   engine                   = "postgres"
   engine_version           = "14.5"
-  identifier               = "${var.project_name}-db-keycloak-${var.environment}"
+  identifier               = "${var.project_name}db-keycloak-${var.environment}"
   #subnet_ids              =  aws_db_subnet_group.db_subnet_group_name.subnet_group.id
   db_subnet_group_name     = aws_db_subnet_group.public_subnet_group.id
   # instance_class         = "db.r5.large"
   instance_class           = "db.m6g.large"
   multi_az                 = false
-  db_name                  = "${var.project_name}-db-keycloak-${var.environment}"
+  db_name                  = "${var.project_name}dbkeycloak-${var.environment}"
   # parameter_group_name     = "mydbparamgroup1" # if you have tuned it
   #password                 = "${trimspace(file("${path.module}/secrets/mydb1-password.txt"))}"
   password                 = "TestZaizi1234..##"

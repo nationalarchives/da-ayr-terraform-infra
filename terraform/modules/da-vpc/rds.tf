@@ -1,10 +1,10 @@
 resource "aws_db_subnet_group" "public_subnet_group" {
-  name       = "${var.project_name}public-subnet-group"
+  name       = "publicsubnet"
   subnet_ids = module.vpc.public_subnets
 }
 
 resource "aws_db_subnet_group" "private_subnet_group" {
-  name       = "${var.project_name}private-subnet-group"
+  name       = "privatesubnet"
   subnet_ids = module.vpc.private_subnets
 }
 

@@ -1,3 +1,8 @@
+resource "aws_db_subnet_group" "subnet_group" {
+  name       = "${var.environment}-${var.project_name}loadbalancer-subnet-group"
+  subnet_ids = module.vpc.public_subnets
+}
+
 resource "aws_db_instance" "mydb1" {
   allocated_storage        = 256 # gigabytes
   backup_retention_period  = 7   # in days
@@ -6,8 +11,9 @@ resource "aws_db_instance" "mydb1" {
   engine                   = "postgres"
   engine_version           = "14.5"
   identifier               = "mydb1"
-  subnet_ids               = module.vpc.public_subnets
-  # instance_class           = "db.r5.large"
+  #subnet_ids              =  aws_db_subnet_group.db_subnet_group_name.subnet_group.id
+  db_subnet_group_name     = aws_db_subnet_group.subnet_group.id
+  # instance_class         = "db.r5.large"
   instance_class           = "db.m6g.large"
   multi_az                 = false
   db_name                  = "mydb1"

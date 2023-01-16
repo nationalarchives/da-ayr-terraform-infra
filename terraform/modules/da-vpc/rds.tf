@@ -6,7 +6,7 @@ resource "aws_db_instance" "mydb1" {
   engine                   = "postgres"
   engine_version           = "13.7-R1"
   identifier               = "mydb1"
-  instance_class           = "db.m5d.xlarge"
+  instance_class           = "db.r5.large"
   multi_az                 = false
   db_name                  = "mydb1"
   parameter_group_name     = "mydbparamgroup1" # if you have tuned it

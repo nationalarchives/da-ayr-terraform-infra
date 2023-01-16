@@ -22,7 +22,7 @@ resource "aws_db_instance" "mydb1" {
   instance_class           = "db.m6g.large"
   multi_az                 = false
   db_name                  = "mydb1"
-  parameter_group_name     = "mydbparamgroup1" # if you have tuned it
+  # parameter_group_name     = "mydbparamgroup1" # if you have tuned it
   # password               = "${trimspace(file("${path.module}/secrets/mydb1-password.txt"))}"
   password                 = "Zaizi-Org##.."
   port                     = 5432

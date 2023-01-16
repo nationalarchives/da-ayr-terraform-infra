@@ -30,7 +30,7 @@ resource "aws_db_instance" "db_webapp" {
   storage_encrypted        = true # you should always do this
   storage_type             = "gp2"
   username                 = "zaiziuser"
-  vpc_security_group_ids   = ["${aws_security_group.db_webapp.id}"]
+  vpc_security_group_ids   = ["${aws_security_group.db_webapp-sg.id}"]
 }
 
 
@@ -56,7 +56,7 @@ resource "aws_db_instance" "db_keycloak" {
   storage_encrypted        = true # you should always do this
   storage_type             = "gp2"
   username                 = "zaiziuser"
-  vpc_security_group_ids   = ["${aws_security_group.db_webapp.id}"]
+  vpc_security_group_ids   = ["${aws_security_group.db_webapp-sg.id}"]
 }
 
 resource "aws_security_group" "db_webapp-sg" {

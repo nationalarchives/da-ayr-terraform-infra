@@ -1,27 +1,27 @@
 resource "aws_db_subnet_group" "public_subnet_group" {
-  name       = "${var.environment}-${var.project_name}-public-subnet-group"
+  name       = "${var.project_name}-${var.environment}-public-subnet-group"
   subnet_ids = module.vpc.public_subnets
 }
 
 resource "aws_db_subnet_group" "private_subnet_group" {
-  name       = "${var.environment}-${var.project_name}private-subnet-group"
+  name       = "${var.project_name}-${var.environment}-public-subnet-group"
   subnet_ids = module.vpc.private_subnets
 }
 
-resource "aws_db_instance" "mydb1" {
+resource "aws_db_instance" "db_webapp" {
   allocated_storage        = 256 # gigabytes
   backup_retention_period  = 7   # in days
   # db_subnet_group_name     = module.vpc.private_subnets
   # db_subnet_group_name     = "${var.rds_public_subnet_group}"
   engine                   = "postgres"
   engine_version           = "14.5"
-  identifier               = "mydb1"
+  identifier               = "${var.project_name}-db_webapp-${var.environment}"
   #subnet_ids              =  aws_db_subnet_group.db_subnet_group_name.subnet_group.id
   db_subnet_group_name     = aws_db_subnet_group.public_subnet_group.id
   # instance_class         = "db.r5.large"
   instance_class           = "db.m6g.large"
   multi_az                 = false
-  db_name                  = "mydb1"
+  db_name                  = "${var.project_name}-db_webapp-${var.environment}"
   # parameter_group_name     = "mydbparamgroup1" # if you have tuned it
   # password               = "${trimspace(file("${path.module}/secrets/mydb1-password.txt"))}"
   password                 = "Zaizi-Org##.."
@@ -29,12 +29,38 @@ resource "aws_db_instance" "mydb1" {
   publicly_accessible      = true
   storage_encrypted        = true # you should always do this
   storage_type             = "gp2"
-  username                 = "mydb1"
-  vpc_security_group_ids   = ["${aws_security_group.mydb1.id}"]
+  username                 = "zaiziuser"
+  vpc_security_group_ids   = ["${aws_security_group.db_webapp.id}"]
 }
 
-resource "aws_security_group" "mydb1" {
-  name = "mydb1"
+
+resource "aws_db_instance" "db_keycloak" {
+  allocated_storage        = 256 # gigabytes
+  backup_retention_period  = 7   # in days
+  # db_subnet_group_name     = module.vpc.private_subnets
+  # db_subnet_group_name     = "${var.rds_public_subnet_group}"
+  engine                   = "postgres"
+  engine_version           = "14.5"
+  identifier               = "${var.project_name}-db_keycloak-${var.environment}"
+  #subnet_ids              =  aws_db_subnet_group.db_subnet_group_name.subnet_group.id
+  db_subnet_group_name     = aws_db_subnet_group.public_subnet_group.id
+  # instance_class         = "db.r5.large"
+  instance_class           = "db.m6g.large"
+  multi_az                 = false
+  db_name                  = "${var.project_name}-db_keycloak-${var.environment}"
+  # parameter_group_name     = "mydbparamgroup1" # if you have tuned it
+  # password               = "${trimspace(file("${path.module}/secrets/mydb1-password.txt"))}"
+  password                 = "Zaizi-Org##.."
+  port                     = 5432
+  publicly_accessible      = true
+  storage_encrypted        = true # you should always do this
+  storage_type             = "gp2"
+  username                 = "zaiziuser"
+  vpc_security_group_ids   = ["${aws_security_group.db_webapp.id}"]
+}
+
+resource "aws_security_group" "db_webapp-sg" {
+  name = "db_webapp-sg"
 
   description = "RDS postgres servers (terraform-managed)"
   #vpc_id = "${var.rds_vpc_id}"

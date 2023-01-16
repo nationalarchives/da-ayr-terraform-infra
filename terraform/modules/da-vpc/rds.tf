@@ -6,6 +6,7 @@ resource "aws_db_instance" "mydb1" {
   engine                   = "postgres"
   engine_version           = "14.5"
   identifier               = "mydb1"
+  subnet_ids               = module.vpc.public_subnets
   # instance_class           = "db.r5.large"
   instance_class           = "db.m6g.large"
   multi_az                 = false

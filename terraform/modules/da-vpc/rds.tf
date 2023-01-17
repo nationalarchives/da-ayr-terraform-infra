@@ -50,7 +50,7 @@ resource "aws_db_instance" "dbkeycloak" {
   # instance_class         = "db.r5.large"
   instance_class           = "db.m6g.large"
   multi_az                 = false
-  db_name                  = "dbkeycloak-${var.environment}"
+  db_name                  = "dbkeycloak${var.environment}"
   # parameter_group_name     = "mydbparamgroup1" # if you have tuned it
   #password                 = "${trimspace(file("${path.module}/secrets/mydb1-password.txt"))}"
   password                 = "TestZaizi1234..##"

@@ -8,7 +8,7 @@ resource "aws_db_subnet_group" "private_subnet_group" {
   subnet_ids = module.vpc.private_subnets
 }
 
-resource "aws_db_instance" "db_webapp" {
+resource "aws_db_instance" "dbwebapp" {
   allocated_storage        = 100 # gigabytes
   backup_retention_period  = 0   # in days
   apply_immediately        = true
@@ -36,7 +36,7 @@ resource "aws_db_instance" "db_webapp" {
 }
 
 
-resource "aws_db_instance" "db_keycloak" {
+resource "aws_db_instance" "dbkeycloak" {
   allocated_storage        = 100 # gigabytes
   backup_retention_period  = 0   # in days
   apply_immediately        = true

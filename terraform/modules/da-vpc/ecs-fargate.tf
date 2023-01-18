@@ -254,11 +254,11 @@ resource "aws_ecs_task_definition" "definition" {
     "secrets": [
       {
         "name": "secretkey",
-        "valueFrom": "${data.aws_ssm_parameter.secret_key.value}"
+        "valueFrom": "test"
       },
       {
         "name": "secretkeysig",
-        "valueFrom": "${data.aws_ssm_parameter.secret_key_sig.value}"
+        "valueFrom": "test"
       }
     ],
     "runtimePlatform": {	

@@ -90,6 +90,7 @@ resource "aws_s3_bucket" "ecs_exec" {
   bucket_prefix = "${var.environment}-acs-exec"
 }
 
+
 resource "aws_s3_bucket_acl" "ecs_exec" {
   bucket = aws_s3_bucket.ecs_exec.id
   acl = "private"

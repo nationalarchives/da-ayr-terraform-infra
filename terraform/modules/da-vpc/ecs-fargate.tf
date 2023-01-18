@@ -206,10 +206,10 @@ resource "random_string" "session" {
 #}${aws_ssm_parameter.master_realm.arn}
 
 data "aws_ssm_parameter" "secret_key" {
-  name = "/dev/SECRET_KEY"
+  name = "/dev/secret_key"
 }
 data "aws_ssm_parameter" "secret_key_sig" {
-  name = "/dev/SECRET_KEY_SIG"
+  name = "/dev/secret_key_sig"
 }
 
 

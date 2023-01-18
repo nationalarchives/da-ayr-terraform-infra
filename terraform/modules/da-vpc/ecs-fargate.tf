@@ -258,7 +258,7 @@ resource "aws_ecs_task_definition" "definition" {
       },
       {
        "name": "WEBAPP_DB_PASSWORD", 
-       "value": "dj4ng0",
+       "value": "dj4ng0"
       }
     ],
     "portMappings": [

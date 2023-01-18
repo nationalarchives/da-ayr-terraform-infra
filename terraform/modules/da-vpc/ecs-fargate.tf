@@ -193,22 +193,32 @@ resource "random_string" "session" {
 }
 
 # SAMPLE DATA PASSED TO NODE
-resource "aws_ssm_parameter" "config_string" {
-  name = "/${var.environment}/config_string"
-  type = "SecureString"
-  value = "${random_string.session.result}"
+#resource "aws_ssm_parameter" "config_string" {
+#  name = "/${var.environment}/config_string"
+#  type = "SecureString"
+#  value = "${random_string.session.result}"
+#}
+
+#resource "aws_ssm_parameter" "master_realm" {
+#  name = "/${var.environment}/master_realm"
+#  type = "SecureString"
+#  value = "${random_string.session.result}"
+#}${aws_ssm_parameter.master_realm.arn}
+
+data "aws_ssm_parameter" "secret_key" {
+  name = "/dev/SECRET_KEY"
+}
+data "aws_ssm_parameter" "secret_key_sig" {
+  name = "/dev/SECRET_KEY_SIG"
 }
 
-resource "aws_ssm_parameter" "master_realm" {
-  name = "/${var.environment}/master_realm"
-  type = "SecureString"
-  value = "${random_string.session.result}"
-}
+
+
 
 
 #tfsec:ignore:aws-cloudwatch-log-group-customer-key:exp:2022-08-08 FIXME
 resource "aws_cloudwatch_log_group" "ecslogs" {
-  name_prefix = "nhsbsa-${var.environment}-ecs"
+  name_prefix = "${var.project_name}-${var.environment}-ecs"
 }
 
 resource "aws_ecs_task_definition" "definition" {
@@ -243,12 +253,12 @@ resource "aws_ecs_task_definition" "definition" {
     ],
     "secrets": [
       {
-        "name": "CONFIG_STRING",
-        "valueFrom": "${aws_ssm_parameter.config_string.arn}"
+        "name": "SECRET_KEY",
+        "valueFrom": "${data.aws_ssm_parameter.secret_key.value}"
       },
       {
-        "name": "MASTER_REALM",
-        "valueFrom": "${aws_ssm_parameter.master_realm.arn}"
+        "name": "SECRET_KEY_SIG",
+        "valueFrom": "${data.aws_ssm_parameter.secret_key_sig.value}"
       }
     ],
     "runtimePlatform": {	

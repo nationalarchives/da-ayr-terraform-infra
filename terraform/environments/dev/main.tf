@@ -19,6 +19,7 @@
   enable_nat_gateway = var.enable_nat_gateway
   project_name = var.project_name
   aws_account_id = var.aws_account_id
+  managment_id = var.managment_id
   image = var.image
   image_tag = var.image_tag
   app_port = var.app_port

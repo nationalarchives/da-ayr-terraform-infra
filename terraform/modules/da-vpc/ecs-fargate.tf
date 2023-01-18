@@ -262,7 +262,7 @@ resource "aws_ecs_task_definition" "definition" {
       },
       {
         "name": "WEBAPP_DEBUG",
-        "valueFrom": false
+        "valueFrom": "false"
       },
       {
         "name": "WEBAPP_DB_PASSWORD",

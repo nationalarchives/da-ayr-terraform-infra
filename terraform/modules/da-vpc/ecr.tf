@@ -17,9 +17,9 @@
         {
             "Sid": "AllowPushPull",
             "Effect": "Allow",
-            "Principal": [
+            "Principal": {
                 "AWS": "arn:aws:iam::${var.managment_id}:role/da_ayr-github-actions-open-id-connect-roles"
-            ],
+            },
             "Action": [
                 "ecr:GetDownloadUrlForLayer",
                 "ecr:BatchGetImage",
@@ -62,9 +62,9 @@ resource "aws_ecr_repository" "ecr_keycloak" {
         {
             "Sid": "AllowPushPull",
             "Effect": "Allow",
-            "Principal": [
+            "Principal": {
                 "AWS": "arn:aws:iam::${var.managment_id}:role/da_ayr-github-actions-open-id-connect-roles"
-            ],
+            },
             "Action": [
                 "ecr:GetDownloadUrlForLayer",
                 "ecr:BatchGetImage",

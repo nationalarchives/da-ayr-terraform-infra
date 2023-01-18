@@ -23,6 +23,9 @@
   image = var.image
   image_tag = var.image_tag
   app_port = var.app_port
+  image_keycloak = var.image_keycloak
+  image_tag_keycloak = var.image_tag_keycloak
+  app_port_keycloak = var.app_port_keycloak
   providers = {
     aws = aws
     # aws.us-east-1 = aws.us-east-1

@@ -206,12 +206,12 @@ resource "random_string" "session" {
 #  value = "${random_string.session.result}"
 #}${aws_ssm_parameter.master_realm.arn}
 
-data "aws_ssm_parameter" "secret_key" {
-  name = "/dev/secret_key"
-}
-data "aws_ssm_parameter" "secret_key_sig" {
-  name = "/dev/secret_key_sig"
-}
+#data "aws_ssm_parameter" "secret_key" {
+#  name = "/dev/secret_key"
+#}
+#data "aws_ssm_parameter" "secret_key_sig" {
+#  name = "/dev/secret_key_sig"
+#}
 
 
 
@@ -273,12 +273,7 @@ resource "aws_ecs_task_definition" "definition" {
         "containerPort": 8000
       }
     ],
-    "secrets": [
-      {
-        "name": "config",
-        "valueFrom": "django"
-      }
-    ],
+    "secrets": [],
     "runtimePlatform": {	
       "operatingSystemFamily": "LINUX"
     },
@@ -356,5 +351,171 @@ resource "aws_ecs_service" "service" {
     target_group_arn = aws_lb_target_group.lbtargets.arn
     container_name = "project-container"
     container_port = 8000
+  }
+}
+
+################################################
+
+
+resource "aws_cloudwatch_log_group" "ecslogs-keycloak" {
+  name_prefix = "${var.project_name}-${var.environment}-ecs-keycloak"
+}
+
+resource "aws_security_group" "ecs-sg-keycloak" {
+  name = "${var.environment}-ecs-sg-keycloak"
+  vpc_id = module.vpc.vpc_id
+  description = "ecs security group"
+  ingress {
+    description = "permit traffic from elb"
+    from_port = var.app_port_keycloak
+    to_port = var.app_port_keycloak
+    protocol = "tcp"
+    security_groups = [ aws_security_group.loadbalancer-keycloak.id ]
+  }
+  egress {
+    description = ""
+    from_port = 8080
+    to_port = 8080
+    protocol = "tcp"
+    cidr_blocks = [ "0.0.0.0/0" ]
+    ipv6_cidr_blocks = [ "::/0" ]
+  }
+  egress {
+    description = ""
+    from_port = 3000
+    to_port = 3000
+    protocol = "tcp"
+    cidr_blocks = [ "0.0.0.0/0" ]
+    ipv6_cidr_blocks = [ "::/0" ]
+  }
+  egress {
+    description = ""
+    from_port = 6379
+    to_port = 6379
+    protocol = "tcp"
+    cidr_blocks = [ "0.0.0.0/0" ]
+    ipv6_cidr_blocks = [ "::/0" ]
+  }
+  egress {
+    description = ""
+    from_port = 443
+    to_port = 443
+    protocol = "tcp"
+    cidr_blocks = [ "0.0.0.0/0" ]
+    ipv6_cidr_blocks = [ "::/0" ]
+  }
+}
+
+
+
+
+resource "aws_ecs_task_definition" "definition-keycloak" {
+  family = "task_definition_name"
+  task_role_arn = aws_iam_role.ecs_task_role.arn
+  execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
+  network_mode = "awsvpc"
+  cpu = "512"
+  memory = "2048"
+  requires_compatibilities = [ "FARGATE" ]
+
+  container_definitions = <<DEFINITION
+[
+  {
+    "image": "${var.image_keycloak}:${var.image_tag_keycloak}",
+    "name": "project-container",
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region": "${data.aws_region.current.name}",
+        "awslogs-group": "${aws_cloudwatch_log_group.ecslogs-keycloak.name}",
+        "awslogs-stream-prefix": "project-${var.environment}-keycloak"
+      }
+    },
+    "environment": [
+      {
+       "name": "SECRET_KEY", 
+       "value": "@)l!d#bi8hnwmsg_m02&uzpqq$54bc0)*q8xok_8ni$49qpo1y"
+      },
+      {
+       "name": "KEYCLOACK_BASE_URI", 
+       "value": "http://kubernetes.docker.internal:8080"
+      },
+      {
+       "name": "KEYCLOACK_REALM_NAME", 
+       "value": "ayr"
+      },
+      {
+       "name": "OIDC_RP_CLIENT_ID", 
+       "value": "webapp"
+      },
+      {
+       "name": "OIDC_RP_CLIENT_SECRET", 
+       "value": "5Qpz3zLnqo42smvTzAkw6gdRk9MRpCuf"
+      },
+      {
+       "name": "KEYCLOACK_DB_NAME", 
+       "value": "keycloack"
+      },
+      {
+       "name": "KEYCLOACK_DB_USER", 
+       "value": "keycloack"
+      },
+      {
+       "name": "KEYCLOACK_DB_PASSWORD", 
+       "value": "k3ycl0ack"
+      },
+      {
+       "name": "KEYCLOAK_ADMIN", 
+       "value": "admin"
+      },
+      {
+       "name": "KEYCLOAK_ADMIN_PASSWORD", 
+       "value": "Pa55w0rd"
+      }
+    ],
+    "portMappings": [
+      {
+        "hostPort": 8080,
+        "protocol": "tcp",
+        "containerPort": 8080
+      }
+    ],
+    "secrets": [
+      {
+        "name": "config",
+        "valueFrom": "keycloak"
+      }
+    ],
+    "runtimePlatform": {	
+      "operatingSystemFamily": "LINUX"
+    },
+    "linuxParameters": {
+      "initProcessEnabled": true
+    }
+  }
+]
+DEFINITION
+}
+
+resource "aws_ecs_service" "service-keycloak" {
+  name = "${var.environment}-ecs-service-keycloak"
+  cluster = aws_ecs_cluster.cluster.id
+  task_definition = aws_ecs_task_definition.definition-keycloak.arn
+  desired_count = 1
+  launch_type = "FARGATE"
+  enable_ecs_managed_tags = true
+  enable_execute_command = true
+  health_check_grace_period_seconds = 300
+
+  network_configuration {
+    subnets = module.vpc.private_subnets
+    security_groups = [ aws_security_group.ecs-sg-keycloak.id ]
+    assign_public_ip = false
+  }
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.lbtargets-keycloak.arn
+    container_name = "project-container-keycloak"
+    container_port = 8080
   }
 }

@@ -16,6 +16,11 @@ variable "aws_account_id" {
   type = string
 }
 
+variable "managment_id" {
+  description = "Aws acc id"
+  type = string
+}
+
 variable "vpc_cidr" {
   description = "The CIDR block for the application VPC"
   type        = string

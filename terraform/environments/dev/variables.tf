@@ -15,6 +15,11 @@ variable "aws_account_id" {
   type = string
 }
 
+variable "managment_id" {
+  description = "Aws acc id"
+  type = string
+}
+
 #################
 # ECS Task Config
 #################

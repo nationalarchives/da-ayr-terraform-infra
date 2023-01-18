@@ -264,6 +264,46 @@ resource "aws_ecs_task_definition" "definition" {
       {
        "name": "WEBAPP_DB_PASSWORD", 
        "value": "dj4ng0"
+      },
+      {
+       "name": "SECRET_KEY", 
+       "value": "@)l!d#bi8hnwmsg_m02&uzpqq$54bc0)*q8xok_8ni$49qpo1y"
+      },
+      {
+       "name": "KEYCLOACK_BASE_URI", 
+       "value": "http://kubernetes.docker.internal:8080"
+      },
+      {
+       "name": "KEYCLOACK_REALM_NAME", 
+       "value": "ayr"
+      },
+      {
+       "name": "OIDC_RP_CLIENT_ID", 
+       "value": "webapp"
+      },
+      {
+       "name": "OIDC_RP_CLIENT_SECRET", 
+       "value": "5Qpz3zLnqo42smvTzAkw6gdRk9MRpCuf"
+      },
+      {
+       "name": "KEYCLOACK_DB_NAME", 
+       "value": "keycloack"
+      },
+      {
+       "name": "KEYCLOACK_DB_USER", 
+       "value": "keycloack"
+      },
+      {
+       "name": "KEYCLOACK_DB_PASSWORD", 
+       "value": "k3ycl0ack"
+      },
+      {
+       "name": "KEYCLOAK_ADMIN", 
+       "value": "admin"
+      },
+      {
+       "name": "KEYCLOAK_ADMIN_PASSWORD", 
+       "value": "Pa55w0rd"
       }
     ],
     "portMappings": [
@@ -431,48 +471,7 @@ resource "aws_ecs_task_definition" "definition-keycloak" {
         "awslogs-stream-prefix": "project-${var.environment}-keycloak"
       }
     },
-    "environment": [
-      {
-       "name": "SECRET_KEY", 
-       "value": "@)l!d#bi8hnwmsg_m02&uzpqq$54bc0)*q8xok_8ni$49qpo1y"
-      },
-      {
-       "name": "KEYCLOACK_BASE_URI", 
-       "value": "http://kubernetes.docker.internal:8080"
-      },
-      {
-       "name": "KEYCLOACK_REALM_NAME", 
-       "value": "ayr"
-      },
-      {
-       "name": "OIDC_RP_CLIENT_ID", 
-       "value": "webapp"
-      },
-      {
-       "name": "OIDC_RP_CLIENT_SECRET", 
-       "value": "5Qpz3zLnqo42smvTzAkw6gdRk9MRpCuf"
-      },
-      {
-       "name": "KEYCLOACK_DB_NAME", 
-       "value": "keycloack"
-      },
-      {
-       "name": "KEYCLOACK_DB_USER", 
-       "value": "keycloack"
-      },
-      {
-       "name": "KEYCLOACK_DB_PASSWORD", 
-       "value": "k3ycl0ack"
-      },
-      {
-       "name": "KEYCLOAK_ADMIN", 
-       "value": "admin"
-      },
-      {
-       "name": "KEYCLOAK_ADMIN_PASSWORD", 
-       "value": "Pa55w0rd"
-      }
-    ],
+    "environment": [],
     "portMappings": [
       {
         "hostPort": 8080,

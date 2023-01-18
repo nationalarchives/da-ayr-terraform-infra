@@ -243,7 +243,14 @@ resource "aws_ecs_task_definition" "definition" {
         "awslogs-stream-prefix": "project-${var.environment}"
       }
     },
-    "environment" : [],
+    "environment": [
+      {
+      "name": "WEBAPP_DB_NAME", "value": "django",
+      "name": "WEBAPP_DB_HOST", "value": "test",
+      "name": "WEBAPP_DEBUG", "value": "false",
+      "name": "WEBAPP_DB_PASSWORD", "value": "dj4ng0",
+      }
+    ],
     "portMappings": [
       {
         "hostPort": 8000,
@@ -253,20 +260,8 @@ resource "aws_ecs_task_definition" "definition" {
     ],
     "secrets": [
       {
-        "name": "WEBAPP_DB_NAME",
+        "name": "config",
         "valueFrom": "django"
-      },
-      {
-        "name": "WEBAPP_DB_HOST",
-        "valueFrom": "test"
-      },
-      {
-        "name": "WEBAPP_DEBUG",
-        "valueFrom": "false"
-      },
-      {
-        "name": "WEBAPP_DB_PASSWORD",
-        "valueFrom": "dj4ng0"
       }
     ],
     "runtimePlatform": {	

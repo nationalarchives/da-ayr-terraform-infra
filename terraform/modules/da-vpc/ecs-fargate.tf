@@ -245,10 +245,20 @@ resource "aws_ecs_task_definition" "definition" {
     },
     "environment": [
       {
-      "name": "WEBAPP_DB_NAME", "value": "django",
-      "name": "WEBAPP_DB_HOST", "value": "test",
-      "name": "WEBAPP_DEBUG", "value": "false",
-      "name": "WEBAPP_DB_PASSWORD", "value": "dj4ng0",
+       "name": "WEBAPP_DB_NAME", 
+       "value": "django"
+      },
+      {
+       "name": "WEBAPP_DB_HOST", 
+       "value": "test"
+      },
+      {
+       "name": "WEBAPP_DEBUG", 
+       "value": "false"
+      },
+      {
+       "name": "WEBAPP_DB_PASSWORD", 
+       "value": "dj4ng0",
       }
     ],
     "portMappings": [

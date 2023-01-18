@@ -253,12 +253,20 @@ resource "aws_ecs_task_definition" "definition" {
     ],
     "secrets": [
       {
-        "name": "secretkey",
+        "name": "WEBAPP_DB_NAME",
+        "valueFrom": "django"
+      },
+      {
+        "name": "WEBAPP_DB_HOST",
         "valueFrom": "test"
       },
       {
-        "name": "secretkeysig",
-        "valueFrom": "test"
+        "name": "WEBAPP_DEBUG",
+        "valueFrom": false
+      },
+      {
+        "name": "WEBAPP_DB_PASSWORD",
+        "valueFrom": "dj4ng0"
       }
     ],
     "runtimePlatform": {	

@@ -15,7 +15,6 @@ resource "aws_lb" "loadbalancer-keycloak" {
   }
 }
 
-#################
 resource "aws_lb_target_group" "lbtargets-keycloak" {
   name = "tf-lb-target-keycloak-${var.environment}"
   port = var.app_port
@@ -43,9 +42,6 @@ resource "aws_lb_listener" "httpslistener-keycloak" {
     target_group_arn = aws_lb_target_group.lbtargets-keycloak.arn
   }
 }
-
-#####################
-
 
 #tfsec:ignore:aws-vpc-no-public-egress-sgr #tfsec:ignore:aws-vpc-no-public-ingress-sgr
 resource "aws_security_group" "loadbalancer-keycloak" {

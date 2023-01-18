@@ -126,11 +126,11 @@ data "aws_iam_policy_document" "ecs_task_execution_parameter_policy" {
       "ssm:GetParameters",
       "kms:Decrypt"
     ]
-
-    resources = [
-      aws_ssm_parameter.config_string.arn,
-      aws_ssm_parameter.master_realm.arn
-    ]
+    resources = ["*"]
+#    resources = [
+#     aws_ssm_parameter.config_string.arn,
+#      aws_ssm_parameter.master_realm.arn
+#    ]
   }
 }
 

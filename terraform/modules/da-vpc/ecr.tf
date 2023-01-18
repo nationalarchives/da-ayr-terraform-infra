@@ -15,9 +15,11 @@
     "Version": "2008-10-17",
     "Statement": [
         {
-            "Sid": "new policy",
+            "Sid": "AllowPushPull",
             "Effect": "Allow",
-            "Principal": "*",
+            "Principal": {
+                "AWS": "arn:aws:iam::${var.managment_id}:role/da_ayr-github-actions-open-id-connect-roles"
+            },
             "Action": [
                 "ecr:GetDownloadUrlForLayer",
                 "ecr:BatchGetImage",
@@ -31,8 +33,6 @@
                 "ecr:ListImages",
                 "ecr:DeleteRepository",
                 "ecr:BatchDeleteImage",
-                "ecr:SetRepositoryPolicy",
-                "ecr:DeleteRepositoryPolicy"
             ]
         }
     ]
@@ -60,9 +60,11 @@ resource "aws_ecr_repository" "ecr_keycloak" {
     "Version": "2008-10-17",
     "Statement": [
         {
-            "Sid": "new policy",
+            "Sid": "AllowPushPull",
             "Effect": "Allow",
-            "Principal": "*",
+            "Principal": {
+                "AWS": "arn:aws:iam::${var.managment_id}:role/da_ayr-github-actions-open-id-connect-roles"
+            },
             "Action": [
                 "ecr:GetDownloadUrlForLayer",
                 "ecr:BatchGetImage",
@@ -76,8 +78,6 @@ resource "aws_ecr_repository" "ecr_keycloak" {
                 "ecr:ListImages",
                 "ecr:DeleteRepository",
                 "ecr:BatchDeleteImage",
-                "ecr:SetRepositoryPolicy",
-                "ecr:DeleteRepositoryPolicy"
             ]
         }
     ]

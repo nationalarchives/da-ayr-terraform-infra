@@ -253,11 +253,11 @@ resource "aws_ecs_task_definition" "definition" {
     ],
     "secrets": [
       {
-        "name": "SECRET_KEY",
+        "name": "secret_key",
         "valueFrom": "${data.aws_ssm_parameter.secret_key.value}"
       },
       {
-        "name": "SECRET_KEY_SIG",
+        "name": "secret_key_sig",
         "valueFrom": "${data.aws_ssm_parameter.secret_key_sig.value}"
       }
     ],

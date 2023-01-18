@@ -64,6 +64,10 @@ variable "app_port" {
   description = "The port the application will listen on within its container"
   default = 8000
 }
+variable "fqdn" {
+  type = string
+  description = "The fully-qualified domain name to use for the frontend"
+}
 
 #################
 # ECS Task Config
@@ -82,4 +86,9 @@ variable "app_port_keycloak" {
   type = number
   description = "The port the application will listen on within its container"
   default = 8080
+}
+
+variable "fqdn_keycloak" {
+  type = string
+  description = "The fully-qualified domain name to use for the frontend"
 }

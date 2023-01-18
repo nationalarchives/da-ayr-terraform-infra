@@ -20,6 +20,16 @@ variable "managment_id" {
   type = string
 }
 
+variable "fqdn" {
+  type = string
+  description = "The fully-qualified domain name to use for the frontend"
+}
+
+variable "fqdn_keycloak" {
+  type = string
+  description = "The fully-qualified domain name to use for the frontend"
+}
+
 #################
 # ECS Task Config
 #################

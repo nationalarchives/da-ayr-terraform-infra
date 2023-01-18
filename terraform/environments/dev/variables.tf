@@ -39,22 +39,6 @@ variable "app_port" {
   default = 8000
 }
 
-variable "image_keycloak" {
-  type = string
-  description = "location and name of the container image for the ECS task"
-}
-
-variable "image_tag_keycloak" {
-  type = string
-  description = "The tag (e.g. version or 'latest') to retrieve for this environment"
-}
-
-variable "app_port_keycloak" {
-  type = number
-  description = "The port the application will listen on within its container"
-  default = 8080
-}
-
 
 ##################
 # Application VPC

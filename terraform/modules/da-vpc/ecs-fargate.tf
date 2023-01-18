@@ -249,6 +249,10 @@ resource "aws_ecs_task_definition" "definition" {
        "value": "django"
       },
       {
+       "name": "WEBAPP_DB_USER", 
+       "value": "django"
+      },
+      {
        "name": "WEBAPP_DB_HOST", 
        "value": "test"
       },

@@ -32,7 +32,7 @@
                 "ecr:GetRepositoryPolicy",
                 "ecr:ListImages",
                 "ecr:DeleteRepository",
-                "ecr:BatchDeleteImage",
+                "ecr:BatchDeleteImage"
             ]
         }
     ]
@@ -77,7 +77,7 @@ resource "aws_ecr_repository" "ecr_keycloak" {
                 "ecr:GetRepositoryPolicy",
                 "ecr:ListImages",
                 "ecr:DeleteRepository",
-                "ecr:BatchDeleteImage",
+                "ecr:BatchDeleteImage"
             ]
         }
     ]

@@ -422,7 +422,7 @@ resource "aws_ecs_task_definition" "definition-keycloak" {
 [
   {
     "image": "${var.image_keycloak}:${var.image_tag_keycloak}",
-    "name": "project-container",
+    "name": "project-container-keycloak",
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {

@@ -276,7 +276,7 @@ resource "aws_ecs_task_definition" "definition" {
       },
       {
        "name": "KEYCLOACK_BASE_URI", 
-       "value": "http://dev-loadbalancer-108847439.eu-west-2.elb.amazonaws.com/"
+       "value": "dev-loadbalancer-108847439.eu-west-2.elb.amazonaws.com/"
       },
       {
        "name": "KEYCLOACK_REALM_NAME", 

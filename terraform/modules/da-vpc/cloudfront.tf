@@ -16,28 +16,28 @@ resource "aws_s3_bucket" "cloudfront_logs" {
   bucket_prefix = "${var.project_name}-${var.environment}-cloudfront-logs"
 }
 
-resource "aws_s3_bucket_acl" "cloudfront_logs" {
-  bucket = aws_s3_bucket.cloudfront_logs.id
-  acl = "private"
-}
+#resource "aws_s3_bucket_acl" "cloudfront_logs" {
+#  bucket = aws_s3_bucket.cloudfront_logs.id
+#  acl = "private"
+#}
 
 resource "aws_s3_bucket_public_access_block" "cloudfront_logs" {
   bucket = aws_s3_bucket.cloudfront_logs.id
-  block_public_acls = false
-  block_public_policy = false
-  restrict_public_buckets = false
-  ignore_public_acls = false
+  block_public_acls = true
+  block_public_policy = true
+  restrict_public_buckets = true
+  ignore_public_acls = true
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "cloudfront_logs" {
   bucket = aws_s3_bucket.cloudfront_logs.id
 
-  rule {
-    apply_server_side_encryption_by_default {
-      kms_master_key_id = aws_kms_key.cloudfront_logs.arn
-      sse_algorithm = "aws:kms"
-    }
-  }
+#  rule {
+#    apply_server_side_encryption_by_default {
+#      kms_master_key_id = aws_kms_key.cloudfront_logs.arn
+#      sse_algorithm = "aws:kms"
+#    }
+#  }
 }
 
 resource "aws_kms_key" "cloudfront_logs" {

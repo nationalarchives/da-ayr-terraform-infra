@@ -213,9 +213,9 @@ resource "random_string" "session" {
 data "aws_ssm_parameter" "web_db_name_infra" {
   name = "/dev/WEBAPP_DB_NAME_INFRA"
 }
-
-
-
+data "aws_ssm_parameter" "web_db_name" {
+  name = "/dev/WEBAPP_DB_NAME"
+}
 
 
 #tfsec:ignore:aws-cloudwatch-log-group-customer-key:exp:2022-08-08 FIXME
@@ -252,7 +252,7 @@ resource "aws_ecs_task_definition" "definition" {
       },
       {
        "name": "WEBAPP_DB_NAME", 
-       "value": "webappdev"
+       "value": "${data.aws_ssm_parameter.web_db_name.value}"
       },
       {
        "name": "WEBAPP_DB_USER", 
@@ -500,12 +500,7 @@ resource "aws_ecs_task_definition" "definition-keycloak" {
         "containerPort": 8080
       }
     ],
-    "secrets": [
-      {
-        "name": "config",
-        "valueFrom": "keycloak"
-      }
-    ],
+    "secrets": [],
     "runtimePlatform": {	
       "operatingSystemFamily": "LINUX"
     },

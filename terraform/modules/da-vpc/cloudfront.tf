@@ -29,8 +29,8 @@ resource "aws_s3_bucket_public_access_block" "cloudfront_logs" {
   ignore_public_acls = true
 }
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "cloudfront_logs" {
-  bucket = aws_s3_bucket.cloudfront_logs.id
+#resource "aws_s3_bucket_server_side_encryption_configuration" "cloudfront_logs" {
+#  bucket = aws_s3_bucket.cloudfront_logs.id
 
 #  rule {
 #    apply_server_side_encryption_by_default {
@@ -38,13 +38,13 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "cloudfront_logs" 
 #      sse_algorithm = "aws:kms"
 #    }
 #  }
-}
+#}
 
-resource "aws_kms_key" "cloudfront_logs" {
-  description = "KMS key for cloudfront logs"
-  deletion_window_in_days = 10
-  enable_key_rotation = true
-}
+#resource "aws_kms_key" "cloudfront_logs" {
+#  description = "KMS key for cloudfront logs"
+#  deletion_window_in_days = 10
+#  enable_key_rotation = true
+#}
 
 resource "aws_cloudfront_distribution" "cf_distribution" {
   enabled = true

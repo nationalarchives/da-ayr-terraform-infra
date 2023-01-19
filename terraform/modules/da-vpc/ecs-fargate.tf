@@ -209,9 +209,10 @@ resource "random_string" "session" {
 #data "aws_ssm_parameter" "secret_key" {
 #  name = "/dev/secret_key"
 #}
-#data "aws_ssm_parameter" "secret_key_sig" {
-#  name = "/dev/secret_key_sig"
-#}
+
+data "aws_ssm_parameter" "web_db_name_infra" {
+  name = "/dev/WEBAPP_DB_NAME_INFRA"
+}
 
 
 
@@ -245,6 +246,10 @@ resource "aws_ecs_task_definition" "definition" {
       }
     },
     "environment": [
+      {
+       "name": "WEBAPP_DB_NAME_INFRA", 
+       "value": "${data.aws_ssm_parameter.web_db_name_infra.value}"
+      },
       {
        "name": "WEBAPP_DB_NAME", 
        "value": "webappdev"

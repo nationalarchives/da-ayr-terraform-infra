@@ -247,15 +247,15 @@ resource "aws_ecs_task_definition" "definition" {
     "environment": [
       {
        "name": "WEBAPP_DB_NAME", 
-       "value": "django"
+       "value": "webappdev"
       },
       {
        "name": "WEBAPP_DB_USER", 
-       "value": "django"
+       "value": "webapp_user"
       },
       {
        "name": "WEBAPP_DB_HOST", 
-       "value": "test"
+       "value": "dbwebappdev.cnzaefghraly.eu-west-2.rds.amazonaws.com"
       },
       {
        "name": "WEBAPP_DEBUG", 
@@ -263,7 +263,7 @@ resource "aws_ecs_task_definition" "definition" {
       },
       {
        "name": "WEBAPP_DB_PASSWORD", 
-       "value": "dj4ng0"
+       "value": "v92jhC5BA@0A"
       },
       {
        "name": "SECRET_KEY", 

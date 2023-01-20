@@ -32,7 +32,7 @@ resource "aws_lb_target_group" "lbtargets" {
 }
 
 resource "aws_lb_target_group" "lbtargets-1" {
-  name = "tf-lb-target-${var.environment}"
+  name = "tf-lb-target-1-${var.environment}"
   port = var.app_port
   protocol = "HTTP"
   vpc_id = module.vpc.vpc_id

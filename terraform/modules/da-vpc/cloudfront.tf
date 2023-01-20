@@ -49,7 +49,7 @@ resource "aws_kms_key" "cloudfront_logs" {
 }
 */
 
-
+/*
 resource "aws_cloudfront_distribution" "cf_distribution" {
   enabled = true
   is_ipv6_enabled = true
@@ -72,6 +72,7 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
       value = random_string.cloudfront_identifier.result
     }
   }
+  */
   /*
   logging_config {
     include_cookies = false
@@ -79,7 +80,7 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
     prefix = var.environment
   }
   */
-
+  /*
   aliases = [ var.fqdn ]
   
   restrictions {
@@ -117,7 +118,7 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
 
   # web_acl_id = aws_wafv2_web_acl.cloudfront.arn
 }
-
+*/
 #resource "aws_route53_record" "cloudfront" {
 #  zone_id = data.aws_route53_zone.dnszone.zone_id
 #  name = var.fqdn

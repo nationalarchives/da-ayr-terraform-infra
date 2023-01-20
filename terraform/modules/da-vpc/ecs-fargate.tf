@@ -216,7 +216,7 @@ data "aws_ssm_parameter" "web_db_name_infra" {
 data "aws_ssm_parameter" "web_db_name" {
   name = "/dev/WEBAPP_DB_NAME"
 }
-data "aws_ssm_parameter" "web_db_name" {
+data "aws_ssm_parameter" "web_db_user" {
   name = "/dev/WEBAPP_DB_USER"
 }
 data "aws_ssm_parameter" "web_db_host" {
@@ -266,7 +266,7 @@ resource "aws_ecs_task_definition" "definition" {
       },
       {
        "name": "WEBAPP_DB_HOST", 
-       "value": "${data.aws_ssm_parameter.web_db_user.value}"
+       "value": "${data.aws_ssm_parameter.web_db_host.value}"
       },
       {
        "name": "WEBAPP_DEBUG", 

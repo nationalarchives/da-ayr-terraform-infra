@@ -9,8 +9,8 @@ resource "aws_acm_certificate" "certificate" {
 }
 
 resource "aws_acm_certificate" "cloudfront" {
-  # provider = aws.us-east-1
-  provider = aws.eu-west-2
+  provider = aws.us-east-1
+  #provider = aws.eu-west-2
   domain_name = var.fqdn
   validation_method = "DNS"
 

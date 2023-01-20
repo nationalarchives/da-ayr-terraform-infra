@@ -19,11 +19,6 @@ provider "aws" {
   }
 }
 
-provider "aws" {
-  region                  = "eu-west-2"
-  # profile                 = "nhsbsa"
-}
-
 
 
 provider "aws" {

@@ -28,9 +28,9 @@
   app_port_keycloak = var.app_port_keycloak
   fqdn = var.fqdn
   fqdn_keycloak = var.fqdn_keycloak
-  providers= {
-    aws=aws
-    aws.us-east-1=aws.us-east-1
+  providers = {
+    aws = aws
+    aws.us-east-1 = aws.us-east-1
   }
 }
  

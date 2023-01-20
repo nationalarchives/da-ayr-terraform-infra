@@ -16,7 +16,8 @@ module "da-vpc" {
   fqdn_keycloak = var.fqdn_keycloak
   providers = {
     aws = aws
-    aws.us-east-1 = aws.us-east-1
+    # aws.us-east-1 = aws.us-east-1
+    aws.eu-west-2 = aws.us-east-1
   }
 }
  

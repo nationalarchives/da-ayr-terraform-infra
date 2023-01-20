@@ -1,3 +1,4 @@
+/*
 #tfsec:ignore:aws-elb-alb-not-public
 resource "aws_lb" "loadbalancer" {
   name = "${var.environment}-loadbalancer"
@@ -128,3 +129,4 @@ resource "aws_security_group" "loadbalancer" {
     ipv6_cidr_blocks = [ "::/0" ]
   }
 }
+*/

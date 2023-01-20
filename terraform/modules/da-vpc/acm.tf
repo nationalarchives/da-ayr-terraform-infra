@@ -1,3 +1,4 @@
+/*
 resource "aws_acm_certificate" "certificate" {
   domain_name = var.fqdn
   validation_method = "DNS"
@@ -47,3 +48,4 @@ resource "aws_acm_certificate_validation" "cert-validation" {
   validation_record_fqdns = [ for record in aws_route53_record.cert-validation: record.fqdn ]
 }
 
+*/

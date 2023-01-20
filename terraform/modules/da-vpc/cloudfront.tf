@@ -1,3 +1,4 @@
+/*
 resource "random_string" "cloudfront_identifier" {
   length = 40
   lower = true
@@ -10,6 +11,7 @@ resource "random_string" "cloudfront_identifier" {
   min_special = 4
   override_special = "-#!,"
 }
+*/
 
 #tfsec:ignore:aws-s3-enable-bucket-logging #tfsec:ignore:aws-s3-enable-versioning
 /*
@@ -49,6 +51,8 @@ resource "aws_kms_key" "cloudfront_logs" {
 }
 */
 
+/*
+
 resource "aws_cloudfront_distribution" "cf_distribution" {
   enabled = true
   is_ipv6_enabled = true
@@ -71,13 +75,14 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
       value = random_string.cloudfront_identifier.result
     }
   }
-  /*
+
+  #
   logging_config {
     include_cookies = false
     bucket = aws_s3_bucket.cloudfront_logs.bucket_domain_name
     prefix = var.environment
   }
-  */
+  #
 
   aliases = [ var.fqdn ]
   
@@ -116,6 +121,7 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
 
   # web_acl_id = aws_wafv2_web_acl.cloudfront.arn
 }
+*/
 
 #resource "aws_route53_record" "cloudfront" {
 #  zone_id = data.aws_route53_zone.dnszone.zone_id

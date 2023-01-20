@@ -52,7 +52,7 @@ resource "aws_kms_key" "cloudfront_logs" {
 resource "aws_cloudfront_distribution" "cf_distribution" {
   enabled = true
   is_ipv6_enabled = true
-  comment = "Cloudfront vdps ${var.environment}"
+  comment = "Cloudfront webapp ${var.environment}"
   price_class = "PriceClass_100"
   # provider = aws.us-east-1
   provider = aws.eu-west-2
@@ -109,12 +109,12 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
 
   viewer_certificate {
     cloudfront_default_certificate = true
-    # acm_certificate_arn = aws_acm_certificate.cloudfront.arn
+    acm_certificate_arn = aws_acm_certificate.cloudfront.arn
     ssl_support_method = "sni-only"
     minimum_protocol_version = "TLSv1.2_2021"
   }
 
-  web_acl_id = aws_wafv2_web_acl.cloudfront.arn
+  # web_acl_id = aws_wafv2_web_acl.cloudfront.arn
 }
 
 #resource "aws_route53_record" "cloudfront" {

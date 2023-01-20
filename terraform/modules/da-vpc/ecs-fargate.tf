@@ -294,7 +294,7 @@ resource "aws_ecs_task_definition" "definition" {
       },
       {
        "name": "OIDC_RP_CLIENT_SECRET", 
-       "value": "5Qpz3zLnqo42smvTzAkw6gdRk9MRpCuf"
+       "value": "7oTDc6ExG0bQJFHYmKxPJDEmWodWeQUl"
       },
       {
        "name": "KEYCLOACK_DB_NAME", 

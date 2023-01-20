@@ -114,7 +114,7 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
     minimum_protocol_version = "TLSv1.2_2021"
   }
 
-  # web_acl_id = aws_wafv2_web_acl.cloudfront.arn
+  web_acl_id = aws_wafv2_web_acl.cloudfront.arn
 }
 
 #resource "aws_route53_record" "cloudfront" {

@@ -406,11 +406,12 @@ resource "aws_ecs_service" "service" {
     assign_public_ip = false
   }
 
-  load_balancer {
+/*  load_balancer {
     target_group_arn = aws_lb_target_group.lbtargets.arn
     container_name = "project-container"
     container_port = 8000
   }
+*/
 }
 
 ################################################

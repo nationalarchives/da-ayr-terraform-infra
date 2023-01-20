@@ -19,9 +19,9 @@ resource "aws_acm_certificate" "cloudfront" {
 }
 
 data "aws_route53_zone" "dnszone" {
-  #name = "ayr.labs.zaizicloud.net"
+  name = "ayr.labs.zaizicloud.net"
   #name = "${var.fqdn}"
-  name = join(".", slice(split(".", var.fqdn), 1, length(split(".", var.fqdn))))
+  #name = join(".", slice(split(".", var.fqdn), 1, length(split(".", var.fqdn))))
   private_zone = false
 }
 

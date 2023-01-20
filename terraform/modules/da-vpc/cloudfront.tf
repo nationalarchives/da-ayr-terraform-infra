@@ -12,14 +12,16 @@ resource "random_string" "cloudfront_identifier" {
 }
 
 #tfsec:ignore:aws-s3-enable-bucket-logging #tfsec:ignore:aws-s3-enable-versioning
+/*
 resource "aws_s3_bucket" "cloudfront_logs" {
   bucket_prefix = "${var.project_name}-${var.environment}-cloudfront-logs"
 }
 
-#resource "aws_s3_bucket_acl" "cloudfront_logs" {
-#  bucket = aws_s3_bucket.cloudfront_logs.id
-#  acl = "private"
-#}
+resource "aws_s3_bucket_acl" "cloudfront_logs" {
+  bucket = aws_s3_bucket.cloudfront_logs.id
+  acl = "private"
+}
+
 
 resource "aws_s3_bucket_public_access_block" "cloudfront_logs" {
   bucket = aws_s3_bucket.cloudfront_logs.id
@@ -45,6 +47,7 @@ resource "aws_kms_key" "cloudfront_logs" {
   deletion_window_in_days = 10
   enable_key_rotation = true
 }
+*/
 
 resource "aws_cloudfront_distribution" "cf_distribution" {
   enabled = true
@@ -68,12 +71,13 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
       value = random_string.cloudfront_identifier.result
     }
   }
-
+  /*
   logging_config {
     include_cookies = false
     bucket = aws_s3_bucket.cloudfront_logs.bucket_domain_name
     prefix = var.environment
   }
+  */
 
   aliases = [ var.fqdn ]
   

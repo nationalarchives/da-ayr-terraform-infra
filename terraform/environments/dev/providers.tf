@@ -21,19 +21,18 @@ provider "aws" {
 
 
 
-provider "aws" {
-source = "hashicorp/aws"
-  alias = "us-east-1"
-  region = "us-east-1"
-  default_tags {
-    tags = {
-      Environment = var.environment
-      Owner = "Terraform"
-      StateBucket = var.bucket
-      StatePrefix = var.key
-    }
-  }
-}
+#provider "aws" {
+#  alias = "us-east-1"
+#  region = "us-east-1"
+#  default_tags {
+#    tags = {
+#      Environment = var.environment
+#      Owner = "Terraform"
+#      StateBucket = var.bucket
+#      StatePrefix = var.key
+#    }
+#  }
+#}
 
 terraform {
   ## Fix version of the providers to avoid breaking changes causing problems

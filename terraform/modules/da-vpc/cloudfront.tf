@@ -56,8 +56,8 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
   is_ipv6_enabled = true
   comment = "Cloudfront webapp ${var.environment}"
   price_class = "PriceClass_100"
-  # provider = aws.us-east-1
-  provider = aws.eu-west-2
+  provider = aws.us-east-1
+  #provider = aws.eu-west-2
 
   origin {
     domain_name = aws_lb.loadbalancer.dns_name

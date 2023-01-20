@@ -49,7 +49,8 @@ resource "aws_kms_key" "cloudfront_logs" {
 }
 */
 
-/*
+
+
 resource "aws_cloudfront_distribution" "cf_distribution" {
   enabled = true
   is_ipv6_enabled = true
@@ -72,7 +73,7 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
       value = random_string.cloudfront_identifier.result
     }
   }
-  */
+  
   /*
   logging_config {
     include_cookies = false
@@ -80,7 +81,7 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
     prefix = var.environment
   }
   */
-  /*
+  
 
   aliases = [ var.fqdn ]
   
@@ -131,4 +132,3 @@ resource "aws_route53_record" "cloudfront" {
     evaluate_target_health = true
   }
 }
-*/

@@ -51,7 +51,7 @@ resource "aws_lb_listener" "httpslistener-1" {
   load_balancer_arn = aws_lb.loadbalancer.arn
   port = "80"
   protocol = "HTTP"
-  #certificate_arn = aws_acm_certificate_validation.cert-validation.certificate_arn
+  certificate_arn = aws_acm_certificate_validation.cert-validation.certificate_arn
   
   default_action {
     type = "forward"
@@ -59,17 +59,17 @@ resource "aws_lb_listener" "httpslistener-1" {
   }
 }
 
-#resource "aws_lb_listener" "httpslistener" {
-#  load_balancer_arn = aws_lb.loadbalancer.arn
-#  port = "443"
-#  protocol = "HTTPS"
-  #certificate_arn = aws_acm_certificate_validation.cert-validation.certificate_arn
+resource "aws_lb_listener" "httpslistener" {
+  load_balancer_arn = aws_lb.loadbalancer.arn
+  port = "443"
+  protocol = "HTTPS"
+  certificate_arn = aws_acm_certificate_validation.cert-validation.certificate_arn
   
- # default_action {
-#  type = "forward"
-#    target_group_arn = aws_lb_target_group.lbtargets.arn
-#  }
-#}
+  default_action {
+  type = "forward"
+    target_group_arn = aws_lb_target_group.lbtargets.arn
+  }
+}
 
 #tfsec:ignore:aws-vpc-no-public-egress-sgr #tfsec:ignore:aws-vpc-no-public-ingress-sgr
 resource "aws_security_group" "loadbalancer" {

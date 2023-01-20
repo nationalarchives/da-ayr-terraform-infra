@@ -1,4 +1,3 @@
-/*
 resource "aws_acm_certificate" "certificate" {
   domain_name = var.fqdn
   validation_method = "DNS"
@@ -20,8 +19,8 @@ resource "aws_acm_certificate" "cloudfront" {
 }
 
 data "aws_route53_zone" "dnszone" {
-  name = "ayr.labs.zaizicloud.net"
-  #name = "${var.fqdn}"
+  #name = "ayr.labs.zaizicloud.net"
+  name = "${var.fqdn}"
   # name = join(".", slice(split(".", var.fqdn), 1, length(split(".", var.fqdn))))
   private_zone = false
 }
@@ -48,4 +47,3 @@ resource "aws_acm_certificate_validation" "cert-validation" {
   validation_record_fqdns = [ for record in aws_route53_record.cert-validation: record.fqdn ]
 }
 
-*/

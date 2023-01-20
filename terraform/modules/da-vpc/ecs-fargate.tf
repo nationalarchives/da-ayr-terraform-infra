@@ -346,7 +346,7 @@ resource "aws_security_group" "ecs-sg" {
     from_port = var.app_port
     to_port = var.app_port
     protocol = "tcp"
-    # security_groups = [ aws_security_group.loadbalancer.id ]
+    security_groups = [ aws_security_group.loadbalancer.id ]
   }
   egress {
     description = ""
@@ -406,12 +406,11 @@ resource "aws_ecs_service" "service" {
     assign_public_ip = false
   }
 
-/*  load_balancer {
+  load_balancer {
     target_group_arn = aws_lb_target_group.lbtargets.arn
     container_name = "project-container"
     container_port = 8000
   }
-*/
 }
 
 ################################################

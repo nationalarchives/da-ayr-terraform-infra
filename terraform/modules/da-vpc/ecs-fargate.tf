@@ -216,6 +216,12 @@ data "aws_ssm_parameter" "web_db_name_infra" {
 data "aws_ssm_parameter" "web_db_name" {
   name = "/dev/WEBAPP_DB_NAME"
 }
+data "aws_ssm_parameter" "web_db_name" {
+  name = "/dev/WEBAPP_DB_USER"
+}
+data "aws_ssm_parameter" "web_db_host" {
+  name = "/dev/WEBAPP_DB_HOST"
+}
 
 
 #tfsec:ignore:aws-cloudwatch-log-group-customer-key:exp:2022-08-08 FIXME
@@ -256,11 +262,11 @@ resource "aws_ecs_task_definition" "definition" {
       },
       {
        "name": "WEBAPP_DB_USER", 
-       "value": "webapp_user"
+       "value": "${data.aws_ssm_parameter.web_db_user.value}"
       },
       {
        "name": "WEBAPP_DB_HOST", 
-       "value": "dbwebappdev.cnzaefghraly.eu-west-2.rds.amazonaws.com"
+       "value": "${data.aws_ssm_parameter.web_db_user.value}"
       },
       {
        "name": "WEBAPP_DEBUG", 

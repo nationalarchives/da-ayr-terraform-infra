@@ -346,7 +346,7 @@ resource "aws_security_group" "ecs-sg" {
     from_port = var.app_port
     to_port = var.app_port
     protocol = "tcp"
-    security_groups = [ aws_security_group.loadbalancer.id ]
+    # security_groups = [ aws_security_group.loadbalancer.id ]
   }
   egress {
     description = ""

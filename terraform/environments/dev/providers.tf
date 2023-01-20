@@ -44,22 +44,6 @@ terraform {
     }
   }
 
-provider "aws" {
-  alias = "us-east-1"
-  region = "us-east-1"
-  assume_role {
-    role_arn =  var.assume_role.nonprod
-  }
-  default_tags {
-    tags = {
-      Environment = var.environment
-      Owner = "Terraform"
-      StateBucket = var.bucket
-      StatePrefix = var.key
-    }
-  }
-}
-
   ## Backend should be configured with terraform init, eg:
   ##   `terraform init -backend-config=backend-config.auto.tfvars -reconfigure`
   ## This allows for keeping terraform code DRY between environments

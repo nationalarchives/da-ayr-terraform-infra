@@ -20,8 +20,18 @@ provider "aws" {
 }
 
 provider "aws" {
+  region                  = "eu-west-2"
+  # profile                 = "nhsbsa"
+}
+
+
+
+provider "aws" {
   alias = "us-east-1"
   region = "us-east-1"
+  assume_role {
+    role_arn =  var.assume_role.nonprod
+  }
   default_tags {
     tags = {
       Environment = var.environment

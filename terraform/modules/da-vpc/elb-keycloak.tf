@@ -60,7 +60,7 @@ resource "aws_lb_listener" "httpslistener-keycloak" {
 }
 
 resource "aws_lb_listener" "httpslistener-keycloak-1" {
-  load_balancer_arn = aws_lb.loadbalancer.arn
+  load_balancer_arn = aws_lb.loadbalancer-keycloak.arn
   port = "443"
   protocol = "HTTPS"
   certificate_arn = aws_acm_certificate_validation.cert-validation.certificate_arn

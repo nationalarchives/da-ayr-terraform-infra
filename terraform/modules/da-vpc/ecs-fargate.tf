@@ -282,7 +282,7 @@ resource "aws_ecs_task_definition" "definition" {
       },
       {
        "name": "KEYCLOACK_BASE_URI", 
-       "value": "http://dev-keycloak-loadbalancer-1788036597.eu-west-2.elb.amazonaws.com"
+       "value": "https://keycloak.ayr.labs.zaizicloud.net"
       },
       {
        "name": "KEYCLOACK_REALM_NAME", 

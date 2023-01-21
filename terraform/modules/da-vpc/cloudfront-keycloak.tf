@@ -1,4 +1,4 @@
-resource "random_string" "cloudfront_identifier" {
+resource "random_string_keycloak" "cloudfront_identifier_keycloak" {
   length = 40
   lower = true
   min_lower = 4
@@ -51,16 +51,17 @@ resource "aws_kms_key" "cloudfront_logs" {
 
 
 
-resource "aws_cloudfront_distribution" "cf_distribution" {
+resource "aws_cloudfront_distribution" "cf_distribution_keycloak" {
   enabled = true
   is_ipv6_enabled = true
-  comment = "Cloudfront webapp ${var.environment}"
+  comment = "Cloudfront keycloak ${var.environment}"
   price_class = "PriceClass_100"
   provider = aws.us-east-1
   #provider = aws.eu-west-2
 
   origin {
-    domain_name = aws_lb.loadbalancer.dns_name
+    domain_name =aws_lb.loadbalancer-keycloak.dns_name
+    #domain_name = aws_lb.loadbalancer.dns_name
     origin_id = "ecs-alb"
     custom_origin_config {
       origin_protocol_policy = "https-only"
@@ -70,7 +71,7 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
     }
     custom_header {
       name = "x-cloudfront-identifier"
-      value = random_string.cloudfront_identifier.result
+      value = random_string_keycloak.cloudfront_identifier_keycloak.result
     }
   }
   
@@ -83,7 +84,7 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
   */
   
 
-  aliases = [ var.fqdn ]
+  aliases = [ var.fqdn_keycloak ]
   
   restrictions {
     geo_restriction {
@@ -113,7 +114,7 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
 
   viewer_certificate {
     cloudfront_default_certificate = true
-    acm_certificate_arn = aws_acm_certificate.cloudfront.arn
+    acm_certificate_arn = aws_acm_certificate.cloudfront_keycloak.arn
     ssl_support_method = "sni-only"
     minimum_protocol_version = "TLSv1.2_2021"
   }
@@ -121,14 +122,15 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
   # web_acl_id = aws_wafv2_web_acl.cloudfront.arn
 }
 
-resource "aws_route53_record" "cloudfront" {
-  zone_id = data.aws_route53_zone.dnszone.zone_id
-  name = var.fqdn
+resource "aws_route53_record" "cloudfront_keycloak" {
+  zone_id = data.aws_route53_zone.dnszone_keycloak.zone_id
+  name = var.fqdn_keycloak
   type = "A"
 
   alias {
-    name = aws_cloudfront_distribution.cf_distribution.domain_name
-    zone_id = aws_cloudfront_distribution.cf_distribution.hosted_zone_id
+    name = aws_cloudfront_distribution.cf_distribution_keyclok.domain_name
+    #name = aws_cloudfront_distribution.cf_distribution.domain_name
+    zone_id = aws_cloudfront_distribution.cf_distribution_keycloak.hosted_zone_id
     evaluate_target_health = true
   }
 }

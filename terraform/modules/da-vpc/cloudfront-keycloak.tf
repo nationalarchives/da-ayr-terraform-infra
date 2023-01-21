@@ -1,4 +1,4 @@
-resource "random_string_keycloak" "cloudfront_identifier_keycloak" {
+resource "random_string" "cloudfront_identifier_keycloak" {
   length = 40
   lower = true
   min_lower = 4
@@ -71,7 +71,7 @@ resource "aws_cloudfront_distribution" "cf_distribution_keycloak" {
     }
     custom_header {
       name = "x-cloudfront-identifier"
-      value = random_string_keycloak.cloudfront_identifier_keycloak.result
+      value = random_string.cloudfront_identifier_keycloak.result
     }
   }
   

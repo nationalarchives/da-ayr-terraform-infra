@@ -128,7 +128,7 @@ resource "aws_route53_record" "cloudfront_keycloak" {
   type = "A"
 
   alias {
-    name = aws_cloudfront_distribution.cf_distribution_keyclok.domain_name
+    name = aws_cloudfront_distribution.cf_distribution_keycloak.domain_name
     #name = aws_cloudfront_distribution.cf_distribution.domain_name
     zone_id = aws_cloudfront_distribution.cf_distribution_keycloak.hosted_zone_id
     evaluate_target_health = true

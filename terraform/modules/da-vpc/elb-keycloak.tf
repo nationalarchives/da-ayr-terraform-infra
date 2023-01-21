@@ -14,7 +14,7 @@ resource "aws_lb" "loadbalancer-keycloak" {
     enabled = true
   }
 }
-/*
+
 resource "aws_lb_target_group" "lbtargets-keycloak" {
   name = "tf-lb-target-keycloak-${var.environment}"
   port = var.app_port_keycloak
@@ -30,7 +30,7 @@ resource "aws_lb_target_group" "lbtargets-keycloak" {
     timeout = 10
   }
 }
-*/
+
 resource "aws_lb_target_group" "lbtargets-keycloak-1" {
   name = "tf-lb-target-keycloak-1-${var.environment}"
   port = var.app_port_keycloak
@@ -47,7 +47,7 @@ resource "aws_lb_target_group" "lbtargets-keycloak-1" {
   }
 }
 
-/*
+
 resource "aws_lb_listener" "httpslistener-keycloak" {
   load_balancer_arn = aws_lb.loadbalancer-keycloak.arn
   port = "80"
@@ -59,7 +59,7 @@ resource "aws_lb_listener" "httpslistener-keycloak" {
     target_group_arn = aws_lb_target_group.lbtargets-keycloak.arn
   }
 }
-*/
+
 
 resource "aws_lb_listener" "httpslistener-keycloak-1" {
   load_balancer_arn = aws_lb.loadbalancer-keycloak.arn

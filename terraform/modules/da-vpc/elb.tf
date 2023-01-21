@@ -30,7 +30,7 @@ resource "aws_lb_target_group" "lbtargets" {
     timeout = 10
   }
 }
-/*
+
 resource "aws_lb_target_group" "lbtargets-1" {
   name = "tf-lb-target-1-${var.environment}"
   port = var.app_port
@@ -58,7 +58,7 @@ resource "aws_lb_listener" "httpslistener-1" {
     target_group_arn = aws_lb_target_group.lbtargets-1.arn
   }
 }
-*/
+
 resource "aws_lb_listener" "httpslistener" {
   load_balancer_arn = aws_lb.loadbalancer.arn
   port = "443"

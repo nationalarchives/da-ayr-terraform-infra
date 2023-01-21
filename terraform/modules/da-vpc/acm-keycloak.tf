@@ -45,7 +45,7 @@ resource "aws_route53_record" "cert-validation_keycloak" {
 
 resource "aws_acm_certificate_validation" "cert-validation_keycloak" {
   certificate_arn = aws_acm_certificate.certificate_keycloak.arn
-  validation_record_fqdns = [ for record in aws_route53_record.cert-validation_keycloak: record.fqdn_keycloak ]
+  validation_record_fqdns = [ for record in aws_route53_record.cert-validation_keycloak: record.fqdn ]
 }
 
 

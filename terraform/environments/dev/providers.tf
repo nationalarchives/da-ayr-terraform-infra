@@ -18,7 +18,7 @@ provider "aws" {
     }
   }
 }
-/*
+
 provider "aws" {
   alias = "us-east-1"
   region = "us-east-1"
@@ -31,7 +31,7 @@ provider "aws" {
     }
   }
 }
-*/
+
 terraform {
   ## Fix version of the providers to avoid breaking changes causing problems
   required_providers {

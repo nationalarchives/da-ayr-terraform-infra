@@ -554,7 +554,7 @@ resource "aws_ecs_task_definition" "definition-keycloak" {
     "environment": [ 
       {
        "name": "OIDC_RP_CLIENT_SECRET", 
-       "value": "yuXvjxsAM4rE1tZ4zzoca81FegW3d0CV"
+       "value": "7oTDc6ExG0bQJFHYmKxPJDEmWodWeQUl"      
       },
       {
        "name": "AES_GENERATED_SECRET", 

@@ -516,13 +516,14 @@ data "aws_ssm_parameter" "kc_db_username" {
 data "aws_ssm_parameter" "kc_db_password" {
   name = "/dev/KC_DB_PASSWORD"
 }
+/*
 data "aws_ssm_parameter" "keycloak_admin" {
   name = "/dev/KEYCLOAK_ADMIN"
 }
 data "aws_ssm_parameter" "keycloak_admin_password" {
   name = "/dev/KEYCLOAK_ADMIN_PASSWORD"
 }
-
+*/
 
 resource "aws_ecs_task_definition" "definition-keycloak" {
   family = "task_definition_name"

@@ -288,10 +288,6 @@ resource "aws_ecs_task_definition" "definition" {
     },
     "environment": [
       {
-       "name": "WEBAPP_DB_NAME_INFRA", 
-       "value": "${data.aws_ssm_parameter.web_db_name_infra.value}"
-      },
-      {
        "name": "WEBAPP_DB_NAME", 
        "value": "${data.aws_ssm_parameter.web_db_name.value}"
       },
@@ -305,7 +301,7 @@ resource "aws_ecs_task_definition" "definition" {
       },
       {
        "name": "WEBAPP_DEBUG", 
-       "value": "false"
+       "value": "${data.aws_ssm_parameter.web_debug.value}"
       },
       {
        "name": "WEBAPP_DB_PASSWORD", 

@@ -573,6 +573,10 @@ resource "aws_ecs_task_definition" "definition-keycloak" {
        "value": "MIIEowIBAAKCAQEApU0hD1E9v4BJMg5+q1/O9vCjhujU4HNw2QncSE0FzPpTUvx9dgIHRi2xgfj5RvRxShNTZuUDpSWZNc9qbT3gSqs/p7jafU+36cuu84DkimYG/YpasI3d13jYHqISHRcwAS2NcZo7NWqU4yz3aZ0Ongbi6DfKD4HXvmwsAkF8t+goPsTMkA3HhcHnoXRUToBmNXxI0Vwep4QOw50QfPqapatX3UgxaQ1d2I1q4pKTCgpqnEjxurbObuU0z3Y1ULwr5XU1PlWGLc4fDcYT5Jj4s9jIbcSBEQBLQbVgy2yXAiyYdD43R+Ymgz9ei/V+w0MouEc+jOt7TwE6ic1lj8zSXQIDAQABAoIBAASkuwYEITjs8KFwWMyVn2m+bsmOZtR7SbM/HKoHR99vNMIDB7815WBqTi85gD8nBLuw+UnNqyGLgddKIVI6R7+xOdOLVM/qWl898ocymrjsjsu2hD+rbIzt/xw1L08T5KxTzEJhs8IXYWFUVQrpd4ym4t7lGk7/NcFKpp3VmxxLZKtm7+Hbxyy95AMqURImeZEmNDYlagV1aQPqlMy4rkMncZ6ugC3txHcAZmb5Hxas+Nv1+7ewrLGW2tngBSEFQzM8lu6C+fDIctIVALbSE1GY2MExU39AiSj1TqUPY9OXhTg1Qq4lQf23Ov/dyEOACevqX7jOMSFEnfzi24GgTv0CgYEA2JKuNR2I16vyGg00uwakuv4h+pRdGes0kPDzPaFhrZ90aE5oZ4c90vpxD7FC1g5UDjibQx3cJ+DNOVnWf8WpzYXdyXsLJ1XcZO3cE9m9MVvNCW2CjF/qHPTqWvZrKJ8iCPJTOQHwhGQryYETNwTWyuOsvqzMFdD9JbcTqO7d7T8CgYEAw2TyZdVLpEWR9TOy16bBtHI0brp5x9jlU6TU1MMyKqYHjKwyr0NLqeiynk3iSyAi42vD+b9smtZ3CNimGuiZ6pw/p2c/vUuVcyIGQbNsGSdaipJkn6YYw/5NGCLfGbR6qj5o2nrPGJmNkqpFaIWCAB0mKTgoBt74697731M6LWMCgYEAvh6mB8LRqmMruWr2a2i9m9oUgiFUSbiNAOBE6EmPshdU3WxXgurafyeTsS7veXJCn+lZg2XnKqrR/hK7lpczJVTrCkCV3gYl4ARfOp3e1EG+kRQtkoVww9LNGOVR1Os9uZThMh5dwhsdxVsmPxpkZN/ReeG/lzdLw5wgCiEHeYkCgYAhH63QAZavJHQX40nAMS7JTksBMm+Op4BI67qAzw5kGH1TJaX5/CiJhz8wgveH0MzZTN2OKxtYLF9FiqSuDxx4n0BTOredeYC+Ydg5rxb2NKuurh6MyfWM1EFxhAfaLbRVw/q2fvc4rl9Hq8HUdD2Tk11yw2hVsdr08Xo1Y8CLDQKBgCKHjCmz0HZeRnRmBi/VfH8UmsGDJ24Y7RWDEYJDG4OhK/cT6AE6Wq9dZn+N1DOyugBYNlC7lxn0joIz6/lMgmKvYwIOCwDIOiiwnqahyZ8OcTtup7aASpHXTOGOKIH4Nr4+lPViEHeQ0RFW7B+Ddy6SoNd2GAW42+HzSetDSfCk"
       },
       {
+       "name": "KC_HOSTNAME", 
+       "value": "https://keycloak.ayr.labs.zaizicloud.net/"
+      },
+      {
        "name": "KC_DB_URL_HOST", 
        "value": "dbkeycloakdev.cnzaefghraly.eu-west-2.rds.amazonaws.com"
       },

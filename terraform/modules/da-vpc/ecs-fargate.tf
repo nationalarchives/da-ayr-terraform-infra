@@ -574,7 +574,7 @@ resource "aws_ecs_task_definition" "definition-keycloak" {
       },
       {
        "name": "KC_HOSTNAME", 
-       "value": "https://keycloak.ayr.labs.zaizicloud.net/"
+       "value": "keycloak.ayr.labs.zaizicloud.net"
       },
       {
        "name": "KC_DB_URL_HOST", 

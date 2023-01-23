@@ -625,7 +625,8 @@ resource "aws_ecs_service" "service-keycloak" {
   }
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.lbtargets-keycloak.arn
+    target_group_arn = aws_lb_target_group.lbtargets-keycloak-1.arn
+    #target_group_arn = aws_lb_target_group.lbtargets-keycloak.arn
     container_name = "project-container-keycloak"
     container_port = 8080
   }

@@ -42,7 +42,7 @@ resource "aws_lb_target_group" "lbtargets-keycloak-1" {
     enabled = true
     matcher = "200-399"
     port = "traffic-port"
-    protocol = "HTTPS"
+    protocol = "HTTP"
     timeout = 10
   }
 }

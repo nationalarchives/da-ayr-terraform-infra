@@ -549,6 +549,11 @@ resource "aws_ecs_task_definition" "definition-keycloak" {
         "hostPort": 8080,
         "protocol": "tcp",
         "containerPort": 8080
+      },
+      {
+        "hostPort": 8443,
+        "protocol": "tcp",
+        "containerPort": 8443
       }
     ],
     "environment": [ 

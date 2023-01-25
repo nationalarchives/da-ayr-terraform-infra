@@ -389,14 +389,6 @@ resource "aws_security_group" "ecs-sg" {
   }
   egress {
     description = ""
-    from_port = 6379
-    to_port = 6379
-    protocol = "tcp"
-    cidr_blocks = [ "0.0.0.0/0" ]
-    ipv6_cidr_blocks = [ "::/0" ]
-  }
-  egress {
-    description = ""
     from_port = 443
     to_port = 443
     protocol = "tcp"
@@ -458,14 +450,6 @@ resource "aws_security_group" "ecs-sg-keycloak" {
     description = ""
     from_port = 8080
     to_port = 8080
-    protocol = "tcp"
-    cidr_blocks = [ "0.0.0.0/0" ]
-    ipv6_cidr_blocks = [ "::/0" ]
-  }
-  egress {
-    description = ""
-    from_port = 6379
-    to_port = 6379
     protocol = "tcp"
     cidr_blocks = [ "0.0.0.0/0" ]
     ipv6_cidr_blocks = [ "::/0" ]

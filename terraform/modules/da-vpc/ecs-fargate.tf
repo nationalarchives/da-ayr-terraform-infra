@@ -277,7 +277,7 @@ resource "aws_ecs_task_definition" "definition" {
 [
   {
     "image": "${var.image}:${var.image_tag}",
-    "name": "project-container",
+    "name": "webbapp-container",
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
@@ -519,7 +519,7 @@ resource "aws_ecs_task_definition" "definition-keycloak" {
 [
   {
     "image": "${var.image_keycloak}:${var.image_tag_keycloak}",
-    "name": "project-container-keycloak",
+    "name": "keycloak-container",
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {

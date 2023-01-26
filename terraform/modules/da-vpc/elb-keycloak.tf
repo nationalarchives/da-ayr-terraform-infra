@@ -60,7 +60,7 @@ resource "aws_lb_listener" "httpslistener-keycloak" {
   }
 }
 
-
+/*
 resource "aws_lb_listener" "httpslistener-keycloak-1" {
   load_balancer_arn = aws_lb.loadbalancer-keycloak.arn
   port = "443"
@@ -72,6 +72,7 @@ resource "aws_lb_listener" "httpslistener-keycloak-1" {
     target_group_arn = aws_lb_target_group.lbtargets-keycloak-1.arn
   }
 }
+*/
 
 #tfsec:ignore:aws-vpc-no-public-egress-sgr #tfsec:ignore:aws-vpc-no-public-ingress-sgr
 resource "aws_security_group" "loadbalancer-keycloak" {

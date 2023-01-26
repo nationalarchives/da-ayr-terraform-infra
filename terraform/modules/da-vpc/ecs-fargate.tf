@@ -277,7 +277,7 @@ resource "aws_ecs_task_definition" "definition" {
 [
   {
     "image": "${var.image}:${var.image_tag}",
-    "name": "webbapp-container",
+    "name": "project-container",
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
@@ -287,6 +287,10 @@ resource "aws_ecs_task_definition" "definition" {
       }
     },
     "environment": [
+      {
+       "name": "WEBAPP_FORCE", 
+       "value": "nilnilnil"
+      },
       {
        "name": "WEBAPP_DB_NAME", 
        "value": "${data.aws_ssm_parameter.web_db_name.value}"
@@ -424,7 +428,7 @@ resource "aws_ecs_service" "service" {
   load_balancer {
     # target_group_arn = aws_lb_target_group.lbtargets.arn
     target_group_arn = aws_lb_target_group.lbtargets-1.arn
-    container_name = "webapp-container"
+    container_name = "project-container"
     container_port = 8000
   }
 }
@@ -519,7 +523,7 @@ resource "aws_ecs_task_definition" "definition-keycloak" {
 [
   {
     "image": "${var.image_keycloak}:${var.image_tag_keycloak}",
-    "name": "keycloak-container",
+    "name": "project-container-keycloak",
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
@@ -621,7 +625,8 @@ resource "aws_ecs_service" "service-keycloak" {
   load_balancer {
     # target_group_arn = aws_lb_target_group.lbtargets-keycloak-1.arn
     target_group_arn = aws_lb_target_group.lbtargets-keycloak.arn
-    container_name = "keycloak-container"
+    container_name = "project-container-keycloak"
     container_port = 8080
   }
 }
+

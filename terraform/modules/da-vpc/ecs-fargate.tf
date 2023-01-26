@@ -313,7 +313,7 @@ resource "aws_ecs_task_definition" "definition" {
       },
       {
        "name": "KEYCLOACK_BASE_URI", 
-       "value": "https://keycloak.ayr.labs.zaizicloud.net"
+       "value": "http://keycloak1.ayr.labs.zaizicloud.net"
       },
       {
        "name": "KEYCLOACK_REALM_NAME", 
@@ -563,7 +563,7 @@ resource "aws_ecs_task_definition" "definition-keycloak" {
       },
       {
        "name": "KC_HOSTNAME", 
-       "value": "keycloak.ayr.labs.zaizicloud.net"
+       "value": "keycloak1.ayr.labs.zaizicloud.net"
       },
       {
        "name": "KC_DB_URL_HOST", 

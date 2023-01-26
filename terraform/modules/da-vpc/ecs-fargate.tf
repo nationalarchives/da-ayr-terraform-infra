@@ -288,6 +288,10 @@ resource "aws_ecs_task_definition" "definition" {
     },
     "environment": [
       {
+       "name": "WEBAPP_FORCE", 
+       "value": "nilnilnil"
+      },
+      {
        "name": "WEBAPP_DB_NAME", 
        "value": "${data.aws_ssm_parameter.web_db_name.value}"
       },
@@ -625,3 +629,4 @@ resource "aws_ecs_service" "service-keycloak" {
     container_port = 8080
   }
 }
+

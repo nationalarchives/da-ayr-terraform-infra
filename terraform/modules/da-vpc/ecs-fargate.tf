@@ -317,7 +317,7 @@ resource "aws_ecs_task_definition" "definition" {
       },
       {
        "name": "KEYCLOACK_BASE_URI", 
-       "value": "https://keycloak1.ayr.labs.zaizicloud.net"
+       "value": "https://keycloak.ayr.labs.zaizicloud.net"
        
       },
       {
@@ -573,7 +573,7 @@ resource "aws_ecs_task_definition" "definition-keycloak" {
       },
       {
        "name": "KC_HOSTNAME", 
-       "value": "https://keycloak1.ayr.labs.zaizicloud.net"
+       "value": "https://keycloak.ayr.labs.zaizicloud.net"
       },
       {
        "name": "KC_HOSTNAME_1", 

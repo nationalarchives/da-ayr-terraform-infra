@@ -97,7 +97,7 @@ resource "aws_opensearch_domain" "es" {
             "Action": "es:*",
             "Principal": "*",
             "Effect": "Allow",
-            "Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.project_name}-aws-opensearch-${var.environment}/*"
+            "Resource": "arn:aws:es:${var.region}:${var.aws_account_id}:domain/${var.project_name}-aws-opensearch-${var.environment}/*"
         }
     ]
     }

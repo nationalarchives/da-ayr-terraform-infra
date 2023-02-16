@@ -41,21 +41,28 @@ resource "aws_security_group" "es" {
   }
 }
 
-resource "aws_iam_service_linked_role" "es" {
-  aws_service_name = "es.amazonaws.com"
+# resource "aws_iam_service_linked_role" "es" {
+#   aws_service_name = "es.amazonaws.com"
+# }
+
+resource "aws_iam_service_linked_role" "ec" {
+  aws_service_name = "opensearchservice.amazonaws.com"
 }
 
-resource "aws_elasticsearch_domain" "es" {
+#resource "aws_elasticsearch_domain" "es" {
+resource "aws_opensearch_domain" "es" {
 #   domain_name           = var.domain
 
-    domain_name ="${var.project_name}-elasticsearch-${var.environment}"
+    domain_name ="${var.project_name}-aws-opensearch-${var.environment}"
     
-    elasticsearch_version = "6.3"
+    #elasticsearch_version = "6.3"
+    engine_version = "OpenSearch_2.3"
 
     cluster_config {
-        instance_type          = "m4.large.elasticsearch"
+        # instance_type          = "m4.large.elasticsearch"
+        instance_type          = "t3.medium.search"
         zone_awareness_enabled = true
-        instance_count = 2
+        instance_count = 1
     }
 
     ebs_options {
@@ -72,8 +79,8 @@ resource "aws_elasticsearch_domain" "es" {
         # subnet_ids =   [aws_db_subnet_group.private_subnet_group]
         # subnet_ids =  module.vpc.private_subnets
         subnet_ids = [
-            module.vpc.private_subnets[0],
-            module.vpc.private_subnets[1],
+            module.vpc.private_subnets[0]
+            # module.vpc.private_subnets[1]
         ]
         security_group_ids = [aws_security_group.es.id]
     }
@@ -90,7 +97,7 @@ resource "aws_elasticsearch_domain" "es" {
             "Action": "es:*",
             "Principal": "*",
             "Effect": "Allow",
-            "Resource": "arn:aws:es:eu-west-2:281072317055:domain/da-ayr-opensearch-dev/*"
+            "Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.project_name}-aws-opensearch-${var.environment}/*"
         }
     ]
     }
@@ -98,6 +105,7 @@ resource "aws_elasticsearch_domain" "es" {
     CONFIG
 
 # "Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.domain}/*"
+#             "Resource": "arn:aws:es:eu-west-2:281072317055:domain/da-ayr-opensearch-dev/*"
 
   tags = {
     # Domain = "TestDomain"

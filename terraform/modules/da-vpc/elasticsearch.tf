@@ -46,7 +46,7 @@ resource "aws_security_group" "es" {
 # }
 
 resource "aws_iam_service_linked_role" "os" {
-  aws_service_name = "opensearchservice.amazonaws.com"
+  aws_service_name = "da-ayr-opensearchservice.amazonaws.com"
 }
 
 #resource "aws_elasticsearch_domain" "es" {

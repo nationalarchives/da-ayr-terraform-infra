@@ -62,7 +62,7 @@ resource "aws_opensearch_domain" "es" {
         # instance_type          = "m4.large.elasticsearch"
         instance_type          = "t3.medium.search"
         zone_awareness_enabled = true
-        instance_count = 1
+        instance_count = 2
     }
 
     ebs_options {

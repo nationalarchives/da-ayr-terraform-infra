@@ -63,8 +63,11 @@ resource "aws_elasticsearch_domain" "es" {
         #     data.aws_subnet_ids.selected.ids[1],
         # ]
         # subnet_ids =   [aws_db_subnet_group.private_subnet_group]
-        subnet_ids =  module.vpc.private_subnets
-
+        # subnet_ids =  module.vpc.private_subnets
+        subnet_ids = [
+            module.vpc.private_subnets[0],
+            module.vpc.private_subnets[1],
+        ]
         security_group_ids = [aws_security_group.es.id]
     }
 

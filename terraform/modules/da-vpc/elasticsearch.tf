@@ -49,12 +49,13 @@ resource "aws_elasticsearch_domain" "es" {
 #   domain_name           = var.domain
 
     domain_name ="${var.project_name}-elasticsearch-${var.environment}"
-    instance_count = 2
+    
     elasticsearch_version = "6.3"
 
     cluster_config {
         instance_type          = "m4.large.elasticsearch"
         zone_awareness_enabled = true
+        instance_count = 2
     }
 
     vpc_options {

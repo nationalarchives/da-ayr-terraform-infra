@@ -24,7 +24,7 @@
 
 resource "aws_security_group" "es" {
   #name        = "${var.vpc}-elasticsearch-${var.domain}"
-  name        = "${var.project_name}-elasticsearch-${var.environment}-sg"
+  name        = "${var.project_name}-aws-elasticsearch-${var.environment}-sg"
   description = "Managed by Terraform"
   #vpc_id      = data.aws_vpc.selected.id
   vpc_id      =   module.vpc.vpc_id

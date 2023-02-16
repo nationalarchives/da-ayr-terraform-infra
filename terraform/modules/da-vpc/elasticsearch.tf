@@ -61,7 +61,7 @@ resource "aws_elasticsearch_domain" "es" {
     ebs_options {
        ebs_enabled = true
        volume_size = 10
-       throughput = "gp3"
+    #    throughput = "gp3"
     }
 
     vpc_options {

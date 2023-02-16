@@ -55,7 +55,7 @@ resource "aws_elasticsearch_domain" "es" {
     cluster_config {
         instance_type          = "m4.large.elasticsearch"
         zone_awareness_enabled = true
-        instance_count = 1
+        instance_count = 2
     }
 
     ebs_options {
@@ -73,7 +73,7 @@ resource "aws_elasticsearch_domain" "es" {
         # subnet_ids =  module.vpc.private_subnets
         subnet_ids = [
             module.vpc.private_subnets[0],
-            # module.vpc.private_subnets[1],
+            module.vpc.private_subnets[1],
         ]
         security_group_ids = [aws_security_group.es.id]
     }

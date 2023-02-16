@@ -112,5 +112,5 @@ resource "aws_opensearch_domain" "es" {
     Domain = "${var.project_name}-elasticsearch-${var.environment}"
   }
 
-  depends_on = [aws_iam_service_linked_role.os]
+#   depends_on = [aws_iam_service_linked_role.os]
 }

@@ -45,9 +45,9 @@ resource "aws_security_group" "es" {
 #   aws_service_name = "es.amazonaws.com"
 # }
 
-resource "aws_iam_service_linked_role" "example" {
-  aws_service_name = "opensearchservice.amazonaws.com"
-}
+# resource "aws_iam_service_linked_role" "aws_os" {
+#   aws_service_name = "opensearchservice.amazonaws.com"
+# }
 
 #resource "aws_elasticsearch_domain" "es" {
 resource "aws_opensearch_domain" "es" {
@@ -112,5 +112,5 @@ resource "aws_opensearch_domain" "es" {
     Domain = "${var.project_name}-elasticsearch-${var.environment}"
   }
 
-  depends_on = [aws_iam_service_linked_role.example]
+  # depends_on = [aws_iam_service_linked_role.aws_os]
 }

@@ -55,8 +55,19 @@ resource "aws_elasticsearch_domain" "es" {
     cluster_config {
         instance_type          = "m4.large.elasticsearch"
         zone_awareness_enabled = true
-        instance_count = 2
+        instance_count = 1
     }
+
+    ebs_options {
+      ebs_enabled = true
+      volume_size = 10
+      throughput = "gp3"
+    }
+
+    Provisioned IOPS
+3000 IOPS
+Provisioned Throughput (MiB/s)
+125 MiB/s
 
     vpc_options {
         # subnet_ids = [
@@ -67,7 +78,7 @@ resource "aws_elasticsearch_domain" "es" {
         # subnet_ids =  module.vpc.private_subnets
         subnet_ids = [
             module.vpc.private_subnets[0],
-            module.vpc.private_subnets[1],
+            # module.vpc.private_subnets[1],
         ]
         security_group_ids = [aws_security_group.es.id]
     }

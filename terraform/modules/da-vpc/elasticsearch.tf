@@ -45,7 +45,7 @@ resource "aws_security_group" "es" {
 #   aws_service_name = "es.amazonaws.com"
 # }
 
-resource "aws_iam_service_linked_role" "ec" {
+resource "aws_iam_service_linked_role" "os" {
   aws_service_name = "opensearchservice.amazonaws.com"
 }
 
@@ -97,7 +97,7 @@ resource "aws_opensearch_domain" "es" {
             "Action": "es:*",
             "Principal": "*",
             "Effect": "Allow",
-            "Resource": "arn:aws:es:${var.region}:${var.aws_account_id}:domain/${var.project_name}-aws-opensearch-${var.environment}/*"
+            "Resource": "arn:aws:es:eu-west-2:281072317055:domain/da-ayr-aws-opensearch-dev/*"
         }
     ]
     }
@@ -106,11 +106,11 @@ resource "aws_opensearch_domain" "es" {
 
 # "Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.domain}/*"
 #             "Resource": "arn:aws:es:eu-west-2:281072317055:domain/da-ayr-opensearch-dev/*"
-
+            # "Resource": "arn:aws:es:${var.region}:${var.aws_account_id}:domain/${var.project_name}-aws-opensearch-${var.environment}/*"
   tags = {
     # Domain = "TestDomain"
     Domain = "${var.project_name}-elasticsearch-${var.environment}"
   }
 
-  depends_on = [aws_iam_service_linked_role.es]
+  depends_on = [aws_iam_service_linked_role.os]
 }

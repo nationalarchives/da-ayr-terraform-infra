@@ -48,42 +48,45 @@ resource "aws_iam_service_linked_role" "es" {
 resource "aws_elasticsearch_domain" "es" {
 #   domain_name           = var.domain
 
-  domain_name ="${var.project_name}-elasticsearch-${var.environment}"
+    domain_name ="${var.project_name}-elasticsearch-${var.environment}"
 
-  elasticsearch_version = "6.3"
+    elasticsearch_version = "6.3"
 
-  cluster_config {
-    instance_type          = "m4.large.elasticsearch"
-    zone_awareness_enabled = true
-  }
+    cluster_config {
+        instance_type          = "m4.large.elasticsearch"
+        zone_awareness_enabled = true
+    }
 
-  vpc_options {
+   vpc_options {
     # subnet_ids = [
     #   data.aws_subnet_ids.selected.ids[0],
     #   data.aws_subnet_ids.selected.ids[1],
     # ]
-    subnet_ids =   aws_db_subnet_group.private_subnet_group
+        subnet_ids =   aws_db_subnet_group.private_subnet_group
 
-    security_group_ids = [aws_security_group.es.id]
-  }
+        security_group_ids = [aws_security_group.es.id]
+    }
 
-  advanced_options = {
-    "rest.action.multi.allow_explicit_index" = "true"
-  }
+    advanced_options = {
+        "rest.action.multi.allow_explicit_index" = "true"
+     }
 
-  access_policies = <<CONFIG
-{
+    access_policies = <<CONFIG
+    {
     "Version": "2012-10-17",
     "Statement": [
         {
             "Action": "es:*",
             "Principal": "*",
             "Effect": "Allow",
-            "Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.domain}/*"
+            "Resource": "arn:aws:es:eu-west-2:281072317055:domain/da-ayr-opensearch-dev/*"
         }
     ]
-}
-CONFIG
+    }
+
+    CONFIG
+
+# "Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.domain}/*"
 
   tags = {
     # Domain = "TestDomain"

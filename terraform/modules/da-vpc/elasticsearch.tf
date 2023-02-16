@@ -57,12 +57,13 @@ resource "aws_elasticsearch_domain" "es" {
         zone_awareness_enabled = true
     }
 
-   vpc_options {
-    # subnet_ids = [
-    #   data.aws_subnet_ids.selected.ids[0],
-    #   data.aws_subnet_ids.selected.ids[1],
-    # ]
-        subnet_ids =   aws_db_subnet_group.private_subnet_group
+    vpc_options {
+        # subnet_ids = [
+        #     data.aws_subnet_ids.selected.ids[0],
+        #     data.aws_subnet_ids.selected.ids[1],
+        # ]
+        # subnet_ids =   [aws_db_subnet_group.private_subnet_group]
+        subnet_ids =  module.vpc.private_subnets
 
         security_group_ids = [aws_security_group.es.id]
     }

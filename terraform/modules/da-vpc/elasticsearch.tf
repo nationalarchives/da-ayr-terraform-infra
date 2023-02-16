@@ -59,15 +59,10 @@ resource "aws_elasticsearch_domain" "es" {
     }
 
     ebs_options {
-      ebs_enabled = true
-      volume_size = 10
-      throughput = "gp3"
+       ebs_enabled = true
+       volume_size = 10
+       throughput = "gp3"
     }
-
-    Provisioned IOPS
-3000 IOPS
-Provisioned Throughput (MiB/s)
-125 MiB/s
 
     vpc_options {
         # subnet_ids = [

@@ -40,7 +40,7 @@ resource "aws_lambda_function" "lambda_rest_api" {
   # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
   source_code_hash = filebase64sha256("../../../lambda/lambda_rest_api.zip")
 
-  runtime = "puthon3.9"
+  runtime = "python3.9"
 
   environment {
     variables = {

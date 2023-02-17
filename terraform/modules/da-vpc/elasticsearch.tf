@@ -49,6 +49,15 @@ resource "aws_security_group" "es" {
 #   aws_service_name = "opensearchservice.amazonaws.com"
 # }
 
+
+data "aws_ssm_parameter" "master_user_name" {
+  name = "/dev/OS_USER_NAME"
+}
+data "aws_ssm_parameter" "master_user_password" {
+  name = "/dev/OS_USER_PASSWORD"
+}
+
+
 #resource "aws_elasticsearch_domain" "es" {
 resource "aws_opensearch_domain" "es" {
 #   domain_name           = var.domain
@@ -65,10 +74,32 @@ resource "aws_opensearch_domain" "es" {
         instance_count = 1
     }
 
+    advanced_security_options {
+        enabled                        = false
+        anonymous_auth_enabled         = true
+        internal_user_database_enabled = true
+        master_user_options {
+          master_user_name     = "${data.aws_ssm_parameter.master_user_name.value}"
+          master_user_password = "${data.aws_ssm_parameter.master_user_password.value}"
+        }
+    }
+
+    # encrypt_at_rest {
+    #     enabled = true
+    # }
+
+    # domain_endpoint_options {
+    #   enforce_https       = true
+    #   tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
+    # }
+
+    node_to_node_encryption {
+      enabled = true
+    }
+
     ebs_options {
        ebs_enabled = true
        volume_size = 10
-    #    throughput = "gp3"
     }
 
     vpc_options {
@@ -104,6 +135,7 @@ resource "aws_opensearch_domain" "es" {
 
     CONFIG
 
+# "Resource": "arn:aws:es:eu-west-2:281072317055:domain/${var.project_name}-aws-opensearch-${var.environment}/*"
 # "Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.domain}/*"
 #             "Resource": "arn:aws:es:eu-west-2:281072317055:domain/da-ayr-opensearch-dev/*"
             # "Resource": "arn:aws:es:${var.region}:${var.aws_account_id}:domain/${var.project_name}-aws-opensearch-${var.environment}/*"

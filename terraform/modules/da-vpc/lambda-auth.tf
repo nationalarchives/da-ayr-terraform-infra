@@ -5,8 +5,8 @@
 # }
 
 
-resource "aws_iam_role" "iam_for_lambda_rest_api" {
-  name = "${var.project_name}-rest-api-${var.environment}-role"
+resource "aws_iam_role" "iam_for_lambda_auth" {
+  name = "${var.project_name}-auth-${var.environment}-role"
 
   assume_role_policy = <<EOF
 {
@@ -26,19 +26,19 @@ EOF
 }
 
 # resource "aws_lambda_function" "test_lambda" {
-resource "aws_lambda_function" "lambda_rest_api" {
+resource "aws_lambda_function" "lambda_auth" {
   # If the file is not in the current working directory you will need to include a
   # path.module in the filename.
-  filename      = "../../../lambda/lambda_rest_api.zip"
+  filename      = "../../../lambda/lambda_auth.zip"
   # function_name = "lambda_handler"
-  function_name = "${var.project_name}-rest-api-${var.environment}"
-  role          = aws_iam_role.iam_for_lambda_rest_api.arn
+  function_name = "${var.project_name}-auth-${var.environment}"
+  role          = aws_iam_role.iam_for_lambda_auth.arn
   handler       = "lambda_handler"
 
   # The filebase64sha256() function is available in Terraform 0.11.12 and later
   # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
   # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
-  source_code_hash = filebase64sha256("../../../lambda/lambda_rest_api.zip")
+  source_code_hash = filebase64sha256("../../../lambda/lambda_auth.zip")
 
   runtime = "python3.9"
 

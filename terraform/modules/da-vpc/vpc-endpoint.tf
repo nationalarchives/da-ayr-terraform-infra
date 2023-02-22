@@ -2,9 +2,6 @@ data "aws_vpc" "da-ayr-dev" {
     id = vpc-0b863d0ff3d5f256e
 }
 
-
-data "aws_availability_zones" "available" {}
-
 resource "aws_security_group" "vpc-endpoint" {
   name        = "da-ayr-private-api"
   description = "Allow HTTPS access to Private API Endpoimt"

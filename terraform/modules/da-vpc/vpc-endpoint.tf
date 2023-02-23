@@ -12,8 +12,8 @@ resource "aws_security_group" "vpc-endpoint" {
     from_port        = 443
     to_port          = 443
     protocol         = "tcp"
-    cidr_blocks      = [aws_vpc.da-ayr-dev.cidr_block]
-    ipv6_cidr_blocks = [aws_vpc.da-ayr-dev.ipv6_cidr_block]
+    cidr_blocks      = [data.aws_vpc.da-ayr-dev.cidr_block]
+    ipv6_cidr_blocks = [data.aws_vpc.da-ayr-dev.ipv6_cidr_block]
   }
 
   egress {

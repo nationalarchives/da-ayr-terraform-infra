@@ -1,11 +1,6 @@
-data "aws_vpc" "da-ayr-dev" {
-    id = "vpc-0b863d0ff3d5f256e"
-}
-
 resource "aws_security_group" "vpc-endpoint" {
   name        = "da-ayr-private-api"
   description = "Allow HTTPS access to Private API Endpoimt"
-  # vpc_id      = data.aws_vpc.da-ayr-dev.id
   vpc_id      = module.vpc.vpc_id
 
   ingress {
@@ -30,17 +25,11 @@ resource "aws_security_group" "vpc-endpoint" {
   }
 }
 
-data "aws_subnet" "selected" {
-  id = "subnet-0f277b422ebc26ef8"
-}
-
-
 data "aws_vpc_endpoint_service" "da-ayr" {
   service = "execute-api"
 }
 
 resource "aws_vpc_endpoint" "da-ayr" {
-  # vpc_id              = data.aws_vpc.da-ayr-dev.id
   vpc_id              = module.vpc.vpc_id
   service_name        = data.aws_vpc_endpoint_service.da-ayr.service_name
   vpc_endpoint_type   = "Interface"

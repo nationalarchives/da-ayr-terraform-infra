@@ -1,5 +1,5 @@
 data "aws_vpc" "da-ayr-dev" {
-    id = vpc-0b863d0ff3d5f256e
+    id = "vpc-0b863d0ff3d5f256e"
 }
 
 resource "aws_security_group" "vpc-endpoint" {
@@ -30,7 +30,7 @@ resource "aws_security_group" "vpc-endpoint" {
 }
 
 data "aws_subnet" "selected" {
-  id = subnet-0f277b422ebc26ef8
+  id = "subnet-0f277b422ebc26ef8"
 }
 
 

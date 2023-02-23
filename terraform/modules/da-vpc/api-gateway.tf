@@ -58,10 +58,29 @@ resource "aws_api_gateway_deployment" "test" {
       ]
 }
 
+resource "aws_api_gateway_integration" "test_integration" {
+  rest_api_id             = aws_api_gateway_rest_api.da-ayr-test.id
+  http_method             = aws_api_gateway_method.da-ayr.http_method
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  uri                     = aws_lambda_function.test.invoke_arn
+}
+
+
 
 output "api-url" {
   value = "https://${aws_api_gateway_rest_api.da-ayr-test.id}-${aws_vpc_endpoint.da-ayr.id}.execute-api.eu-west-2.amazonaws.com/test"
 }
 
+
+
+resource "aws_api_gateway_integration" "example_integration" {
+  rest_api_id             = aws_api_gateway_rest_api.example_api.id
+  resource_id             = aws_api_gateway_resource.example_resource.id
+  http_method             = aws_api_gateway_method.example_method.http_method
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  uri                     = aws_lambda_function.lambda_rest_api.invoke_arn
+}
 
 

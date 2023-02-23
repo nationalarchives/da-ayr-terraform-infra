@@ -50,22 +50,22 @@ resource "aws_api_gateway_method" "da-ayr" {
 }
 
 
-resource "aws_api_gateway_deployment" "test" {
-  rest_api_id = aws_api_gateway_rest_api.da-ayr-test.id
-  stage_name = "test"
+# resource "aws_api_gateway_deployment" "test" {
+#   rest_api_id = aws_api_gateway_rest_api.da-ayr-test.id
+#   stage_name = "test"
 
-  triggers = {
-    redeployment = sha1(jsonencode([
-      aws_api_gateway_resource.da-ayr.id,
-      aws_api_gateway_method.da-ayr.id,
-      aws_api_gateway_integration.test_integration.id,
-    ]))
-  }
+#   triggers = {
+#     redeployment = sha1(jsonencode([
+#       aws_api_gateway_resource.da-ayr.id,
+#       aws_api_gateway_method.da-ayr.id,
+#       aws_api_gateway_integration.test_integration.id,
+#     ]))
+#   }
 
-  lifecycle {
-    create_before_destroy = true
-  }
-}
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+# }
 
 resource "aws_api_gateway_integration" "test_integration" {
   rest_api_id             = aws_api_gateway_rest_api.da-ayr-test.id

@@ -5,7 +5,7 @@ data "aws_vpc" "da-ayr-dev" {
 resource "aws_security_group" "vpc-endpoint" {
   name        = "da-ayr-private-api"
   description = "Allow HTTPS access to Private API Endpoimt"
-  vpc_id      = aws_vpc.da-ayr-dev.id
+  vpc_id      = data.aws_vpc.da-ayr-dev.id
 
   ingress {
     description      = "TLS from VPC"

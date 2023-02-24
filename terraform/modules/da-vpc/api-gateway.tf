@@ -60,7 +60,7 @@ resource "aws_api_gateway_integration" "test_integration" {
   resource_id             = aws_api_gateway_resource.da-ayr.id
   http_method             = aws_api_gateway_method.da-ayr.http_method
   integration_http_method = "GET"
-  type                    = "LAMBDA"
+  type                    = "AWS"
   uri                     = "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:281072317055:function:dgandy-tmp-test-lambda-1/invocations"
 }
 

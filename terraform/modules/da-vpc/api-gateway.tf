@@ -61,7 +61,7 @@ resource "aws_api_gateway_integration" "test_integration" {
   http_method             = aws_api_gateway_method.da-ayr.http_method
   integration_http_method = "GET"
   type                    = "AWS_PROXY"
-  uri                     = "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:281072317055:function:dgandy-tmp-test-lambda-1/invocations""
+  uri                     = "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:281072317055:function:dgandy-tmp-test-lambda-1/invocations"
 }
 
 resource "aws_api_gateway_deployment" "test" {

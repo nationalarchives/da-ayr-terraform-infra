@@ -47,7 +47,6 @@ resource "aws_api_gateway_method" "da-ayr" {
   resource_id   = aws_api_gateway_resource.da-ayr.id
   http_method   = "GET"
   authorization = "NONE"
-  integration_id = aws_api_gateway_integration.test_integration.id
 }
 
 resource "aws_api_gateway_stage" "stage-test" {

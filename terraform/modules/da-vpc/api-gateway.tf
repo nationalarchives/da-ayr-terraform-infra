@@ -49,11 +49,11 @@ resource "aws_api_gateway_method" "da-ayr" {
   authorization = "NONE"
 }
 
-resource "aws_api_gateway_stage" "stage-test" {
-  deployment_id = aws_api_gateway_deployment.test.id
-  rest_api_id   = aws_api_gateway_rest_api.da-ayr-test.id
-  stage_name    = "dev"
-}
+# resource "aws_api_gateway_stage" "stage-test" {
+#   deployment_id = aws_api_gateway_deployment.test.id
+#   rest_api_id   = aws_api_gateway_rest_api.da-ayr-test.id
+#   stage_name    = "test"
+# }
 
 resource "aws_api_gateway_integration" "test_integration" {
   rest_api_id             = "${aws_api_gateway_rest_api.da-ayr-test.id}"
@@ -67,7 +67,7 @@ resource "aws_api_gateway_integration" "test_integration" {
 
 resource "aws_api_gateway_deployment" "test" {
   rest_api_id = aws_api_gateway_rest_api.da-ayr-test.id
-  stage_name = "dev"
+  stage_name = "test"
 
   lifecycle {
     create_before_destroy = true

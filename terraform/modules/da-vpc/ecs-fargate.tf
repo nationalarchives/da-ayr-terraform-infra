@@ -310,51 +310,47 @@ resource "aws_ecs_task_definition" "definition" {
       {
        "name": "WEBAPP_DB_PASSWORD", 
        "value": "v92jhC5BA@0A"
+       "value": "${data.aws_ssm_parameter.web_db_password.value}"
       },
       {
        "name": "SECRET_KEY", 
-       "value": "@)l!d#bi8hnwmsg_m02&uzpqq$54bc0)*q8xok_8ni$49qpo1y"
+       "value": "${data.aws_ssm_parameter.secret_key.value}"
       },
       {
        "name": "KEYCLOACK_BASE_URI", 
-       "value": "https://keycloak.ayr.labs.zaizicloud.net"
-       
-      },
-      {
-      "name": "KEYCLOACK_BASE_URI_1", 
-       "value": "http://dev-keycloak-loadbalancer-1788036597.eu-west-2.elb.amazonaws.com"
+       "value": "${data.aws_ssm_parameter.keycloak_base_uri.value}"      
       },
       {
        "name": "KEYCLOACK_REALM_NAME", 
-       "value": "ayr"
+       "value": "${data.aws_ssm_parameter.keycloak_realm_name.value}"
       },
       {
        "name": "OIDC_RP_CLIENT_ID", 
-       "value": "webapp"
+       "value": "${data.aws_ssm_parameter.oidc_rp_client_id.value}"
       },
       {
-       "name": "OIDC_RP_CLIENT_SECRET", 
-       "value": "K0vWF8RB2SEFA1xYFmI2NoqKJnATshmJ"
+       "name": "OIDC_RP_CLIENT_SECRET",
+       "value": "${data.aws_ssm_parameter.oidc_rp_client_secret.value}"
       },
       {
        "name": "KEYCLOACK_DB_NAME", 
-       "value": "keycloack"
+       "value": "${data.aws_ssm_parameter.keycloak_db_name.value}"
       },
       {
        "name": "KEYCLOACK_DB_USER", 
-       "value": "keycloack"
+       "value": "${data.aws_ssm_parameter.keycloak_db_user.value}"
       },
       {
        "name": "KEYCLOACK_DB_PASSWORD", 
-       "value": "k3ycl0ack"
+       "value": "${data.aws_ssm_parameter.keycloak_db_password.value}"
       },
       {
        "name": "KEYCLOAK_ADMIN", 
-       "value": "admin"
+       "value": "${data.aws_ssm_parameter.keycloak_admin.value}"
       },
       {
        "name": "KEYCLOAK_ADMIN_PASSWORD", 
-       "value": "Pa55w0rd"
+       "value": "${data.aws_ssm_parameter.keycloak_admin_password.value}"
       }
     ],
     "portMappings": [
@@ -506,14 +502,9 @@ data "aws_ssm_parameter" "kc_db_username" {
 data "aws_ssm_parameter" "kc_db_password" {
   name = "/dev/KC_DB_PASSWORD"
 }
-/*
-data "aws_ssm_parameter" "keycloak_admin" {
-  name = "/dev/KEYCLOAK_ADMIN"
+data "aws_ssm_parameter" "kc_hostname" {
+  name = "/dev/KC_HOSTNAME"
 }
-data "aws_ssm_parameter" "keycloak_admin_password" {
-  name = "/dev/KEYCLOAK_ADMIN_PASSWORD"
-}
-*/
 
 resource "aws_ecs_task_definition" "definition-keycloak" {
   family = "task_definition_name"
@@ -553,55 +544,51 @@ resource "aws_ecs_task_definition" "definition-keycloak" {
     "environment": [ 
       {
        "name": "OIDC_RP_CLIENT_SECRET", 
-       "value": "7oTDc6ExG0bQJFHYmKxPJDEmWodWeQUl"      
+       "value": "${data.aws_ssm_parameter.oidc_rp_client_secret.value}"  
       },
       {
        "name": "AES_GENERATED_SECRET", 
-       "value": "vRwRNWcWca0APWiaPP9IXA"
+       "value": "${data.aws_ssm_parameter.aes_generated_secret.value}"   
       },
       {
        "name": "HMAC_GENERATED_SECRET", 
-       "value": "VD325oNHYISGJSy0P34L3Q-SX5Jf9aJptXwRHCapr_fN2nOaY9Jqo30ehWtNEQMVGxAOpGc7NHeuFt3rz5409Q"
+       "value": "${data.aws_ssm_parameter.hmac_generated_secret.value}" 
       },
       {
        "name": "RSA_GENERATED_PRIVATE_KEY",
-       "value" : "MIIEowIBAAKCAQEAvt8U2TJ3T0yzSrQ3P9rahhUxpAMSbh8ZxutClty5AS5WWc9hDUj1a2XIqMpj35GKeuHotdyXefKe9lyCOCBluqw/YKK8zMhl8YioTWkmvxwGVJsmqBCd4LHHklQOX8Mn/5ukiNXe1cgjfVNYWft5rNPelXfbauJ2JynqvXatRHdyC7cdLhCSq/kuqJ3tyiK0YXuTBUcNS2KMjASxgbFkKHksDDtMvaLBRjhvv14Jzcpkze8C1hWeCEqpzaq9eJMAK4Nmm3jLKTNyi5osiCAddqtaE84qwnGdGfXaxLDNJsxBfnzVVVCCUoUhtzZcEfcU8RzA5wuCsisVjE5hdY1vdwIDAQABAoIBADEqIyOjJSpO9mvKqeSPyfP5p5S4mdm1tx0O4lMbvae5ONLfYP9cCKNGT35yy3D9+y6V3CxkCryFqz6IK56rcai4z4ZjxL/26pNhgQCXkjxtyo+mezmVNiV3hZGCh0VRbo8fly0L8d8dM08H1d0vsnK7DD1x5xnMBWUnHej5lb3pl5Kg1C+GR6Le8LsUyoJN2V6U7XsPy+FrqrhEi8nEwwgtDwd42dBqig2AMCQTZrlqw76f5EW93DAPE4ZUAPs19GPnJAqCEv0ONRlTj3W5BUhV6+B4qxZsvzBPIbWV+iqtH0J8RuK8YMQquXfuHjrjXowNjieBDsDAZuZgwCXWLmkCgYEA/QYHVWtBOIywi43a1J2ScNtnz7li3ovbTLzB+QLbk9In5ayBcls92/tdGTTt4Xkvd7iRJ576o6mo+uuFunYt2T5SOt4/zWEsbG/+0ewiNY8qD6WkVIFcFlqVlHY4gUzXTm0QpJXc/5I8rJ0al0hNPO/Uet7wOzpq6n4f/N41mSUCgYEAwR3iRHErehKRFhXHsxT94ZTvMvyW5xsCpQGqPGkr2QcUP3c/qhw0iuiVhh/dl0+AmOWSdxYifFmT38jH3R+9hkF4kYRC3xH/zZCQd/6pvXuDG3k9okhOHN1l2uWzJ8OViEwiHnlPJxXxS28RprcrErenoLejUf7DGa3+vJHJqWsCgYByJM8YJMuGdEmMm1D2C6Otj/00A4DrvpIO+zRSXoyqEet3vCulaC3u2GW2Yl9SETZtvvCUvC57uKUHlUp9xKSIVYoJDowf3c+Jl7iQAQOpv80Mw//vM3BUkUbbc72n7v9OXPteFFFfZhxDDpiZWL+nVtY3G+2p+n+TC5TooWHylQKBgQCOSJRTVQZxdIiNOxLdsRO1RuROLqiIMfBq3qUsyVhTGNIkSJoRnaJgziiMn6HGP/9Bp7OYJijWcbFv6iDHnQEoj8hjfo0+iaZtMJwgrPMm9n+MmHF+xcM3pS/MbfznyUS9HUruJPbal2Im7/iTWtVTfxj0Yxjj6s6Ydwf+q3NnbQKBgBqUIlu82ZizTRv7fGYeYdEQ42FXf76u443tZYXKtJrY7QdwDrzog495O9UzsQ0YX+BOnS1z4r3HMXK7r266qozzcesD2aYyKEZFdck+vW/wARC7Cm44a8MTxYp3g7ZJ32t1lBKPi8CLShvaQNfGOxatSjpzSm2CcDvCq/6PuL72"
+       "value": "${data.aws_ssm_parameter.rsa_generated_private_key.value}" 
       },
       {
        "name": "RSA_ENC_GENERATED_PRIVATE_KEY", 
-       "value": "MIIEowIBAAKCAQEApU0hD1E9v4BJMg5+q1/O9vCjhujU4HNw2QncSE0FzPpTUvx9dgIHRi2xgfj5RvRxShNTZuUDpSWZNc9qbT3gSqs/p7jafU+36cuu84DkimYG/YpasI3d13jYHqISHRcwAS2NcZo7NWqU4yz3aZ0Ongbi6DfKD4HXvmwsAkF8t+goPsTMkA3HhcHnoXRUToBmNXxI0Vwep4QOw50QfPqapatX3UgxaQ1d2I1q4pKTCgpqnEjxurbObuU0z3Y1ULwr5XU1PlWGLc4fDcYT5Jj4s9jIbcSBEQBLQbVgy2yXAiyYdD43R+Ymgz9ei/V+w0MouEc+jOt7TwE6ic1lj8zSXQIDAQABAoIBAASkuwYEITjs8KFwWMyVn2m+bsmOZtR7SbM/HKoHR99vNMIDB7815WBqTi85gD8nBLuw+UnNqyGLgddKIVI6R7+xOdOLVM/qWl898ocymrjsjsu2hD+rbIzt/xw1L08T5KxTzEJhs8IXYWFUVQrpd4ym4t7lGk7/NcFKpp3VmxxLZKtm7+Hbxyy95AMqURImeZEmNDYlagV1aQPqlMy4rkMncZ6ugC3txHcAZmb5Hxas+Nv1+7ewrLGW2tngBSEFQzM8lu6C+fDIctIVALbSE1GY2MExU39AiSj1TqUPY9OXhTg1Qq4lQf23Ov/dyEOACevqX7jOMSFEnfzi24GgTv0CgYEA2JKuNR2I16vyGg00uwakuv4h+pRdGes0kPDzPaFhrZ90aE5oZ4c90vpxD7FC1g5UDjibQx3cJ+DNOVnWf8WpzYXdyXsLJ1XcZO3cE9m9MVvNCW2CjF/qHPTqWvZrKJ8iCPJTOQHwhGQryYETNwTWyuOsvqzMFdD9JbcTqO7d7T8CgYEAw2TyZdVLpEWR9TOy16bBtHI0brp5x9jlU6TU1MMyKqYHjKwyr0NLqeiynk3iSyAi42vD+b9smtZ3CNimGuiZ6pw/p2c/vUuVcyIGQbNsGSdaipJkn6YYw/5NGCLfGbR6qj5o2nrPGJmNkqpFaIWCAB0mKTgoBt74697731M6LWMCgYEAvh6mB8LRqmMruWr2a2i9m9oUgiFUSbiNAOBE6EmPshdU3WxXgurafyeTsS7veXJCn+lZg2XnKqrR/hK7lpczJVTrCkCV3gYl4ARfOp3e1EG+kRQtkoVww9LNGOVR1Os9uZThMh5dwhsdxVsmPxpkZN/ReeG/lzdLw5wgCiEHeYkCgYAhH63QAZavJHQX40nAMS7JTksBMm+Op4BI67qAzw5kGH1TJaX5/CiJhz8wgveH0MzZTN2OKxtYLF9FiqSuDxx4n0BTOredeYC+Ydg5rxb2NKuurh6MyfWM1EFxhAfaLbRVw/q2fvc4rl9Hq8HUdD2Tk11yw2hVsdr08Xo1Y8CLDQKBgCKHjCmz0HZeRnRmBi/VfH8UmsGDJ24Y7RWDEYJDG4OhK/cT6AE6Wq9dZn+N1DOyugBYNlC7lxn0joIz6/lMgmKvYwIOCwDIOiiwnqahyZ8OcTtup7aASpHXTOGOKIH4Nr4+lPViEHeQ0RFW7B+Ddy6SoNd2GAW42+HzSetDSfCk"
+       "value": "${data.aws_ssm_parameter.rsa_enc_generated_private_key.value}" 
       },
       {
        "name": "KC_HOSTNAME", 
-       "value": "keycloak.ayr.labs.zaizicloud.net"
-      },
-      {
-       "name": "KC_HOSTNAME_1", 
-       "value": "dev-keycloak-loadbalancer-1788036597.eu-west-2.elb.amazonaws.com"
+        "value": "${data.aws_ssm_parameter.kc_hostname.value}" 
       },
       {
        "name": "KC_DB_URL_HOST", 
-       "value": "dbkeycloakdev.cnzaefghraly.eu-west-2.rds.amazonaws.com"
+       "value": "${data.aws_ssm_parameter.kc_db_url_host.value}" 
       },
       {
        "name": "KC_DB_URL_DATABASE", 
-       "value": "dbkeycloakdev"
+       "value": "${data.aws_ssm_parameter.kc_db_url_database.value}" 
       },
       {
        "name": "KC_DB_USERNAME", 
-       "value": "keycloack_user"
+       "value": "${data.aws_ssm_parameter.kc_db_username.value}" 
       },
       {
        "name": "KC_DB_PASSWORD", 
-       "value": "@T4eO6v1q3Iy"
+       "value": "${data.aws_ssm_parameter.kc_db_password.value}" 
       },
       {
        "name": "KEYCLOAK_ADMIN", 
-       "value": "admin"
+       "value": "${data.aws_ssm_parameter.keycloak_admin.value}" 
       },
       {
        "name": "KEYCLOAK_ADMIN_PASSWORD", 
-       "value": "5ivoX**sK&4b"
+       "value": "${data.aws_ssm_parameter.keycloak_admin.value}" 
       }
     ],
     "runtimePlatform": {	

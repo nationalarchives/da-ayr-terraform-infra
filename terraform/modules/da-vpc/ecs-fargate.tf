@@ -308,8 +308,7 @@ resource "aws_ecs_task_definition" "definition" {
        "value": "${data.aws_ssm_parameter.web_debug.value}"
       },
       {
-       "name": "WEBAPP_DB_PASSWORD", 
-       "value": "v92jhC5BA@0A"
+       "name": "WEBAPP_DB_PASSWORD",
        "value": "${data.aws_ssm_parameter.web_db_password.value}"
       },
       {

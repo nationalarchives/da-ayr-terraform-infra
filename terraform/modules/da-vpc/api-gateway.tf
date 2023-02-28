@@ -12,7 +12,7 @@ resource "aws_api_gateway_rest_api" "da-ayr" {
             "Resource": "arn:aws:execute-api:eu-west-2:281072317055:p2edhc6y1d/*/*/*",
             "Condition": {
                 "StringNotEquals": {
-                    "aws:sourceVpc": "vpc-0608e1eee3c7917b8"
+                    "aws:sourceVpc": "${aws_vpc_endpoint.da-ayr.id}"
                 }
             }
         },

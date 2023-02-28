@@ -289,7 +289,7 @@ resource "aws_ecs_task_definition" "definition" {
     "environment": [
       {
        "name": "WEBAPP_FORCE", 
-       "value": "nilnilnil"
+       "value": "nilnil"
       },
       {
        "name": "WEBAPP_DB_NAME", 

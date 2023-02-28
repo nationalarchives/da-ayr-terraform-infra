@@ -1,30 +1,26 @@
-resource "aws_api_gateway_rest_api" "da-ayr-test" {
-  name = "Private-API"
+resource "aws_api_gateway_rest_api" "da-ayr" {
+  name = "da-ayr-api-gateway-rest-api-private"
 
   policy = <<EOF
 {
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "execute-api:Invoke",
-            "Resource": [
-                "*"
-            ]
-        },
-        {
             "Effect": "Deny",
             "Principal": "*",
             "Action": "execute-api:Invoke",
-            "Resource": [
-                "*"
-            ],
-            "Condition" : {
+            "Resource": "arn:aws:execute-api:eu-west-2:281072317055:"${aws_api_gateway_rest_api.da-ayr.id}"/*/*/*",
+            "Condition": {
                 "StringNotEquals": {
-                    "aws:SourceVpce": "${aws_vpc_endpoint.da-ayr.id}"
+                    "aws:sourceVpc": "${aws_vpc_endpoint.da-ayr.id}"
                 }
             }
+        },
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "execute-api:Invoke",
+            "Resource": "arn:aws:execute-api:eu-west-2:281072317055:p2edhc6y1d/*/*/*"
         }
     ]
 }
@@ -37,13 +33,13 @@ EOF
 }
 
 resource "aws_api_gateway_resource" "da-ayr" {
-  rest_api_id = aws_api_gateway_rest_api.da-ayr-test.id
-  parent_id   = aws_api_gateway_rest_api.da-ayr-test.root_resource_id
+  rest_api_id = aws_api_gateway_rest_api.da-ayr.id
+  parent_id   = aws_api_gateway_rest_api.da-ayr.root_resource_id
   path_part   = "da-ayr-test"
 }
 
 resource "aws_api_gateway_method" "da-ayr" {
-  rest_api_id   = aws_api_gateway_rest_api.da-ayr-test.id
+  rest_api_id   = aws_api_gateway_rest_api.da-ayr.id
   resource_id   = aws_api_gateway_resource.da-ayr.id
   http_method   = "POST"
   authorization = "CUSTOM"
@@ -57,7 +53,7 @@ resource "aws_api_gateway_method" "da-ayr" {
 # }
 
 resource "aws_api_gateway_integration" "test_integration" {
-  rest_api_id             = "${aws_api_gateway_rest_api.da-ayr-test.id}"
+  rest_api_id             = "${aws_api_gateway_rest_api.da-ayr.id}"
   resource_id             = "${aws_api_gateway_resource.da-ayr.id}"
   http_method             = "${aws_api_gateway_method.da-ayr.http_method}"
   integration_http_method = "POST"
@@ -68,7 +64,7 @@ resource "aws_api_gateway_integration" "test_integration" {
 }
 
 resource "aws_api_gateway_deployment" "test" {
-  rest_api_id = aws_api_gateway_rest_api.da-ayr-test.id
+  rest_api_id = aws_api_gateway_rest_api.da-ayr.id
   stage_name = "test"
 
   lifecycle {
@@ -82,16 +78,17 @@ resource "aws_api_gateway_deployment" "test" {
 }
 
 output "api-url" {
-  value = "https://${aws_api_gateway_rest_api.da-ayr-test.id}-${aws_vpc_endpoint.da-ayr.id}.execute-api.eu-west-2.amazonaws.com/test"
+  value = "https://${aws_api_gateway_rest_api.da-ayr.id}-${aws_vpc_endpoint.da-ayr.id}.execute-api.eu-west-2.amazonaws.com/test"
 }
 
 resource "aws_api_gateway_authorizer" "da-ayr-authorizer" {
-  name                   = "da-ayr-authorizer"
-  rest_api_id            = aws_api_gateway_rest_api.da-ayr-test.id
+  name                   = "da-ayr-authorizer-dev"
+  rest_api_id            = aws_api_gateway_rest_api.da-ayr.id
   authorizer_uri         = aws_lambda_function.lambda_auth.invoke_arn
   identity_source        = "method.request.header.Authorization"
   type                   = "TOKEN"
   authorizer_result_ttl_in_seconds = 300
+  identity_validation_expression = ""
 }
 
 

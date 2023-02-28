@@ -57,8 +57,8 @@ resource "aws_api_gateway_integration" "test_integration" {
   resource_id             = "${aws_api_gateway_resource.da-ayr.id}"
   http_method             = "${aws_api_gateway_method.da-ayr.http_method}"
   integration_http_method = "POST"
-#   type                    = "AWS_PROXY"
-  type                    = "MOCK"
+  type                    = "AWS_PROXY"
+#   type                    = "MOCK"
 #   uri                     = "${aws_lambda_function.lambda_rest_api.invoke_arn}"
   uri                     = "${aws_lambda_function.lambda_auth.invoke_arn}"
 }

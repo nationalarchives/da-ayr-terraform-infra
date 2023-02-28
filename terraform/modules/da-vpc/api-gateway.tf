@@ -12,7 +12,7 @@ resource "aws_api_gateway_rest_api" "da-ayr" {
             "Resource": "${aws_api_gateway_deployment.test.execution_arn}/*/*/*",
             "Condition": {
                 "StringNotEquals": {
-                    "aws:sourceVpc": ${aws_vpc_endpoint.da-ayr.id}"
+                    "aws:sourceVpc": "${aws_vpc_endpoint.da-ayr.id}"
                 }
             }
         },

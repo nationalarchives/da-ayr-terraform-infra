@@ -45,8 +45,9 @@ resource "aws_api_gateway_resource" "da-ayr" {
 resource "aws_api_gateway_method" "da-ayr" {
   rest_api_id   = aws_api_gateway_rest_api.da-ayr-test.id
   resource_id   = aws_api_gateway_resource.da-ayr.id
-  http_method   = "GET"
-  authorization = "NONE"
+  http_method   = "POST"
+  authorization = "CUSTOM"
+  authorizer_id = aws_api_gateway_authorizer.da-ayr-authorizer.id
 }
 
 # resource "aws_api_gateway_stage" "stage-test" {
@@ -59,9 +60,8 @@ resource "aws_api_gateway_integration" "test_integration" {
   rest_api_id             = "${aws_api_gateway_rest_api.da-ayr-test.id}"
   resource_id             = "${aws_api_gateway_resource.da-ayr.id}"
   http_method             = "${aws_api_gateway_method.da-ayr.http_method}"
-  integration_http_method = "GET"
-  type                    = "AWS"
-#   uri                     = "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:281072317055:function:dgandy-tmp-test-lambda-1/invocations"
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
   uri                     = "${aws_lambda_function.lambda_rest_api.invoke_arn}"
 }
 
@@ -81,6 +81,15 @@ resource "aws_api_gateway_deployment" "test" {
 
 output "api-url" {
   value = "https://${aws_api_gateway_rest_api.da-ayr-test.id}-${aws_vpc_endpoint.da-ayr.id}.execute-api.eu-west-2.amazonaws.com/test"
+}
+
+resource "aws_api_gateway_authorizer" "da-ayr-authorizer" {
+  name                   = "da-ayr-authorizer"
+  rest_api_id            = aws_api_gateway_rest_api.da-ayr-test.id
+  authorizer_uri         = aws_lambda_function.lambda_auth.invoke_arn
+  identity_source        = "method.request.header.Authorization"
+  type                   = "TOKEN"
+  authorizer_result_ttl_in_seconds = 300
 }
 
 

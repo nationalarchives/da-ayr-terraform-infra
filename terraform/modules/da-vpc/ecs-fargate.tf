@@ -238,8 +238,8 @@ data "aws_ssm_parameter" "keycloak_realm_name" {
 data "aws_ssm_parameter" "oidc_rp_client_id" {
   name = "/dev/OIDC_RP_CLIENT_ID"
 }
-data "aws_ssm_parameter" "oidc_rp_client_secret" {
-  name = "/dev/OIDC_RP_CLIENT_SECRET"
+data "aws_ssm_parameter" "oidc_rp_client_secret_webapp" {
+  name = "/dev/OIDC_RP_CLIENT_SECRET_WEBAPP"
 }
 data "aws_ssm_parameter" "keycloak_db_name" {
   name = "/dev/KEYCLOACK_DB_NAME"
@@ -329,7 +329,7 @@ resource "aws_ecs_task_definition" "definition" {
       },
       {
        "name": "OIDC_RP_CLIENT_SECRET",
-       "value": "${data.aws_ssm_parameter.oidc_rp_client_secret.value}"
+       "value": "${data.aws_ssm_parameter.oidc_rp_client_secret_webapp.value}"
       },
       {
        "name": "KEYCLOACK_DB_NAME", 

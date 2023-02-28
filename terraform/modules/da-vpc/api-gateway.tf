@@ -9,10 +9,10 @@ resource "aws_api_gateway_rest_api" "da-ayr" {
             "Effect": "Deny",
             "Principal": "*",
             "Action": "execute-api:Invoke",
-            "Resource": "arn:aws:execute-api:eu-west-2:281072317055:x4bz9by2b2/*/*/*",
+            "Resource": "${aws_api_gateway_deployment.test.execution_arn}/*/*/*",
             "Condition": {
                 "StringNotEquals": {
-                    "aws:sourceVpc": "vpc-0608e1eee3c7917b8"
+                    "aws:sourceVpc": ${aws_vpc_endpoint.da-ayr.id}"
                 }
             }
         },

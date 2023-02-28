@@ -75,6 +75,10 @@ resource "aws_api_gateway_deployment" "test" {
       ]
 }
 
+output "da-ayr_api_execute_api_arn" {
+  value = aws_api_gateway_deployment.test.execution_arn
+}
+
 output "api-url" {
   value = "https://${aws_api_gateway_rest_api.da-ayr.id}-${aws_vpc_endpoint.da-ayr.id}.execute-api.eu-west-2.amazonaws.com/test"
 }

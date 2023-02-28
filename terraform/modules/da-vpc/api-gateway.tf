@@ -65,9 +65,9 @@ resource "aws_api_gateway_deployment" "test" {
   rest_api_id = aws_api_gateway_rest_api.da-ayr.id
   stage_name = "test"
 
-  lifecycle {
-    create_before_destroy = true
-  }
+  # lifecycle {
+  #   create_before_destroy = true
+  # }
 
   depends_on = [
         aws_api_gateway_method.da-ayr,

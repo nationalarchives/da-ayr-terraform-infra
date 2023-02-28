@@ -504,6 +504,9 @@ data "aws_ssm_parameter" "kc_db_password" {
 data "aws_ssm_parameter" "kc_hostname" {
   name = "/dev/KC_HOSTNAME"
 }
+data "aws_ssm_parameter" "oidc_rp_client_secret" {
+  name = "/dev/OIDC_RP_CLIENT_SECRET"
+}
 
 resource "aws_ecs_task_definition" "definition-keycloak" {
   family = "task_definition_name"

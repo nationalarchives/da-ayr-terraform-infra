@@ -542,6 +542,10 @@ resource "aws_ecs_task_definition" "definition-keycloak" {
     ],
     "environment": [ 
       {
+       "name": "KEYCLOAK_FORCE", 
+       "value": "nilnilnil"
+      },
+      {
        "name": "OIDC_RP_CLIENT_SECRET", 
        "value": "${data.aws_ssm_parameter.oidc_rp_client_secret.value}"  
       },

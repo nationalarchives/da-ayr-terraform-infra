@@ -9,10 +9,10 @@ resource "aws_api_gateway_rest_api" "da-ayr" {
             "Effect": "Deny",
             "Principal": "*",
             "Action": "execute-api:Invoke",
-            "Resource": "${aws_api_gateway_deployment.test.execution_arn}/*/*/*",
+            "Resource": "arn:aws:execute-api:eu-west-2:281072317055:p2edhc6y1d/*/*/*",
             "Condition": {
                 "StringNotEquals": {
-                    "aws:sourceVpc": "${aws_vpc_endpoint.da-ayr.id}"
+                    "aws:sourceVpc": "vpc-0608e1eee3c7917b8"
                 }
             }
         },
@@ -20,7 +20,7 @@ resource "aws_api_gateway_rest_api" "da-ayr" {
             "Effect": "Allow",
             "Principal": "*",
             "Action": "execute-api:Invoke",
-            "Resource": "arn:aws:execute-api:eu-west-2:281072317055:x4bz9by2b2/*/*/*"
+            "Resource": "arn:aws:execute-api:eu-west-2:281072317055:p2edhc6y1d/*/*/*"
         }
     ]
 }
@@ -65,18 +65,14 @@ resource "aws_api_gateway_deployment" "test" {
   rest_api_id = aws_api_gateway_rest_api.da-ayr.id
   stage_name = "test"
 
-  # lifecycle {
-  #   create_before_destroy = true
-  # }
+  lifecycle {
+    create_before_destroy = true
+  }
 
   depends_on = [
         aws_api_gateway_method.da-ayr,
         aws_api_gateway_integration.test_integration
       ]
-}
-
-output "da-ayr_api_execute_api_arn" {
-  value = aws_api_gateway_deployment.test.execution_arn
 }
 
 output "api-url" {

@@ -1,7 +1,7 @@
 name: Terraform platform deployment
 on:
   push:
-    branches: [feature/AYR-139-new,dev,feature/AYR-212]
+    branches: [dev, AYR-212]
   workflow_dispatch:
     inputs:
       environment:

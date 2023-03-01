@@ -35,7 +35,7 @@ EOF
 resource "aws_api_gateway_resource" "da-ayr" {
   rest_api_id = aws_api_gateway_rest_api.da-ayr.id
   parent_id   = aws_api_gateway_rest_api.da-ayr.root_resource_id
-  path_part   = "da-ayr-test"
+  path_part   = ""
 }
 
 resource "aws_api_gateway_method" "da-ayr" {
@@ -91,5 +91,9 @@ resource "aws_api_gateway_authorizer" "da-ayr-authorizer" {
   identity_validation_expression = ""
 }
 
-
-
+resource "aws_api_gateway_method_response" "response_200" {
+  rest_api_id = aws_api_gateway_rest_api.da-ayr.id
+  resource_id = aws_api_gateway_resource.da-ayr.id
+  http_method = aws_api_gateway_method.da-ayr.http_method
+  status_code = "200"
+}

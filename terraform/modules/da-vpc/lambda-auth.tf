@@ -63,8 +63,6 @@ resource "aws_lambda_function" "lambda_auth" {
   # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
   source_code_hash = filebase64sha256("../../../lambda/lambda_auth.zip")
 
-  runtime = "python3.9"
-
   environment {
     variables = {
       KEYCLOAK_CLIENT_ID = "${data.aws_ssm_parameter.keycloak_client_id.value}"

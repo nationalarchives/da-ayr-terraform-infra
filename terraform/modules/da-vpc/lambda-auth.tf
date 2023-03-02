@@ -18,6 +18,34 @@ resource "aws_iam_role" "iam_for_lambda_auth" {
 EOF
 }
 
+resource "aws_security_group" "vpc-default" {
+  name        = "da-ayr-private-api"
+  description = "Allow HTTPS access to Private API Endpoimt"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    description      = "TLS from VPC"
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = [ "0.0.0.0/0" ]
+    ipv6_cidr_blocks = [ "::/0" ]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = "allow_tls_all"
+  }
+}
+
+
 
 # Defined in fargate
 # data "aws_ssm_parameter" "keycloak_realm_name" {
@@ -54,7 +82,9 @@ resource "aws_lambda_function" "lambda_auth" {
             module.vpc.private_subnets[2]
     ]
     # security_group_ids = [aws_security_group.vpc-endpoint.id] module.vpc.default_security_group_id
-    security_group_ids = [aws_security_group.vpc-endpoint.id]
+    # security_group_ids = [aws_security_group.vpc-endpoint.id]
+    security_group_ids = [aws_security_group.vpc-default.id]
+    
 
   }
 

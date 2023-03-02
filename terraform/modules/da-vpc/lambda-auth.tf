@@ -41,7 +41,7 @@ resource "aws_lambda_function" "lambda_auth" {
   # function_name = "lambda_handler"
   function_name = "${var.project_name}-auth-${var.environment}"
   role          = aws_iam_role.iam_for_lambda_auth.arn
-  handler       = "lambda_function.py"
+  handler       = "lambda_handler"
   timeout       = 30
   runtime       = "python3.8"
 

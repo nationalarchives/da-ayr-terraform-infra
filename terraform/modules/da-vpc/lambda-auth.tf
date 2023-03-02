@@ -12,52 +12,11 @@ resource "aws_iam_role" "iam_for_lambda_auth" {
       },
       "Effect": "Allow",
       "Sid": ""
-    },
-    {
-      "Effect": "Allow",
-      "Action": "logs:CreateLogGroup",
-      "Resource": "arn:aws:logs:eu-west-2:281072317055:*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-          "logs:CreateLogStream",
-          "logs:PutLogEvents"
-      ],
-      "Resource": [
-          "arn:aws:logs:eu-west-2:281072317055:log-group:/aws/lambda/*:*"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents",
-          "ec2:CreateNetworkInterface",
-          "ec2:DescribeNetworkInterfaces",
-          "ec2:DeleteNetworkInterface",
-          "ec2:AssignPrivateIpAddresses",
-          "ec2:UnassignPrivateIpAddresses"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Sid": "GetParameter",
-      "Effect": "Allow",
-      "Action": "ssm:GetParameter",
-      "Resource": "arn:aws:ssm:eu-west-2:281072317055:parameter/dev/*"
-    },
-    {
-      "Sid": "DecryptKey",
-      "Effect": "Allow",
-      "Action": "kms:Decrypt",
-      "Resource": "arn:aws:ssm:eu-west-2:281072317055:parameter/dev/*"
     }
-  ]
-}
 EOF
 }
+
+
 # Defined in fargate
 # data "aws_ssm_parameter" "keycloak_realm_name" {
 #   name = "/dev/KEYCLOACK_REALM_NAME"

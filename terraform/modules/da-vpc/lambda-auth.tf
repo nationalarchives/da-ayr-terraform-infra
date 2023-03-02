@@ -1,10 +1,3 @@
-# locals {
-#   lambda_name = "helloWorldLambda"
-#   zip_file_name = "/tmp/helloWorldLambda.zip"
-#   handler_name = "helloWorldLambda.handler"
-# }
-
-
 resource "aws_iam_role" "iam_for_lambda_auth" {
   name = "${var.project_name}-auth-${var.environment}-role"
 
@@ -19,11 +12,65 @@ resource "aws_iam_role" "iam_for_lambda_auth" {
       },
       "Effect": "Allow",
       "Sid": ""
+    },
+    {
+      "Effect": "Allow",
+      "Action": "logs:CreateLogGroup",
+      "Resource": "arn:aws:logs:eu-west-2:281072317055:*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+      ],
+      "Resource": [
+          "arn:aws:logs:eu-west-2:281072317055:log-group:/aws/lambda/*:*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "ec2:CreateNetworkInterface",
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DeleteNetworkInterface",
+          "ec2:AssignPrivateIpAddresses",
+          "ec2:UnassignPrivateIpAddresses"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "GetParameter",
+      "Effect": "Allow",
+      "Action": "ssm:GetParameter",
+      "Resource": "arn:aws:ssm:eu-west-2:281072317055:parameter/dev/*"
+    },
+    {
+      "Sid": "DecryptKey",
+      "Effect": "Allow",
+      "Action": "kms:Decrypt",
+      "Resource": "arn:aws:ssm:eu-west-2:281072317055:parameter/dev/*"
     }
   ]
 }
 EOF
 }
+
+data "aws_ssm_parameter" "keycloak_realm_name" {
+  name = "/dev/KEYCLOACK_REALM_NAME"
+}
+data "aws_ssm_parameter" "keycloak_hostname" {
+  name = "/dev/KC_HOSTNAME"
+}
+data "aws_ssm_parameter" "keycloak_client_id" {
+  name = "/dev/KEYCLOAK_CLIENT_ID"
+}
+# data "aws_ssm_parameter" "keycloak_client_secret" {
+#   name = "/dev/KEYCLOAK_ID_CLIENT_SECRET"
+# }
 
 # resource "aws_lambda_function" "test_lambda" {
 resource "aws_lambda_function" "lambda_auth" {
@@ -34,6 +81,15 @@ resource "aws_lambda_function" "lambda_auth" {
   function_name = "${var.project_name}-auth-${var.environment}"
   role          = aws_iam_role.iam_for_lambda_auth.arn
   handler       = "lambda_handler"
+  timeout       = 30
+
+  vpc_config {
+    # Every subnet should be able to reach an EFS mount target in the same Availability Zone. Cross-AZ mounts are not permitted.
+    subnet_ids         = [module.vpc.private_subnets]
+    # security_group_ids = [aws_security_group.vpc-endpoint.id] module.vpc.default_security_group_id
+    security_group_ids = [aws_security_group.vpc-endpoint.id]
+
+  }
 
   # The filebase64sha256() function is available in Terraform 0.11.12 and later
   # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
@@ -44,9 +100,10 @@ resource "aws_lambda_function" "lambda_auth" {
 
   environment {
     variables = {
-      ENV_OPENSEARCH_HOST_URL = ""
-      ENV_OPENSEARCH_USER = ""
-      ENV_OPENSEARCH_USER_PASSWORD = ""
+      KEYCLOAK_CLIENT_ID = "${data.aws_ssm_parameter.keycloak_client_id.value}"
+      KEYCLOAK_HOST = "${data.aws_ssm_parameter.keycloak_hostname.value}"
+      KEYCLOAK_REALM = "${data.aws_ssm_parameter.keycloak_realm_name.value}"
+      PARAM_STORE_KEY_KEYCLOAK_CLIENT_SECRET = "/dev/KEYCLOAK_ID_CLIENT_SECRET"
     }
   }
 }

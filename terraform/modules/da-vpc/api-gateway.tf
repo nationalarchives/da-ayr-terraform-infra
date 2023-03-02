@@ -60,7 +60,7 @@ resource "aws_api_gateway_integration" "test_integration" {
   type                    = "AWS_PROXY"
 #   type                    = "MOCK"
 #   uri                     = "${aws_lambda_function.lambda_rest_api.invoke_arn}"
-  uri                     = "${aws_lambda_function.lambda_auth.invoke_arn}"
+  uri                     = "${aws_lambda_function.lambda_rest_api.invoke_arn}"
 }
 
 resource "aws_api_gateway_deployment" "test" {

@@ -108,6 +108,7 @@ resource "aws_lambda_function" "lambda_auth" {
   }
 }
 
+
 # resource "aws_lambda_permission" "apigw_lambda_auth_permission" {
 #   statement_id  = "AllowExecutionFromAPIGateway"
 #   action        = "lambda:InvokeFunction"

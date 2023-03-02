@@ -1,4 +1,4 @@
-resource "aws_iam_role" "iam_for_lambda_receiver" {
+resource "aws_iam_role" "iam_for_lambda_role_assigner" {
   name = "${var.project_name}-role-assigner-${var.environment}-role"
 
   assume_role_policy = <<EOF

@@ -80,7 +80,7 @@ resource "aws_lambda_function" "lambda_auth" {
   # function_name = "lambda_handler"
   function_name = "${var.project_name}-auth-${var.environment}"
   role          = aws_iam_role.iam_for_lambda_auth.arn
-  handler       = "lambda_handler"
+  handler       = "lambda_function.lambda_handler"
   timeout       = 30
 
   vpc_config {
@@ -108,14 +108,14 @@ resource "aws_lambda_function" "lambda_auth" {
   }
 }
 
-resource "aws_lambda_permission" "apigw_lambda_auth_permission" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.lambda_auth.function_name
-  principal     = "apigateway.amazonaws.com"
-  #source_arn    = "arn:aws:execute-api:eu-west-2:${var.aws_account_id}:${aws_api_gateway_rest_api.da-ayr.id}/*/${aws_api_gateway_method.da-ayr.http_method}${aws_api_gateway_resource.da-ayr.path}"
-  source_arn    = "arn:aws:execute-api:eu-west-2:${var.aws_account_id}:${aws_api_gateway_rest_api.da-ayr.id}/*/${aws_api_gateway_method.da-ayr.http_method}"
-  # source_arn = "arn:aws:execute-api:${var.region}:${var.aws_account_id}:*"
-  # More: http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html
-  # source_arn = "arn:aws:execute-api:${var.myregion}:${var.accountId}:${aws_api_gateway_rest_api.api.id}/*/${aws_api_gateway_method.method.http_method}${aws_api_gateway_resource.resource.path}"
-}
+# resource "aws_lambda_permission" "apigw_lambda_auth_permission" {
+#   statement_id  = "AllowExecutionFromAPIGateway"
+#   action        = "lambda:InvokeFunction"
+#   function_name = aws_lambda_function.lambda_auth.function_name
+#   principal     = "apigateway.amazonaws.com"
+#   #source_arn    = "arn:aws:execute-api:eu-west-2:${var.aws_account_id}:${aws_api_gateway_rest_api.da-ayr.id}/*/${aws_api_gateway_method.da-ayr.http_method}${aws_api_gateway_resource.da-ayr.path}"
+#   source_arn    = "arn:aws:execute-api:eu-west-2:${var.aws_account_id}:${aws_api_gateway_rest_api.da-ayr.id}/*/${aws_api_gateway_method.da-ayr.http_method}"
+#   # source_arn = "arn:aws:execute-api:${var.region}:${var.aws_account_id}:*"
+#   # More: http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html
+#   # source_arn = "arn:aws:execute-api:${var.myregion}:${var.accountId}:${aws_api_gateway_rest_api.api.id}/*/${aws_api_gateway_method.method.http_method}${aws_api_gateway_resource.resource.path}"
+# }

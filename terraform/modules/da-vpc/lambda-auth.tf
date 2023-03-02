@@ -41,8 +41,9 @@ resource "aws_lambda_function" "lambda_auth" {
   # function_name = "lambda_handler"
   function_name = "${var.project_name}-auth-${var.environment}"
   role          = aws_iam_role.iam_for_lambda_auth.arn
-  handler       = "lambda_function.lambda_handler"
+  handler       = "lambda_function.py"
   timeout       = 30
+  runtime       = "python3.8"
 
   vpc_config {
     # Every subnet should be able to reach an EFS mount target in the same Availability Zone. Cross-AZ mounts are not permitted.

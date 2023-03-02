@@ -1,10 +1,3 @@
-# locals {
-#   lambda_name = "helloWorldLambda"
-#   zip_file_name = "/tmp/helloWorldLambda.zip"
-#   handler_name = "helloWorldLambda.handler"
-# }
-
-
 resource "aws_iam_role" "iam_for_lambda_receiver" {
   name = "${var.project_name}-receiver-${var.environment}-role"
 

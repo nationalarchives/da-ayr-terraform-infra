@@ -58,10 +58,10 @@ resource "aws_iam_role" "iam_for_lambda_auth" {
 }
 EOF
 }
-
-data "aws_ssm_parameter" "keycloak_realm_name" {
-  name = "/dev/KEYCLOACK_REALM_NAME"
-}
+# Defined in fargate
+# data "aws_ssm_parameter" "keycloak_realm_name" {
+#   name = "/dev/KEYCLOACK_REALM_NAME"
+# }
 data "aws_ssm_parameter" "keycloak_hostname" {
   name = "/dev/KC_HOSTNAME"
 }

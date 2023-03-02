@@ -19,7 +19,7 @@ EOF
 }
 
 resource "aws_security_group" "vpc-default" {
-  name        = "da-ayr-private-api"
+  name        = "da-ayr-vpc-default-${var.environment}"
   description = "Allow HTTPS access to Private API Endpoimt"
   vpc_id      = module.vpc.vpc_id
 

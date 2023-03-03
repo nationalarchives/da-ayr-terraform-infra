@@ -48,9 +48,9 @@ resource "aws_security_group" "vpc-default" {
 
 
 # Defined in fargate
-data "aws_ssm_parameter" "keycloak_realm_name_id" {
-  name = "/dev/KEYCLOACK_REALM_NAME"
-}
+# data "aws_ssm_parameter" "keycloak_realm_name_id" {
+#   name = "/dev/KEYCLOACK_REALM_NAME"
+# }
 data "aws_ssm_parameter" "keycloak_hostname" {
   name = "/dev/KC_HOSTNAME"
 }
@@ -97,7 +97,7 @@ resource "aws_lambda_function" "lambda_auth" {
     variables = {
       KEYCLOAK_CLIENT_ID = "${data.aws_ssm_parameter.keycloak_client_id.value}"
       KEYCLOAK_HOST = "${data.aws_ssm_parameter.keycloak_hostname.value}"
-      KEYCLOAK_REALM = "${data.aws_ssm_parameter.keycloak_realm_name_id.value}"
+      KEYCLOAK_REALM = "${data.aws_ssm_parameter.keycloak_realm_name.value}" #defined in ec2-fargate
       PARAM_STORE_KEY_KEYCLOAK_CLIENT_SECRET = "/dev/KEYCLOAK_ID_CLIENT_SECRET"
     }
   }

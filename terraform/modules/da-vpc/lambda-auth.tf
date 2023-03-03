@@ -1,81 +1,29 @@
-resource "aws_iam_role" "iam_for_lambda_auth" {
-  name = "${var.project_name}-auth-${var.environment}-role"
+# resource "aws_iam_role" "iam_for_lambda_auth" {
+#   name = "${var.project_name}-auth-${var.environment}-role"
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-}
-
-
+#   assume_role_policy = <<EOF
+# {
+#   "Version": "2012-10-17",
+#   "Statement": [
+#     {
+#       "Action": "sts:AssumeRole",
+#       "Principal": {
+#         "Service": "lambda.amazonaws.com"
+#       },
+#       "Effect": "Allow",
+#       "Sid": ""
+#     }
+#   ]
+# }
+# EOF
+# }
 
 
-resource "aws_iam_policy" "iam_for_lambda_auth_policy" {
-  name = "${var.project_name}-auth-${var.environment}-policy"
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-            "ec2:CreateNetworkInterface",
-            "ec2:DescribeNetworkInterfaces",
-            "ec2:DeleteNetworkInterface",
-            "ec2:AssignPrivateIpAddresses",
-            "ec2:UnassignPrivateIpAddresses"
-        ],
-        "Resource": "*"
-    }
-  ]
-}
-POLICY
-}
-
-
-resource "aws_iam_policy_attachment" "iam_for_lambda_auth_attachment" {
-  name = "${var.project_name}-auth-${var.environment}-policy-attachment"
-  roles      = [aws_iam_role.iam_for_lambda_auth.name]
-  policy_arn = aws_iam_policy.iam_for_lambda_auth_policy.arn
-}
-
-resource "aws_security_group" "vpc-default" {
-  name        = "da-ayr-vpc-default-${var.environment}"
-  description = "Allow HTTPS access to Private API Endpoimt"
-  vpc_id      = module.vpc.vpc_id
-
-  ingress {
-    description      = "TLS from VPC"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = [ "0.0.0.0/0" ]
-    ipv6_cidr_blocks = [ "::/0" ]
-  }
-
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
-  tags = {
-    Name = "allow_tls_all"
-  }
-}
+# resource "aws_iam_policy_attachment" "iam_for_lambda_auth_attachment" {
+#   name = "${var.project_name}-auth-${var.environment}-policy-attachment"
+#   roles      = [aws_iam_role.iam_for_lambda_auth.name]
+#   policy_arn = aws_iam_policy.iam_lambda_policy.arn
+# }
 
 
 data "aws_ssm_parameter" "keycloak_realm_name_id" {
@@ -98,7 +46,7 @@ resource "aws_lambda_function" "lambda_auth" {
   filename      = "../../../lambda/lambda_auth.zip"
   # function_name = "lambda_handler"
   function_name = "${var.project_name}-auth-${var.environment}"
-  role          = aws_iam_role.iam_for_lambda_auth.arn
+  role          = aws_iam_role.iam_for_lambda_role.arn
   handler       = "lambda_handler"
   timeout       = 30
   runtime       = "python3.8"

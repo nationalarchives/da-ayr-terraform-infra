@@ -18,6 +18,56 @@ resource "aws_iam_role" "iam_for_lambda_auth" {
 EOF
 }
 
+
+
+
+resource "aws_iam_policy" "iam_for_lambda_auth_policy" {
+  name = "${var.project_name}-auth-${var.environment}-policy"
+  policy = <<POLICY
+  {
+    "Version": "2012-10-17",
+    "Id": "",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeNetworkInterfaces",
+                "ec2:CreateNetworkInterface",
+                "ec2:DeleteNetworkInterface",
+                "ec2:DescribeInstances",
+                "ec2:AttachNetworkInterface"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:CreateNetworkInterface",
+                "ec2:CreateVpcEndpointServiceConfiguration",
+                "ec2:ModifyVpcEndpointServicePermissions",
+                "ec2:CreateVpcEndpointConnectionNotification",
+                "ec2:DeleteNetworkInterfacePermission",
+                "ec2:CreateNetworkInterfacePermission",
+                "ec2:CreateVpcEndpoint"
+            ],
+            "Resource": "*"
+        }
+    ]
+  }
+  POLICY
+}
+
+
+resource "aws_iam_policy_attachment" "iam_for_lambda_auth_attachment" {
+  name = "${var.project_name}-auth-${var.environment}-policy-attachment"
+  roles      = [aws_iam_role.iam_for_lambda_auth.name]
+  policy_arn = aws_iam_policy.iam_for_lambda_auth_policy.arn
+}
+
+
+
+
 resource "aws_security_group" "vpc-default" {
   name        = "da-ayr-vpc-default-${var.environment}"
   description = "Allow HTTPS access to Private API Endpoimt"

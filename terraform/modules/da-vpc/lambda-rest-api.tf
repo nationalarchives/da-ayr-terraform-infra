@@ -31,7 +31,7 @@ resource "aws_lambda_function" "lambda_rest_api" {
   filename      = "../../../lambda/lambda_rest_api.zip"
   # function_name = "lambda_handler"
   function_name = "${var.project_name}-rest-api-${var.environment}"
-  role          = aws_iam_role.iam_for_lambda_rest_api.arn
+  role          = aws_iam_role.iam_for_lambda_role.arn
   handler       = "lambda_handler"
 
   # The filebase64sha256() function is available in Terraform 0.11.12 and later

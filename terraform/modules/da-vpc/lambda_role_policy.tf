@@ -78,14 +78,6 @@ POLICY
 
 resource "aws_iam_policy_attachment" "iam_for_lambda_policy_attachment" {
   name = "${var.project_name}-lambda-${var.environment}-policy-attachment"
-  roles      = [
-                 aws_iam_role.iam_for_lambda_role.name,
-                #  aws_iam_role.iam_for_lambda_auth.name,
-                 aws_iam_role.iam_for_lambda_indexer.name,
-                 aws_iam_role.iam_for_lambda_opensearch.name,
-                 aws_iam_role.iam_for_lambda_receiver.name,
-                 aws_iam_role.iam_for_lambda_unpacker.name,
-                 aws_iam_role.iam_for_lambda_role_assigner.name
-                 ]
+  roles      = [aws_iam_role.iam_for_lambda_role.name]
   policy_arn = aws_iam_policy.iam_lambda_policy.arn
 }

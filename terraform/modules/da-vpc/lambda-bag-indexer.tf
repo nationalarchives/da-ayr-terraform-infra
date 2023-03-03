@@ -1,22 +1,22 @@
-resource "aws_iam_role" "iam_for_lambda_indexer" {
-  name = "${var.project_name}-indexer-${var.environment}-role"
+# resource "aws_iam_role" "iam_for_lambda_indexer" {
+#   name = "${var.project_name}-indexer-${var.environment}-role"
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-}
+#   assume_role_policy = <<EOF
+# {
+#   "Version": "2012-10-17",
+#   "Statement": [
+#     {
+#       "Action": "sts:AssumeRole",
+#       "Principal": {
+#         "Service": "lambda.amazonaws.com"
+#       },
+#       "Effect": "Allow",
+#       "Sid": ""
+#     }
+#   ]
+# }
+# EOF
+# }
 
 # resource "aws_iam_policy_attachment" "iam_for_lambda_auth_attachment" {
 #   name = "${var.project_name}-auth-${var.environment}-policy-attachment"
@@ -31,7 +31,7 @@ resource "aws_lambda_function" "lambda_indexer" {
   filename      = "../../../lambda/lambda_bag_indexer.zip"
   # function_name = "lambda_handler"
   function_name = "${var.project_name}-indexer-${var.environment}"
-  role          = aws_iam_role.iam_for_lambda_indexer.arn
+  role          = aws_iam_role.iam_for_lambda_role.arn 
   handler       = "lambda_handler"
 
   # The filebase64sha256() function is available in Terraform 0.11.12 and later

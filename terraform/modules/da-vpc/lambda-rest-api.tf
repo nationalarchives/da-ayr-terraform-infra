@@ -1,22 +1,22 @@
-resource "aws_iam_role" "iam_for_lambda_rest_api" {
-  name = "${var.project_name}-rest-api-${var.environment}-role"
+# resource "aws_iam_role" "iam_for_lambda_rest_api" {
+#   name = "${var.project_name}-rest-api-${var.environment}-role"
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-}
+#   assume_role_policy = <<EOF
+# {
+#   "Version": "2012-10-17",
+#   "Statement": [
+#     {
+#       "Action": "sts:AssumeRole",
+#       "Principal": {
+#         "Service": "lambda.amazonaws.com"
+#       },
+#       "Effect": "Allow",
+#       "Sid": ""
+#     }
+#   ]
+# }
+# EOF
+# }
 
 # resource "aws_iam_policy_attachment" "iam_for_lambda_auth_attachment" {
 #   name = "${var.project_name}-auth-${var.environment}-policy-attachment"

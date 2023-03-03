@@ -66,10 +66,10 @@ resource "aws_iam_policy" "iam_lambda_policy" {
       "Resource": "*"
     },
     {
-          "Action": "ssm:GetParameter",
-          "Effect": "Allow",
-          "Resource": "arn:aws:ssm:eu-west-2:281072317055:parameter/dev/*",
-          "Service": "ssm"
+      "Action": "ssm:GetParameter",
+      "Effect": "Allow",
+      "Resource": "arn:aws:ssm:eu-west-2:281072317055:parameter/dev/*",
+      "Service": "ssm"
     }
   ]
 }

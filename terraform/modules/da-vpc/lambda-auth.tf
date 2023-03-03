@@ -46,15 +46,17 @@ resource "aws_security_group" "vpc-default" {
 }
 
 
-data "aws_ssm_parameter" "keycloak_realm_name_id" {
-  name = "/dev/KEYCLOACK_REALM_NAME"
-}
-data "aws_ssm_parameter" "keycloak_hostname" {
-  name = "/dev/KC_HOSTNAME"
-}
-data "aws_ssm_parameter" "keycloak_client_id" {
-  name = "/dev/KEYCLOAK_CLIENT_ID"
-}
+# data "aws_ssm_parameter" "keycloak_realm_name_id" {
+#   name = "/dev/KEYCLOACK_REALM_NAME"
+# }
+# data "aws_ssm_parameter" "keycloak_hostname" {
+#   name = "/dev/KC_HOSTNAME"
+# }
+# data "aws_ssm_parameter" "keycloak_client_id" {
+#   name = "/dev/KEYCLOAK_CLIENT_ID"
+# }
+
+
 # data "aws_ssm_parameter" "keycloak_client_secret" {
 #   name = "/dev/KEYCLOAK_ID_CLIENT_SECRET"
 # }
@@ -91,14 +93,14 @@ resource "aws_lambda_function" "lambda_auth" {
   # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
   source_code_hash = filebase64sha256("../../../lambda/lambda_auth.zip")
 
-  environment {
-    variables = {
-      KEYCLOAK_CLIENT_ID = "${data.aws_ssm_parameter.keycloak_client_id.value}"
-      KEYCLOAK_HOST = "${data.aws_ssm_parameter.keycloak_hostname.value}"
-      KEYCLOAK_REALM = "${data.aws_ssm_parameter.keycloak_realm_name_id.value}" #defined in ec2-fargate
-      PARAM_STORE_KEY_KEYCLOAK_CLIENT_SECRET = "/dev/KEYCLOAK_ID_CLIENT_SECRET"
-    }
-  }
+  # environment {
+  #   variables = {
+  #     KEYCLOAK_CLIENT_ID = "${data.aws_ssm_parameter.keycloak_client_id.value}"
+  #     KEYCLOAK_HOST = "${data.aws_ssm_parameter.keycloak_hostname.value}"
+  #     KEYCLOAK_REALM = "${data.aws_ssm_parameter.keycloak_realm_name_id.value}" #defined in ec2-fargate
+  #     PARAM_STORE_KEY_KEYCLOAK_CLIENT_SECRET = "/dev/KEYCLOAK_ID_CLIENT_SECRET"
+  #   }
+  # }
 }
 
 

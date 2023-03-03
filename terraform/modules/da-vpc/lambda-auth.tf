@@ -25,16 +25,6 @@
 #   policy_arn = aws_iam_policy.iam_lambda_policy.arn
 # }
 
-
-data "aws_ssm_parameter" "keycloak_realm_name_id" {
-  name = "/dev/KEYCLOACK_REALM_NAME"
-}
-data "aws_ssm_parameter" "keycloak_hostname" {
-  name = "/dev/KC_HOSTNAME"
-}
-data "aws_ssm_parameter" "keycloak_client_id" {
-  name = "/dev/KEYCLOAK_CLIENT_ID"
-}
 # data "aws_ssm_parameter" "keycloak_client_secret" {
 #   name = "/dev/KEYCLOAK_ID_CLIENT_SECRET"
 # }

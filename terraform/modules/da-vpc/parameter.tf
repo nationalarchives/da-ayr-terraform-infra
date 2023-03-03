@@ -77,3 +77,12 @@ data "aws_ssm_parameter" "kc_hostname" {
 data "aws_ssm_parameter" "oidc_rp_client_secret" {
   name = "/dev/OIDC_RP_CLIENT_SECRET"
 }
+data "aws_ssm_parameter" "keycloak_realm_name_id" {
+  name = "/dev/KEYCLOACK_REALM_NAME"
+}
+data "aws_ssm_parameter" "keycloak_hostname" {
+  name = "/dev/KC_HOSTNAME"
+}
+data "aws_ssm_parameter" "keycloak_client_id" {
+  name = "/dev/KEYCLOAK_CLIENT_ID"
+}

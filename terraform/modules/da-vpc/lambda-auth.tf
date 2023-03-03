@@ -46,17 +46,15 @@ resource "aws_security_group" "vpc-default" {
 }
 
 
-# data "aws_ssm_parameter" "keycloak_realm_name_id" {
-#   name = "/dev/KEYCLOACK_REALM_NAME"
-# }
-# data "aws_ssm_parameter" "keycloak_hostname" {
-#   name = "/dev/KC_HOSTNAME"
-# }
-# data "aws_ssm_parameter" "keycloak_client_id" {
-#   name = "/dev/KEYCLOAK_CLIENT_ID"
-# }
-
-
+data "aws_ssm_parameter" "keycloak_realm_name_id" {
+  name = "/dev/KEYCLOACK_REALM_NAME"
+}
+data "aws_ssm_parameter" "keycloak_hostname" {
+  name = "/dev/KC_HOSTNAME"
+}
+data "aws_ssm_parameter" "keycloak_client_id" {
+  name = "/dev/KEYCLOAK_CLIENT_ID"
+}
 # data "aws_ssm_parameter" "keycloak_client_secret" {
 #   name = "/dev/KEYCLOAK_ID_CLIENT_SECRET"
 # }
@@ -73,34 +71,34 @@ resource "aws_lambda_function" "lambda_auth" {
   timeout       = 30
   runtime       = "python3.8"
 
-  vpc_config {
-    # Every subnet should be able to reach an EFS mount target in the same Availability Zone. Cross-AZ mounts are not permitted.
-    # subnet_ids         = [module.vpc.private_subnets]
-    subnet_ids = [
-            module.vpc.private_subnets[0],
-            module.vpc.private_subnets[1],
-            module.vpc.private_subnets[2]
-    ]
-    # security_group_ids = [aws_security_group.vpc-endpoint.id] module.vpc.default_security_group_id
-    # security_group_ids = [aws_security_group.vpc-endpoint.id]
-    security_group_ids = [aws_security_group.vpc-default.id]
+  # vpc_config {
+  #   # Every subnet should be able to reach an EFS mount target in the same Availability Zone. Cross-AZ mounts are not permitted.
+  #   # subnet_ids         = [module.vpc.private_subnets]
+  #   subnet_ids = [
+  #           module.vpc.private_subnets[0],
+  #           module.vpc.private_subnets[1],
+  #           module.vpc.private_subnets[2]
+  #   ]
+  #   # security_group_ids = [aws_security_group.vpc-endpoint.id] module.vpc.default_security_group_id
+  #   # security_group_ids = [aws_security_group.vpc-endpoint.id]
+  #   security_group_ids = [aws_security_group.vpc-default.id]
     
 
-  }
+  # }
 
   # The filebase64sha256() function is available in Terraform 0.11.12 and later
   # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
   # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
   source_code_hash = filebase64sha256("../../../lambda/lambda_auth.zip")
 
-  # environment {
-  #   variables = {
-  #     KEYCLOAK_CLIENT_ID = "${data.aws_ssm_parameter.keycloak_client_id.value}"
-  #     KEYCLOAK_HOST = "${data.aws_ssm_parameter.keycloak_hostname.value}"
-  #     KEYCLOAK_REALM = "${data.aws_ssm_parameter.keycloak_realm_name_id.value}" #defined in ec2-fargate
-  #     PARAM_STORE_KEY_KEYCLOAK_CLIENT_SECRET = "/dev/KEYCLOAK_ID_CLIENT_SECRET"
-  #   }
-  # }
+  environment {
+    variables = {
+      KEYCLOAK_CLIENT_ID = "${data.aws_ssm_parameter.keycloak_client_id.value}"
+      KEYCLOAK_HOST = "${data.aws_ssm_parameter.keycloak_hostname.value}"
+      KEYCLOAK_REALM = "${data.aws_ssm_parameter.keycloak_realm_name_id.value}" #defined in ec2-fargate
+      PARAM_STORE_KEY_KEYCLOAK_CLIENT_SECRET = "/dev/KEYCLOAK_ID_CLIENT_SECRET"
+    }
+  }
 }
 
 

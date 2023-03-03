@@ -23,7 +23,7 @@ EOF
 
 resource "aws_iam_policy" "iam_for_lambda_auth_policy" {
   name = "${var.project_name}-auth-${var.environment}-policy"
-  policy = <<POLICY
+  policy = <<EOF
   {
     "Version": "2012-10-17",
     "Id": "",
@@ -55,7 +55,7 @@ resource "aws_iam_policy" "iam_for_lambda_auth_policy" {
         }
     ]
   }
-  POLICY
+  EOF
 }
 
 

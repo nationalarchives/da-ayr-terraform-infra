@@ -25,7 +25,27 @@ resource "aws_security_group" "vpc-default" {
   }
 }
 
-resource "aws_iam_policy" "iam_lambda_pol" {
+resource "aws_iam_role" "iam_for_lambda_role" {
+  name = "${var.project_name}-lambda-${var.environment}-role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_policy" "iam_lambda_policy" {
   name = "${var.project_name}-l-${var.environment}-policy"
   policy = <<POLICY
 {
@@ -50,5 +70,5 @@ POLICY
 resource "aws_iam_policy_attachment" "iam_for_lambda_policy_attachment" {
   name = "${var.project_name}-lambda-${var.environment}-policy-attachment"
   roles      = [aws_iam_role.iam_for_lambda_role.name]
-  policy_arn = aws_iam_policy.iam_lambda_pol.arn
+  policy_arn = aws_iam_policy.iam_lambda_policy.arn
 }

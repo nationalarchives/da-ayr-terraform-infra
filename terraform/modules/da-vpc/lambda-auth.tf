@@ -48,9 +48,9 @@ resource "aws_security_group" "vpc-default" {
 
 
 # Defined in fargate
-# data "aws_ssm_parameter" "keycloak_realm_name" {
-#   name = "/dev/KEYCLOACK_REALM_NAME"
-# }
+data "aws_ssm_parameter" "keycloak_realm_name" {
+  name = "/dev/KEYCLOACK_REALM_NAME"
+}
 data "aws_ssm_parameter" "keycloak_hostname" {
   name = "/dev/KC_HOSTNAME"
 }

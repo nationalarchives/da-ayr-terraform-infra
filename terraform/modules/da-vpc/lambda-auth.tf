@@ -30,26 +30,13 @@ resource "aws_iam_policy" "iam_for_lambda_auth_policy" {
     {
       "Effect": "Allow",
       "Action": [
-           "ec2:DescribeNetworkInterfaces",
             "ec2:CreateNetworkInterface",
+            "ec2:DescribeNetworkInterfaces",
             "ec2:DeleteNetworkInterface",
-            "ec2:DescribeInstances",
-            "ec2:AttachNetworkInterface"
+            "ec2:AssignPrivateIpAddresses",
+            "ec2:UnassignPrivateIpAddresses"
         ],
         "Resource": "*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-            "ec2:CreateNetworkInterface",
-            "ec2:CreateVpcEndpointServiceConfiguration",
-            "ec2:ModifyVpcEndpointServicePermissions",
-            "ec2:CreateVpcEndpointConnectionNotification",
-            "ec2:DeleteNetworkInterfacePermission",
-            "ec2:CreateNetworkInterfacePermission",
-            "ec2:CreateVpcEndpoint"
-      ],
-      "Resource": "*"
     }
   ]
 }
@@ -62,9 +49,6 @@ resource "aws_iam_policy_attachment" "iam_for_lambda_auth_attachment" {
   roles      = [aws_iam_role.iam_for_lambda_auth.name]
   policy_arn = aws_iam_policy.iam_for_lambda_auth_policy.arn
 }
-
-
-
 
 resource "aws_security_group" "vpc-default" {
   name        = "da-ayr-vpc-default-${var.environment}"

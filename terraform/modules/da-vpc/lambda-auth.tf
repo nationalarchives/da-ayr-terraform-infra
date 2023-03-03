@@ -46,8 +46,6 @@ resource "aws_security_group" "vpc-default" {
 }
 
 
-
-Defined in fargate
 data "aws_ssm_parameter" "keycloak_realm_name_id" {
   name = "/dev/KEYCLOACK_REALM_NAME"
 }

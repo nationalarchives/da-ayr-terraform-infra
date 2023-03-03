@@ -71,20 +71,20 @@ resource "aws_lambda_function" "lambda_auth" {
   timeout       = 30
   runtime       = "python3.8"
 
-  # vpc_config {
-  #   # Every subnet should be able to reach an EFS mount target in the same Availability Zone. Cross-AZ mounts are not permitted.
-  #   # subnet_ids         = [module.vpc.private_subnets]
-  #   subnet_ids = [
-  #           module.vpc.private_subnets[0],
-  #           module.vpc.private_subnets[1],
-  #           module.vpc.private_subnets[2]
-  #   ]
-  #   # security_group_ids = [aws_security_group.vpc-endpoint.id] module.vpc.default_security_group_id
-  #   # security_group_ids = [aws_security_group.vpc-endpoint.id]
-  #   security_group_ids = [aws_security_group.vpc-default.id]
+  vpc_config {
+    # Every subnet should be able to reach an EFS mount target in the same Availability Zone. Cross-AZ mounts are not permitted.
+    # subnet_ids         = [module.vpc.private_subnets]
+    subnet_ids = [
+            module.vpc.private_subnets[0],
+            module.vpc.private_subnets[1],
+            module.vpc.private_subnets[2]
+    ]
+    # security_group_ids = [aws_security_group.vpc-endpoint.id] module.vpc.default_security_group_id
+    # security_group_ids = [aws_security_group.vpc-endpoint.id]
+    security_group_ids = [aws_security_group.vpc-default.id]
     
 
-  # }
+  }
 
   # The filebase64sha256() function is available in Terraform 0.11.12 and later
   # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:

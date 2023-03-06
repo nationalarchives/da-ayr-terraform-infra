@@ -16,3 +16,5 @@ echo $TF_AUTO_VARS > backend-config.auto.tfvars
 pwd
 ls -alt
 
+cat backend-config.auto.tfvars
+

@@ -45,6 +45,8 @@ resource "aws_iam_role" "iam_for_lambda_role" {
 EOF
 }
 
+
+
 resource "aws_iam_policy" "iam_lambda_policy" {
   name = "${var.project_name}-l-${var.environment}-policy"
   policy = <<POLICY
@@ -63,10 +65,13 @@ resource "aws_iam_policy" "iam_lambda_policy" {
       "Resource": "*"
     },
     {
-      "Action": "ssm:GetParameter",
+      "Action": [
+          "ssm:GetParameter",
+          "ssm:GetParameters",
+          "ssm:GetParametersByPath"
+      ],
       "Effect": "Allow",
-      "Resource": "arn:aws:ssm:eu-west-2:281072317055:parameter/${var.environment}/*",
-      "Service": "ssm"
+      "Resource": "arn:aws:ssm:eu-west-2:281072317055:parameter/${var.environment}/*"
     }
   ]
 }

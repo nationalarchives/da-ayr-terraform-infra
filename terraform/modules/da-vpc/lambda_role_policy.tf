@@ -72,6 +72,20 @@ resource "aws_iam_policy" "iam_lambda_policy" {
       ],
       "Effect": "Allow",
       "Resource": "arn:aws:ssm:eu-west-2:281072317055:parameter/${var.environment}/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "ec2:CreateNetworkInterface",
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DeleteNetworkInterface",
+          "ec2:AssignPrivateIpAddresses",
+          "ec2:UnassignPrivateIpAddresses"
+      ],
+      "Resource": "*"
     }
   ]
 }

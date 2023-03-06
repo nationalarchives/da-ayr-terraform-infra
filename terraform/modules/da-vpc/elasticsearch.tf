@@ -50,14 +50,6 @@ resource "aws_security_group" "es" {
 # }
 
 
-data "aws_ssm_parameter" "master_user_name" {
-  name = "/dev/OS_USER_NAME"
-}
-data "aws_ssm_parameter" "master_user_password" {
-  name = "/dev/OS_USER_PASSWORD"
-}
-
-
 #resource "aws_elasticsearch_domain" "es" {
 resource "aws_opensearch_domain" "es" {
 #   domain_name           = var.domain

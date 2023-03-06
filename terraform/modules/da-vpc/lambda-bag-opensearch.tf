@@ -41,11 +41,23 @@ resource "aws_lambda_function" "lambda_opensearch" {
 
   runtime = "python3.9"
 
+  vpc_config {
+    subnet_ids = [
+            module.vpc.private_subnets[0],
+            module.vpc.private_subnets[1],
+            module.vpc.private_subnets[2]
+    ]
+    security_group_ids = [aws_security_group.vpc-default.id]
+    
+
+  }
+
   environment {
     variables = {
-      ENV_OPENSEARCH_HOST_URL = ""
-      ENV_OPENSEARCH_USER = ""
-      ENV_OPENSEARCH_USER_PASSWORD = ""
+      OPENSEARCH_HOST_URL	= "https://vpc-da-ayr-aws-opensearch-dev-bij2z45raruw42t755inwpjw7u.eu-west-2.es.amazonaws.com"
+      OPENSEARCH_INDEX	= "${data.aws_ssm_parameter.master_os_index.value}"
+      OPENSEARCH_USER	= "${data.aws_ssm_parameter.master_user_name.value}"
+      OPENSEARCH_USER_PASSWORD_PARAM_STORE_KEY =	"/${var.environment}/OS_USER_PASSWORD"
     }
   }
 }

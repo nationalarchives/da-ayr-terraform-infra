@@ -86,3 +86,14 @@ data "aws_ssm_parameter" "keycloak_hostname" {
 data "aws_ssm_parameter" "keycloak_client_id" {
   name = "/dev/KEYCLOAK_CLIENT_ID"
 }
+
+#Opensearch
+data "aws_ssm_parameter" "master_user_name" {
+  name = "/dev/OS_USER_NAME"
+}
+data "aws_ssm_parameter" "master_user_password" {
+  name = "/dev/OS_USER_PASSWORD"
+}
+data "aws_ssm_parameter" "master_os_index" {
+  name = "/dev/OS_INDEX"
+}

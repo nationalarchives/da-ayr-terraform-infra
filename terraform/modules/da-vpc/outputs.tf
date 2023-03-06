@@ -47,3 +47,5 @@ output "da-ayr_nhsbsa_net" {
   description = "Outbound IP addresses from NAT gateways"
   value = module.vpc.nat_public_ips
 }
+
+# 

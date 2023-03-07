@@ -25,6 +25,16 @@ resource "aws_security_group" "vpc-default" {
   }
 }
 
+#Create log group
+
+resource "aws_cloudwatch_log_group" "function_log_group" {
+  name              = "/aws/lambda/${aws_lambda_function.function.function_name}"
+  retention_in_days = 7
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
 resource "aws_iam_role" "iam_for_lambda_role" {
   name = "${var.project_name}-lambda-${var.environment}-role"
 
@@ -76,9 +86,6 @@ resource "aws_iam_policy" "iam_lambda_policy" {
     {
       "Effect": "Allow",
       "Action": [
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents",
           "ec2:CreateNetworkInterface",
           "ec2:DescribeNetworkInterfaces",
           "ec2:DeleteNetworkInterface",
@@ -99,6 +106,15 @@ resource "aws_iam_policy" "iam_lambda_policy" {
       "Action": "s3-object-lambda:*",
       "Effect": "Allow",
       "Resource": "*"
+    },
+    {
+      "Action" : [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        "Effect" : "Allow",
+        "Resource" : "arn:aws:logs:*:*:*"
     }
   ]
 }

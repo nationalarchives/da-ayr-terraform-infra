@@ -150,7 +150,7 @@ EOF
 
 resource "aws_api_gateway_method_settings" "general_settings" {
   # rest_api_id = "${aws_api_gateway_rest_api.rest_api.id}"
-  rest_api_id = "{aws_api_gateway_rest_api.da-ayr.id}"
+  rest_api_id = "${aws_api_gateway_rest_api.da-ayr.id}"
   # stage_name  = "${aws_api_gateway_deployment.deployment_production.stage_name}"
   stage_name  = "${aws_api_gateway_deployment.test.stage_name}"
   method_path = "*/*"

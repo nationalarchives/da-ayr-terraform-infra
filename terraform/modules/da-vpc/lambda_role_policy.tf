@@ -98,7 +98,7 @@ resource "aws_iam_policy" "iam_lambda_policy" {
     {
       "Action": "s3-object-lambda:*",
       "Effect": "Allow",
-      "Resource": "*",
+      "Resource": "*"
     }
   ]
 }

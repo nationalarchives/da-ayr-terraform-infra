@@ -35,7 +35,7 @@ EOF
 resource "aws_api_gateway_resource" "da-ayr" {
   rest_api_id = aws_api_gateway_rest_api.da-ayr.id
   parent_id   = aws_api_gateway_rest_api.da-ayr.root_resource_id
-  path_part   = "da-ayr-dev"
+  path_part   = "*/*"
 }
 
 resource "aws_api_gateway_method" "da-ayr" {
@@ -139,6 +139,7 @@ resource "aws_iam_role_policy" "cloudwatch" {
                 "logs:DescribeLogStreams",
                 "logs:PutLogEvents",
                 "logs:GetLogEvents",
+                "logs:FilterLogEvents",
                 "logs:FilterLogEvents"
             ],
             "Resource": "*"

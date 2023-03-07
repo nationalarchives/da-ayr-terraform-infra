@@ -50,7 +50,7 @@ resource "aws_lambda_function" "lambda_role_assigner" {
 
 resource "aws_cloudwatch_log_group" "function_log_group5" {
   name              = "/aws/lambda/${aws_lambda_function.lambda_role_assigner.function_name}"
-  retention_in_days = 21
+  retention_in_days = 7
   lifecycle {
     prevent_destroy = false
   }

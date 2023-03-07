@@ -66,7 +66,7 @@ resource "aws_lambda_function" "lambda_auth" {
       KEYCLOAK_CLIENT_ID = "${data.aws_ssm_parameter.keycloak_client_id.value}"
       KEYCLOAK_HOST = "${data.aws_ssm_parameter.keycloak_hostname.value}"
       KEYCLOAK_REALM = "${data.aws_ssm_parameter.keycloak_realm_name_id.value}" #defined in ec2-fargate
-      PARAM_STORE_KEY_KEYCLOAK_CLIENT_SECRET = "/dev/KEYCLOAK_ID_CLIENT_SECRET"
+      PARAM_STORE_KEY_KEYCLOAK_CLIENT_SECRET = "/dg-zaizi/tmp/keycloak_secret"
     }
   }
 }
@@ -83,3 +83,11 @@ resource "aws_lambda_function" "lambda_auth" {
 #   # More: http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html
 #   # source_arn = "arn:aws:execute-api:${var.myregion}:${var.accountId}:${aws_api_gateway_rest_api.api.id}/*/${aws_api_gateway_method.method.http_method}${aws_api_gateway_resource.resource.path}"
 # }
+
+resource "aws_cloudwatch_log_group" "function_log_group1" {
+  name              = "/aws/lambda/${aws_lambda_function.lambda_auth.function_name}"
+  retention_in_days = 21
+  lifecycle {
+    prevent_destroy = false
+  }
+}

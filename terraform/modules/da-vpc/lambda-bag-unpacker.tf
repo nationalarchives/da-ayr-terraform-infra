@@ -41,11 +41,19 @@ resource "aws_lambda_function" "lambda_unpacker" {
 
   runtime = "python3.9"
 
-  environment {
-    variables = {
-      ENV_OPENSEARCH_HOST_URL = ""
-      ENV_OPENSEARCH_USER = ""
-      ENV_OPENSEARCH_USER_PASSWORD = ""
-    }
+  # environment {
+  #   variables = {
+  #     ENV_OPENSEARCH_HOST_URL = ""
+  #     ENV_OPENSEARCH_USER = ""
+  #     ENV_OPENSEARCH_USER_PASSWORD = ""
+  #   }
+  # }
+}
+
+resource "aws_cloudwatch_log_group" "function_log_group6" {
+  name              = "/aws/lambda/${aws_lambda_function.lambda_unpacker.function_name}"
+  retention_in_days = 21
+  lifecycle {
+    prevent_destroy = false
   }
 }

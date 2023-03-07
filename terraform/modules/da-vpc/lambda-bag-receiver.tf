@@ -43,9 +43,15 @@ resource "aws_lambda_function" "lambda_receiver" {
 
   environment {
     variables = {
-      ENV_OPENSEARCH_HOST_URL = ""
-      ENV_OPENSEARCH_USER = ""
-      ENV_OPENSEARCH_USER_PASSWORD = ""
+      AYR_TARGET_S3_BUCKET = "dg-zaizi-ayr-in"
     }
+  }
+}
+
+resource "aws_cloudwatch_log_group" "function_log_group4" {
+  name              = "/aws/lambda/${aws_lambda_function.lambda_receiver.function_name}"
+  retention_in_days = 21
+  lifecycle {
+    prevent_destroy = false
   }
 }

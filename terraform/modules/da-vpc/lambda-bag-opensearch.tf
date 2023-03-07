@@ -61,3 +61,11 @@ resource "aws_lambda_function" "lambda_opensearch" {
     }
   }
 }
+
+resource "aws_cloudwatch_log_group" "function_log_group3" {
+  name              = "/aws/lambda/${aws_lambda_function.lambda_opensearch.function_name}"
+  retention_in_days = 21
+  lifecycle {
+    prevent_destroy = false
+  }
+}

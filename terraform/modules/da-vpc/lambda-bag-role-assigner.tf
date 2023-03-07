@@ -43,9 +43,15 @@ resource "aws_lambda_function" "lambda_role_assigner" {
 
   environment {
     variables = {
-      ENV_OPENSEARCH_HOST_URL = ""
-      ENV_OPENSEARCH_USER = ""
-      ENV_OPENSEARCH_USER_PASSWORD = ""
+      AYR_ROLE_MAP_PARAM_STORE_KEY = "/dg-zaizi/tmp/ayr-department-role-map"
     }
+  }
+}
+
+resource "aws_cloudwatch_log_group" "function_log_group5" {
+  name              = "/aws/lambda/${aws_lambda_function.lambda_role_assigner.function_name}"
+  retention_in_days = 21
+  lifecycle {
+    prevent_destroy = false
   }
 }

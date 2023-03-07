@@ -71,7 +71,7 @@ resource "aws_lambda_function" "lambda_auth" {
   }
 }
 
-
+# PARAM_STORE_KEY_KEYCLOAK_CLIENT_SECRET = "/dev/KEYCLOAK_ID_CLIENT_SECRET"
 # resource "aws_lambda_permission" "apigw_lambda_auth_permission" {
 #   statement_id  = "AllowExecutionFromAPIGateway"
 #   action        = "lambda:InvokeFunction"

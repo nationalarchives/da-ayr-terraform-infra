@@ -86,6 +86,19 @@ resource "aws_iam_policy" "iam_lambda_policy" {
           "ec2:UnassignPrivateIpAddresses"
       ],
       "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:*",
+        "s3-object-lambda:*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Action": "s3-object-lambda:*",
+      "Effect": "Allow",
+      "Resource": "*",
     }
   ]
 }

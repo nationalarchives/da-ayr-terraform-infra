@@ -38,7 +38,7 @@ resource "aws_lambda_function" "lambda_rest_api" {
   # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
   # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
   source_code_hash = filebase64sha256("../../../lambda/lambda_rest_api.zip")
-
+  timeout       = 30
   runtime = "python3.9"
 
    vpc_config {
@@ -79,6 +79,7 @@ resource "aws_lambda_permission" "apigw_lambda_auth_permission" {
   #source_arn    = "arn:aws:execute-api:eu-west-2:${var.aws_account_id}:${aws_api_gateway_rest_api.da-ayr.id}/*/${aws_api_gateway_method.da-ayr.http_method}${aws_api_gateway_resource.da-ayr.path}"
   # source_arn    = "arn:aws:execute-api:eu-west-2:${var.aws_account_id}:${aws_api_gateway_rest_api.da-ayr.id}/*/${aws_api_gateway_method.da-ayr.http_method}"
   source_arn    = "arn:aws:execute-api:eu-west-2:${var.aws_account_id}:${aws_api_gateway_rest_api.da-ayr.id}/*/${aws_api_gateway_method.da-ayr.http_method}"
+
   # source_arn    = "arn:aws:execute-api:eu-west-2:${var.aws_account_id}:${aws_api_gateway_rest_api.da-ayr.id}/*/POST/*"
   # source_arn = "arn:aws:execute-api:${var.region}:${var.aws_account_id}:*"
   # More: http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html

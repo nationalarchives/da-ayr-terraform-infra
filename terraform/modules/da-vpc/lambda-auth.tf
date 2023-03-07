@@ -66,12 +66,13 @@ resource "aws_lambda_function" "lambda_auth" {
       KEYCLOAK_CLIENT_ID = "${data.aws_ssm_parameter.keycloak_client_id.value}"
       KEYCLOAK_HOST = "${data.aws_ssm_parameter.keycloak_hostname.value}"
       KEYCLOAK_REALM = "${data.aws_ssm_parameter.keycloak_realm_name_id.value}" #defined in ec2-fargate
-      PARAM_STORE_KEY_KEYCLOAK_CLIENT_SECRET = "/dg-zaizi/tmp/keycloak_secret"
+      PARAM_STORE_KEY_KEYCLOAK_CLIENT_SECRET = "/dev/KEYCLOAK_ID_CLIENT_SECRET"
     }
   }
 }
 
 # PARAM_STORE_KEY_KEYCLOAK_CLIENT_SECRET = "/dev/KEYCLOAK_ID_CLIENT_SECRET"
+# PARAM_STORE_KEY_KEYCLOAK_CLIENT_SECRET = "/dg-zaizi/tmp/keycloak_secret"
 # resource "aws_lambda_permission" "apigw_lambda_auth_permission" {
 #   statement_id  = "AllowExecutionFromAPIGateway"
 #   action        = "lambda:InvokeFunction"

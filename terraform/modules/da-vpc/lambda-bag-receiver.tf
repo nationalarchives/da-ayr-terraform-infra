@@ -38,7 +38,7 @@ resource "aws_lambda_function" "lambda_receiver" {
   # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
   # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
   source_code_hash = filebase64sha256("../../../lambda/lambda_bag_receiver.zip")
-
+  timeout       = 30
   runtime = "python3.9"
 
   environment {

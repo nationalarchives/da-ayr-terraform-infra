@@ -40,6 +40,7 @@ resource "aws_lambda_function" "lambda_role_assigner" {
   source_code_hash = filebase64sha256("../../../lambda/lambda_bag_role_assigner.zip")
 
   runtime = "python3.9"
+  timeout       = 30
 
   environment {
     variables = {

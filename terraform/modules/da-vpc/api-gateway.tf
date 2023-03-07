@@ -97,3 +97,72 @@ resource "aws_api_gateway_method_response" "response_200" {
   http_method = aws_api_gateway_method.da-ayr.http_method
   status_code = "200"
 }
+
+resource "aws_api_gateway_account" "da-ayr" {
+  cloudwatch_role_arn = "${aws_iam_role.cloudwatch.arn}"
+}
+
+resource "aws_iam_role" "cloudwatch" {
+  name = "api_gateway_cloudwatch_global"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "apigateway.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "cloudwatch" {
+  name = "default"
+  role = "${aws_iam_role.cloudwatch.id}"
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:DescribeLogGroups",
+                "logs:DescribeLogStreams",
+                "logs:PutLogEvents",
+                "logs:GetLogEvents",
+                "logs:FilterLogEvents"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_api_gateway_method_settings" "general_settings" {
+  # rest_api_id = "${aws_api_gateway_rest_api.rest_api.id}"
+  rest_api_id = "{aws_api_gateway_rest_api.da-ayr.id}"
+  # stage_name  = "${aws_api_gateway_deployment.deployment_production.stage_name}"
+  stage_name  = "${aws_api_gateway_deployment.test.stage_name}"
+  method_path = "*/*"
+
+  settings {
+    # Enable CloudWatch logging and metrics
+    metrics_enabled        = true
+    data_trace_enabled     = true
+    logging_level          = "INFO"
+
+    # Limit the rate of calls to prevent abuse and unwanted charges
+    throttling_rate_limit  = 100
+    throttling_burst_limit = 50
+  }
+}

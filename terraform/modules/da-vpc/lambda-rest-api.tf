@@ -55,9 +55,9 @@ resource "aws_lambda_function" "lambda_rest_api" {
 
   environment {
     variables = {
-      OPENSEARCH_HOST_URL	= "https://vpc-da-ayr-opensearch-dev-d7baavk3uzlxolz7u4b6nheqdi.eu-west-2.es.amazonaws.com"
-      OPENSEARCH_USER	= "admin"
-      #OPENSEARCH_USER_PASSWORD_PARAM_STORE_KEY = "/dg-zaizi/tmp/opensearch_user_password"
+      
+      OPENSEARCH_HOST_URL	= "${data.aws_ssm_parameter.master_os_host.value}"
+      OPENSEARCH_USER	=  "${data.aws_ssm_parameter.master_user_name.value}"
       OPENSEARCH_USER_PASSWORD_PARAM_STORE_KEY = "/dev/OS_USER_PASSWORD"
     }
   }

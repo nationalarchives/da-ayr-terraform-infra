@@ -97,3 +97,7 @@ data "aws_ssm_parameter" "master_user_password" {
 data "aws_ssm_parameter" "master_os_index" {
   name = "/dev/OS_INDEX"
 }
+data "aws_ssm_parameter" "master_os_host" {
+  name = "/dev/OS_HOST"
+}
+

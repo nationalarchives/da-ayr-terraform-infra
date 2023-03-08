@@ -17,7 +17,3 @@ Below are the build and deployment pipelines that are triggers once checked into
 | Application      | Application       | [nationalarchives/da-ayr-github-actions](https://github.com/nationalarchives/da-ayr-github-actions)  | docker-build-ecr-ecs-deploy-kc.yml  | Keycloak Service
 | Application      | Application       | [nationalarchives/da-ayr-github-actions](https://github.com/nationalarchives/da-ayr-github-actions) | docker-build-ecr-deploy.yml         | Django Python App
 | Serverless       | Lambda Functions  | [nationalarchives/da-ayr-github-actions](https://github.com/nationalarchives/da-ayr-github-actions)  | deploy-lambda.yml                   | lambda functions
-
-
-
-

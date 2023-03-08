@@ -84,7 +84,7 @@ resource "aws_iam_policy" "iam_lambda_policy" {
         "Effect": "Allow",
         "Action": "kms:Decrypt",
         "Resource": "arn:aws:ssm:eu-west-2:281072317055:parameter/${var.environment}/*"
-    }
+    },
     {
       "Effect": "Allow",
       "Action": [

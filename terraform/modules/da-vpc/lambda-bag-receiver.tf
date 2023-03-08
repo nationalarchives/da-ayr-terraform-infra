@@ -43,7 +43,7 @@ resource "aws_lambda_function" "lambda_receiver" {
 
   environment {
     variables = {
-      AYR_TARGET_S3_BUCKET = "dg-zaizi-ayr-in"
+      AYR_TARGET_S3_BUCKET = aws_s3_bucket.da_ayr_data.bucket
     }
   }
 }

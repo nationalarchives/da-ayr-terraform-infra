@@ -76,6 +76,16 @@ resource "aws_iam_policy" "iam_lambda_policy" {
       "Resource": "arn:aws:ssm:eu-west-2:281072317055:parameter/${var.environment}/*"
     },
     {
+       "Effect": "Allow",
+       "Action": "ssm:GetParameter",
+       "Resource": "arn:aws:ssm:eu-west-2:281072317055:parameter/${var.environment}/*"
+    },
+    {
+        "Effect": "Allow",
+        "Action": "kms:Decrypt",
+        "Resource": "arn:aws:ssm:eu-west-2:281072317055:parameter/${var.environment}/*"
+    }
+    {
       "Effect": "Allow",
       "Action": [
           "ec2:CreateNetworkInterface",

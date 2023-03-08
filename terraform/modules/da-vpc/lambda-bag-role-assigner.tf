@@ -44,7 +44,7 @@ resource "aws_lambda_function" "lambda_role_assigner" {
 
   environment {
     variables = {
-      AYR_ROLE_MAP_PARAM_STORE_KEY = "/dg-zaizi/tmp/ayr-department-role-map"
+      AYR_ROLE_MAP_PARAM_STORE_KEY = "/dev/AYR_DEPARTMENT_ROLE_MAP"
     }
   }
 }

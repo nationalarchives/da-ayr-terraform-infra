@@ -35,7 +35,7 @@ EOF
 resource "aws_api_gateway_resource" "da-ayr" {
   rest_api_id = aws_api_gateway_rest_api.da-ayr.id
   parent_id   = aws_api_gateway_rest_api.da-ayr.root_resource_id
-  path_part   = "da-ayr-dev"
+  path_part   = "bag-search"
 }
 
 resource "aws_api_gateway_method" "da-ayr" {
@@ -65,7 +65,7 @@ resource "aws_api_gateway_integration" "test_integration" {
 
 resource "aws_api_gateway_deployment" "test" {
   rest_api_id = aws_api_gateway_rest_api.da-ayr.id
-  stage_name = "test"
+  stage_name = "alpha"
 
   lifecycle {
     create_before_destroy = true

@@ -15,5 +15,9 @@ Below are the build and deployment pipelines that are triggers once checked into
 |----------------------------|------------------|----------------------------------------------------------------------------------------------------|-------------------------------------|-------------
 | Base Infra       | Base infra        | [nationalarchives/da-ayr-github-actions](https://github.com/nationalarchives/da-ayr-github-actions)  | terraform-enviromements-action.yml  | VPC,Subnets, SG
 | Application      | Application       | [nationalarchives/da-ayr-github-actions](https://github.com/nationalarchives/da-ayr-github-actions)  | docker-build-ecr-ecs-deploy-kc.yml  | Keycloak Service
-| Application      | Application       | [nationalarchives/da-ayr-github-actions](https://github.com/nationalarchives/da-ayr-github-actions) | docker-build-ecr-deploy.yml         | Django Python App
+| Application      | Application       | [nationalarchives/da-ayr-github-actions](https://github.com/nationalarchives/da-ayr-github-actions)  | docker-build-ecr-deploy.yml         | Django Python App
 | Serverless       | Lambda Functions  | [nationalarchives/da-ayr-github-actions](https://github.com/nationalarchives/da-ayr-github-actions)  | deploy-lambda.yml                   | lambda functions
+
+
+
+Check into main branch  will trigger the Base infra build.

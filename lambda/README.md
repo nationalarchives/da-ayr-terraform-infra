@@ -1,1 +1,1 @@
-The build will download lambdas to this directory.
+lambda artefacts will be downloaded to this directory before deployment

@@ -77,7 +77,7 @@ resource "aws_sfn_state_machine" "sfn_da_ayr_state_machine" {
       "OutputPath": "$.Payload",
       "Parameters": {
         "Payload.$": "$",
-        "FunctionName": "${aws_lambda_function.lambda_auth.arn}"
+        "FunctionName": "arn:aws:lambda:eu-west-2:281072317055:function:da-ayr-auth-dev"
       },
       "Retry": [
         {
@@ -194,6 +194,4 @@ EOF
 
   # depends_on = ["aws_lambda_function.random-number-generator-lambda","aws_lambda_function.random-number-generator-lambda"]
 
-}
-  
 }

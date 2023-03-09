@@ -92,3 +92,7 @@ resource "aws_cloudwatch_log_group" "function_log_group1" {
     prevent_destroy = false
   }
 }
+
+# output "lambda_arn" {
+#   value = "${aws_lambda_function.lambda_auth.arn}"
+# }

@@ -19,48 +19,6 @@ EOF
 }
 
 
-# resource "aws_iam_policy" "policy_publish_sns" {
-#   name        = "stepFunctionSampleSNSInvocationPolicy"
-
-#   policy = <<EOF
-# {
-#     "Version": "2012-10-17",
-#     "Statement": [
-#         {
-#             "Effect": "Allow",
-#             "Action": [
-#                 "lambda:InvokeFunction"
-#             ],
-#             "Resource": [
-#                 "arn:aws:lambda:eu-west-2:281072317055:function:da-ayr-*:*"
-#             ]
-#         }
-#     ]
-# }
-# EOF
-# }
-
-# resource "aws_iam_role" "iam_for_sf" {
-#   name = "${var.project_name}-step-${var.environment}-role"
-
-#   assume_role_policy = <<EOF
-# {
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Action": "sts:AssumeRole",
-#       "Principal": {
-#         "Service": "lambda.amazonaws.com"
-#       },
-#       "Effect": "Allow",
-#       "Sid": ""
-#     }
-#   ]
-# }
-# EOF
-# }
-
-
 resource "aws_iam_policy" "policy_da_ayr_sf" {
   name        = "stepFunctionSampleLambdaFunctionInvocationPolicy"
 
@@ -101,10 +59,6 @@ resource "aws_iam_role_policy_attachment" "role_policy_attach" {
   policy_arn = "${aws_iam_policy.policy_da_ayr_sf.arn}"
 }
 
-# resource "aws_iam_role_policy_attachment" "iam_for_sfn_attach_policy_publish_sns" {
-#   role       = "${aws_iam_role.iam_for_sfn.name}"
-#   policy_arn = "${aws_iam_policy.policy_publish_sns.arn}"
-# }
 
 
 
@@ -123,7 +77,7 @@ resource "aws_sfn_state_machine" "sfn_da_ayr_state_machine" {
       "OutputPath": "$.Payload",
       "Parameters": {
         "Payload.$": "$",
-        "FunctionName": "arn:aws:lambda:eu-west-2:281072317055:function:da-ayr-auth-dev"
+        "FunctionName": "${aws_lambda_function.lambda_auth.arn}"
       },
       "Retry": [
         {
@@ -240,4 +194,6 @@ EOF
 
   # depends_on = ["aws_lambda_function.random-number-generator-lambda","aws_lambda_function.random-number-generator-lambda"]
 
+}
+  
 }

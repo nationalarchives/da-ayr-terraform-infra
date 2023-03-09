@@ -45,3 +45,10 @@ resource "aws_cloudwatch_log_group" "function_log_group1" {
     prevent_destroy = false
   }
 }
+
+data "aws_lambda_function" "lambda_auth_data" {
+  function_name = aws_lambda_function.lambda_auth.function_name
+}
+output "lambda_auth_arn" {
+  value = data.aws_lambda_function.lambda_auth_data.arn
+}

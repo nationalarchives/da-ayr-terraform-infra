@@ -47,5 +47,8 @@ output "da-ayr_nhsbsa_net" {
   description = "Outbound IP addresses from NAT gateways"
   value = module.vpc.nat_public_ips
 }
+# output "lambda_auth_arn" {
+#   value = data.aws_lambda_function.lambda_auth_data.arn
+# }
 
 # 

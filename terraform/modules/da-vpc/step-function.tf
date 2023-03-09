@@ -77,7 +77,7 @@ resource "aws_sfn_state_machine" "sfn_da_ayr_state_machine" {
       "OutputPath": "$.Payload",
       "Parameters": {
         "Payload.$": "$",
-        "FunctionName": "arn:aws:lambda:eu-west-2:281072317055:function:da-ayr-auth-dev"
+        "FunctionName": "arn:aws:lambda:eu-west-2:281072317055:function:da-ayr-receiver-dev:$LATEST"
       },
       "Retry": [
         {
@@ -100,7 +100,7 @@ resource "aws_sfn_state_machine" "sfn_da_ayr_state_machine" {
       "OutputPath": "$.Payload",
       "Parameters": {
         "Payload.$": "$",
-        "FunctionName": "arn:aws:lambda:eu-west-2:281072317055:function:da-ayr-unpacker-dev"
+        "FunctionName": "arn:aws:lambda:eu-west-2:281072317055:function:da-ayr-unpacker-dev:$LATEST"
       },
       "Retry": [
         {
@@ -123,7 +123,7 @@ resource "aws_sfn_state_machine" "sfn_da_ayr_state_machine" {
       "OutputPath": "$.Payload",
       "Parameters": {
         "Payload.$": "$",
-        "FunctionName": "arn:aws:lambda:eu-west-2:281072317055:function:da-ayr-indexer-dev"
+        "FunctionName": "arn:aws:lambda:eu-west-2:281072317055:function:da-ayr-indexer-dev:$LATEST"
       },
       "Retry": [
         {
@@ -146,7 +146,7 @@ resource "aws_sfn_state_machine" "sfn_da_ayr_state_machine" {
       "OutputPath": "$.Payload",
       "Parameters": {
         "Payload.$": "$",
-        "FunctionName": "arn:aws:lambda:eu-west-2:281072317055:function:da-ayr-role-assigner-dev"
+        "FunctionName": "arn:aws:lambda:eu-west-2:281072317055:function:da-ayr-role-assigner-dev:$LATEST"
       },
       "Retry": [
         {
@@ -169,7 +169,7 @@ resource "aws_sfn_state_machine" "sfn_da_ayr_state_machine" {
       "OutputPath": "$.Payload",
       "Parameters": {
         "Payload.$": "$",
-        "FunctionName": "arn:aws:lambda:eu-west-2:281072317055:function:da-ayr-opensearch-dev"
+        "FunctionName": "arn:aws:lambda:eu-west-2:281072317055:function:da-ayr-opensearch-dev:$LATEST"
       },
       "Retry": [
         {

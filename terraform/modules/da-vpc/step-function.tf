@@ -1,6 +1,6 @@
 # Create IAM role for AWS Step Function
-resource "aws_iam_role" "iam_da_ayr_stepfunction" {
-  name = "stepFunctionSampleStepFunctionExecutionIAM"
+resource "aws_iam_role" "role_da_ayr_sf" {
+  name = "${var.project_name}-step-function-${var.environment}-role"
 
   assume_role_policy = <<EOF
 {
@@ -27,48 +27,79 @@ EOF
 #     "Version": "2012-10-17",
 #     "Statement": [
 #         {
-#             "Sid": "VisualEditor0",
 #             "Effect": "Allow",
 #             "Action": [
-#               "sns:Publish",
-#               "sns:SetSMSAttributes",
-#               "sns:GetSMSAttributes"
+#                 "lambda:InvokeFunction"
 #             ],
-#             "Resource": "*"
+#             "Resource": [
+#                 "arn:aws:lambda:eu-west-2:281072317055:function:da-ayr-*:*"
+#             ]
 #         }
 #     ]
 # }
 # EOF
 # }
 
+# resource "aws_iam_role" "iam_for_sf" {
+#   name = "${var.project_name}-step-${var.environment}-role"
 
-# resource "aws_iam_policy" "policy_da_ayr_stepfunction" {
-#   name        = "stepFunctionSampleLambdaFunctionInvocationPolicy"
-
-#   policy = <<EOF
+#   assume_role_policy = <<EOF
 # {
-#     "Version": "2012-10-17",
-#     "Statement": [
-#         {
-#             "Sid": "VisualEditor0",
-#             "Effect": "Allow",
-#             "Action": [
-#                 "lambda:InvokeFunction",
-#                 "lambda:InvokeAsync"
-#             ],
-#             "Resource": "*"
-#         }
-#     ]
+#   "Version": "2012-10-17",
+#   "Statement": [
+#     {
+#       "Action": "sts:AssumeRole",
+#       "Principal": {
+#         "Service": "lambda.amazonaws.com"
+#       },
+#       "Effect": "Allow",
+#       "Sid": ""
+#     }
+#   ]
 # }
 # EOF
 # }
 
 
-# // Attach policy to IAM Role for Step Function
-# resource "aws_iam_role_policy_attachment" "iam_for_stepfunction_da_ayr_invoke_lambda" {
-#   role       = "${aws_iam_role.iam_da_ayr_stepfunction.name}"
-#   policy_arn = "${aws_iam_policy.policy_da_ayr_stepfunction.arn}"
-# }
+resource "aws_iam_policy" "policy_da_ayr_sf" {
+  name        = "stepFunctionSampleLambdaFunctionInvocationPolicy"
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Resource": [
+                "arn:aws:lambda:eu-west-2:281072317055:function:da-ayr-*:*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
+EOF
+}
+
+
+// Attach policy to IAM Role for Step Function
+resource "aws_iam_role_policy_attachment" "role_policy_attach" {
+  role       = "${aws_iam_role.role_da_ayr_sf.name}"
+  policy_arn = "${aws_iam_policy.policy_da_ayr_sf.arn}"
+}
 
 # resource "aws_iam_role_policy_attachment" "iam_for_sfn_attach_policy_publish_sns" {
 #   role       = "${aws_iam_role.iam_for_sfn.name}"
@@ -80,7 +111,7 @@ EOF
 // Create state machine for step function
 resource "aws_sfn_state_machine" "sfn_da_ayr_state_machine" {
   name     = "da-ayr-ingester-${var.environment}"
-  role_arn = "${aws_iam_role.iam_da_ayr_stepfunction.arn}"
+  role_arn = "${aws_iam_role.role_da_ayr_sf.arn}"
 
   definition = <<EOF
 {

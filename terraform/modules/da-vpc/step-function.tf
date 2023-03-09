@@ -79,7 +79,7 @@ EOF
 
 // Create state machine for step function
 resource "aws_sfn_state_machine" "sfn_da_ayr_state_machine" {
-  name     = "Ingester-da-ayr-alpha"
+  name     = "da-ayr-ingester-${var.environment}"
   role_arn = "${aws_iam_role.iam_da_ayr_stepfunction.arn}"
 
   definition = <<EOF

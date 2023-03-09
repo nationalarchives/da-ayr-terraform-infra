@@ -42,33 +42,33 @@ EOF
 # }
 
 
-resource "aws_iam_policy" "policy_da_ayr_stepfunction" {
-  name        = "stepFunctionSampleLambdaFunctionInvocationPolicy"
+# resource "aws_iam_policy" "policy_da_ayr_stepfunction" {
+#   name        = "stepFunctionSampleLambdaFunctionInvocationPolicy"
 
-  policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": [
-                "lambda:InvokeFunction",
-                "lambda:InvokeAsync"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
-EOF
-}
+#   policy = <<EOF
+# {
+#     "Version": "2012-10-17",
+#     "Statement": [
+#         {
+#             "Sid": "VisualEditor0",
+#             "Effect": "Allow",
+#             "Action": [
+#                 "lambda:InvokeFunction",
+#                 "lambda:InvokeAsync"
+#             ],
+#             "Resource": "*"
+#         }
+#     ]
+# }
+# EOF
+# }
 
 
-// Attach policy to IAM Role for Step Function
-resource "aws_iam_role_policy_attachment" "iam_for_stepfunction_da_ayr_invoke_lambda" {
-  role       = "${aws_iam_role.iam_da_ayr_stepfunction.name}"
-  policy_arn = "${aws_iam_policy.policy_da_ayr_stepfunction.arn}"
-}
+# // Attach policy to IAM Role for Step Function
+# resource "aws_iam_role_policy_attachment" "iam_for_stepfunction_da_ayr_invoke_lambda" {
+#   role       = "${aws_iam_role.iam_da_ayr_stepfunction.name}"
+#   policy_arn = "${aws_iam_policy.policy_da_ayr_stepfunction.arn}"
+# }
 
 # resource "aws_iam_role_policy_attachment" "iam_for_sfn_attach_policy_publish_sns" {
 #   role       = "${aws_iam_role.iam_for_sfn.name}"
@@ -207,6 +207,6 @@ resource "aws_sfn_state_machine" "sfn_da_ayr_state_machine" {
 
 EOF
 
-  depends_on = ["aws_lambda_function.random-number-generator-lambda","aws_lambda_function.random-number-generator-lambda"]
+  # depends_on = ["aws_lambda_function.random-number-generator-lambda","aws_lambda_function.random-number-generator-lambda"]
 
 }

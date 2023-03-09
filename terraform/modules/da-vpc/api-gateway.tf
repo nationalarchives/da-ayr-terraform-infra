@@ -46,11 +46,6 @@ resource "aws_api_gateway_method" "da-ayr" {
   authorizer_id = aws_api_gateway_authorizer.da-ayr-authorizer.id
 }
 
-# resource "aws_api_gateway_stage" "stage-test" {
-#   deployment_id = aws_api_gateway_deployment.test.id
-#   rest_api_id   = aws_api_gateway_rest_api.da-ayr-test.id
-#   stage_name    = "test"
-# }
 
 resource "aws_api_gateway_integration" "test_integration" {
   rest_api_id             = "${aws_api_gateway_rest_api.da-ayr.id}"

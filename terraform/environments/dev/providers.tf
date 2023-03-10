@@ -3,6 +3,9 @@ provider "aws" {
   ## done in the environment, to use a profile for local testing
   ## set the `AWS_PROFILE` environment variable appropriately
   region = "eu-west-2"
+  assume_role {
+    role_arn =  var.assume_role.nonprod
+  }
 
   ## All resources that can be tagged should have a base set of metadata
   ## included as tags - this is an example:
@@ -14,16 +17,27 @@ provider "aws" {
       StatePrefix = var.key
     }
   }
-
-  ## OPTIONAL - in some environments we make use of CloudCustodian to tag all 
-  ##            resources with the id of its creator.  This section will
-  ##            ignore those tag changes so TF doesn't want to update things
-  ##            in a constant loop.
-  #ignore_tags {
-  #  keys = [ "Creator" ]
-  #}
 }
 
+<<<<<<< HEAD
+=======
+provider "aws" {
+  alias = "us-east-1"
+  region = "us-east-1"
+  assume_role {
+    role_arn =  var.assume_role.nonprod
+  }
+  default_tags {
+    tags = {
+      Environment = var.environment
+      Owner = "Terraform"
+      StateBucket = var.bucket
+      StatePrefix = var.key
+    }
+  }
+}
+
+>>>>>>> dev
 terraform {
   ## Fix version of the providers to avoid breaking changes causing problems
   required_providers {

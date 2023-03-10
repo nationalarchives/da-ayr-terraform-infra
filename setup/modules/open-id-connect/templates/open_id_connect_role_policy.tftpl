@@ -1,0 +1,46 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "S3Read",
+            "Effect": "Allow",
+            "Action": "s3:ListBucket",
+            "Resource": "arn:aws:s3:::*"
+        },
+        {
+            "Sid": "S3Write",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:DeleteObject"
+            ],
+            "Resource": "arn:aws:s3:::*/*"
+        },
+        {
+            "Sid": "dynamoDBReadAndWrite",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+                "dynamodb:GetItem" 
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:*:${account_id}:table/*"
+            ]
+        },
+        {
+            "Sid": "ParameterStoreGet",
+            "Effect": "Allow",
+            "Action": "ssm:GetParameters",
+            "Resource": "arn:aws:ssm:*:${account_id}:parameter/*"
+        },
+        {
+            "Sid": "STSAssume",
+            "Effect": "Allow",
+            "Action": "sts:AssumeRole",
+            "Resource": ${jsonencode(terraform_roles)}
+        }      
+    ]
+}

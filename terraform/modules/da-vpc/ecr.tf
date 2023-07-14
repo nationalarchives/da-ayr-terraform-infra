@@ -1,13 +1,13 @@
- resource "aws_ecr_repository" "ecr" {
-   name                 = "${var.project_name}-django_app-${var.environment}"
-   image_tag_mutability = "MUTABLE"
-  
-   image_scanning_configuration {
-     scan_on_push = true
-   }
- }
+resource "aws_ecr_repository" "ecr" {
+  name                 = "${var.project_name}-django_app-${var.environment}"
+  image_tag_mutability = "MUTABLE"
 
- resource "aws_ecr_repository_policy" "ecr_policy" {
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+
+resource "aws_ecr_repository_policy" "ecr_policy" {
   repository = aws_ecr_repository.ecr.name
 
   policy = <<EOF
@@ -44,15 +44,15 @@ EOF
 
 
 resource "aws_ecr_repository" "ecr_keycloak" {
-   name                 = "${var.project_name}-keycloak-${var.environment}"
-   image_tag_mutability = "MUTABLE"
-  
-   image_scanning_configuration {
-     scan_on_push = true
-   }
- }
+  name                 = "${var.project_name}-keycloak-${var.environment}"
+  image_tag_mutability = "MUTABLE"
 
- resource "aws_ecr_repository_policy" "ecr_keycloak_policy" {
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+
+resource "aws_ecr_repository_policy" "ecr_keycloak_policy" {
   repository = aws_ecr_repository.ecr_keycloak.name
 
   policy = <<EOF
@@ -84,4 +84,3 @@ resource "aws_ecr_repository" "ecr_keycloak" {
 }
 EOF
 }
-

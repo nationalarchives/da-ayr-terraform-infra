@@ -8,8 +8,8 @@ resource "aws_security_group" "vpc-endpoint" {
     from_port        = 443
     to_port          = 443
     protocol         = "tcp"
-    cidr_blocks      = [ "0.0.0.0/0" ]
-    ipv6_cidr_blocks = [ "::/0" ]
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   egress {
@@ -35,6 +35,6 @@ resource "aws_vpc_endpoint" "da-ayr" {
   vpc_endpoint_type   = "Interface"
   private_dns_enabled = true
 
-  subnet_ids = [module.vpc.private_subnets[0]]
+  subnet_ids         = [module.vpc.private_subnets[0]]
   security_group_ids = [aws_security_group.vpc-endpoint.id]
 }

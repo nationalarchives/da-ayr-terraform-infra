@@ -100,4 +100,3 @@ data "aws_ssm_parameter" "master_os_index" {
 data "aws_ssm_parameter" "master_os_host" {
   name = "/dev/OS_HOST"
 }
-

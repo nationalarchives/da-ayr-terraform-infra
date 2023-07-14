@@ -29,7 +29,7 @@ variable "prefix" {
 
 variable "da_ayr_repositories" {
   description = "List AYR repositories that require access to AYR AWS Accounts"
-  type = list(string)
+  type        = list(string)
 }
 
 variable "terraform_roles" {
@@ -39,7 +39,7 @@ variable "terraform_roles" {
 
 variable "assume_role" {
   description = "The role to be assumed by terraform"
-  type        = object({
+  type = object({
     management = string
     nonprod    = string
   })
@@ -57,7 +57,7 @@ variable "account_id" {
 
 variable "managment_id" {
   description = "Managment Account ID"
-  type        =  string
+  type        = string
 }
 
 variable "environment" {

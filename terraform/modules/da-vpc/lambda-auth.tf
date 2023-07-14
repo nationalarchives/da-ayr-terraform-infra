@@ -4,7 +4,7 @@
 resource "aws_lambda_function" "lambda_auth" {
   # If the file is not in the current working directory you will need to include a
   # path.module in the filename.
-  filename      = "../../../lambda/lambda_auth.zip"
+  filename = "../../../lambda/lambda_auth.zip"
   # function_name = "lambda_handler"
   function_name = "${var.project_name}-auth-${var.environment}"
   role          = aws_iam_role.iam_for_lambda_role.arn
@@ -16,13 +16,13 @@ resource "aws_lambda_function" "lambda_auth" {
     # Every subnet should be able to reach an EFS mount target in the same Availability Zone. Cross-AZ mounts are not permitted.
     # subnet_ids         = [module.vpc.private_subnets]
     subnet_ids = [
-            module.vpc.private_subnets[0],
-            module.vpc.private_subnets[1],
-            module.vpc.private_subnets[2]
+      module.vpc.private_subnets[0],
+      module.vpc.private_subnets[1],
+      module.vpc.private_subnets[2]
     ]
 
     security_group_ids = [aws_security_group.vpc-default.id]
-    
+
 
   }
 
@@ -30,9 +30,9 @@ resource "aws_lambda_function" "lambda_auth" {
 
   environment {
     variables = {
-      KEYCLOAK_CLIENT_ID = "${data.aws_ssm_parameter.keycloak_client_id.value}"
-      KEYCLOAK_HOST = "${data.aws_ssm_parameter.keycloak_hostname.value}"
-      KEYCLOAK_REALM = "${data.aws_ssm_parameter.keycloak_realm_name_id.value}" #defined in ec2-fargate
+      KEYCLOAK_CLIENT_ID                     = "${data.aws_ssm_parameter.keycloak_client_id.value}"
+      KEYCLOAK_HOST                          = "${data.aws_ssm_parameter.keycloak_hostname.value}"
+      KEYCLOAK_REALM                         = "${data.aws_ssm_parameter.keycloak_realm_name_id.value}" #defined in ec2-fargate
       PARAM_STORE_KEY_KEYCLOAK_CLIENT_SECRET = "/dev/KEYCLOAK_ID_CLIENT_SECRET"
     }
   }

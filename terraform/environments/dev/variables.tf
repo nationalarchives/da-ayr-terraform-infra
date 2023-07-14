@@ -2,31 +2,31 @@
 # Environment Config
 ####################
 variable "environment" {
-  type = string
+  type        = string
   description = "Name of the environment being managed"
 }
 
 variable "project_name" {
   description = "Project Name"
-  type = string
+  type        = string
 }
 variable "aws_account_id" {
   description = "Aws acc id"
-  type = string
+  type        = string
 }
 
 variable "managment_id" {
   description = "Aws acc id"
-  type = string
+  type        = string
 }
 
 variable "fqdn" {
-  type = string
+  type        = string
   description = "The fully-qualified domain name to use for the frontend"
 }
 
 variable "fqdn_keycloak" {
-  type = string
+  type        = string
   description = "The fully-qualified domain name to use for the frontend"
 }
 
@@ -34,35 +34,35 @@ variable "fqdn_keycloak" {
 # ECS Task Config
 #################
 variable "image" {
-  type = string
+  type        = string
   description = "location and name of the container image for the ECS task"
 }
 
 variable "image_tag" {
-  type = string
+  type        = string
   description = "The tag (e.g. version or 'latest') to retrieve for this environment"
 }
 
 variable "app_port" {
-  type = number
+  type        = number
   description = "The port the application will listen on within its container"
-  default = 8000
+  default     = 8000
 }
 
 variable "image_keycloak" {
-  type = string
+  type        = string
   description = "location and name of the container image for the ECS task"
 }
 
 variable "image_tag_keycloak" {
-  type = string
+  type        = string
   description = "The tag (e.g. version or 'latest') to retrieve for this environment"
 }
 
 variable "app_port_keycloak" {
-  type = number
+  type        = number
   description = "The port the application will listen on within its container"
-  default = 8080
+  default     = 8080
 }
 
 
@@ -115,7 +115,7 @@ variable "dynamodb_table" {
 
 variable "assume_role" {
   description = "The role to be assumed by terraform"
-  type        = object({
+  type = object({
     management = string
     nonprod    = string
   })

@@ -1,6 +1,6 @@
-### Github Role Module 
+### Github Role Module
 
-This folder contains terraform a module which set ups Github'S OID provider to get short-lived credentials needed for you actions. Specifying role-to-assume without providing an aws-access-key-id or web-identity-token file will signal to the action that you wish to use the OIDC provider. 
+This folder contains terraform a module which set ups Github'S OID provider to get short-lived credentials needed for you actions. Specifying role-to-assume without providing an aws-access-key-id or web-identity-token file will signal to the action that you wish to use the OIDC provider.
 
 Examples
 ```
@@ -14,18 +14,18 @@ Examples
 
 In this example, the Action will load the OIDC token from the GitHub-provided environment variable and use it to assume the role arn:aws:iam::123456789100:role/my-github-actions-role with the session name MySessionName.
 
-### Open-id-connect module 
+### Open-id-connect module
 
 This module is responsible for creating the da_ayr_github_actions_open_id_connect role in the AWS management account. The role is assigned a set of policies defined in the templates folder, which grants it the necessary permissions to carry out pipeline-related tasks.
 
-Running this module through the pipeline is not possible, as destroying the Terraform infrastructure will also destroy the associated GitHub role. This is why the setup folder is kept separate from the main Terraform infrastructure code. To run this module, you will need to clone the repository and run it manually on your local machine. The necessary terraform.tfvars variables are saved in the AWS Parameter Store under the management account, under the name setup-terraform-tfvars and set-up-backend-config-auto-tfvars which you can retrieve after cloning the repository to your local machine. 
+Running this module through the pipeline is not possible, as destroying the Terraform infrastructure will also destroy the associated GitHub role. This is why the setup folder is kept separate from the main Terraform infrastructure code. To run this module, you will need to clone the repository and run it manually on your local machine. The necessary terraform.tfvars variables are saved in the AWS Parameter Store under the management account, under the name setup-terraform-tfvars and set-up-backend-config-auto-tfvars which you can retrieve after cloning the repository to your local machine.
 
 How to set up backend-config-auto-tfvars?
 1. Retrieve set-up-backend-config-auto-tfvars from the parametor store and save it as backend-config.auto.tfvars in /setup/environments/managment
-2. Retrieve setup-terraform-tfvars from the parametor store adn save it as terraform.tfvars in 
+2. Retrieve setup-terraform-tfvars from the parametor store adn save it as terraform.tfvars in
 /setup/environments/managment
 
-How to run this terraform folder locally from your machine? 
+How to run this terraform folder locally from your machine?
 
 Firstly, you must generate AWS credentials, you can follow these step:
 

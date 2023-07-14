@@ -4,7 +4,7 @@ provider "aws" {
   ## set the `AWS_PROFILE` environment variable appropriately
   region = "eu-west-2"
   assume_role {
-    role_arn =  var.assume_role.nonprod
+    role_arn = var.assume_role.nonprod
   }
 
   ## All resources that can be tagged should have a base set of metadata
@@ -12,7 +12,7 @@ provider "aws" {
   default_tags {
     tags = {
       Environment = var.environment
-      Owner = "Terraform"
+      Owner       = "Terraform"
       StateBucket = var.bucket
       StatePrefix = var.key
     }
@@ -20,15 +20,15 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "us-east-1"
+  alias  = "us-east-1"
   region = "us-east-1"
   assume_role {
-    role_arn =  var.assume_role.nonprod
+    role_arn = var.assume_role.nonprod
   }
   default_tags {
     tags = {
       Environment = var.environment
-      Owner = "Terraform"
+      Owner       = "Terraform"
       StateBucket = var.bucket
       StatePrefix = var.key
     }
@@ -39,7 +39,7 @@ terraform {
   ## Fix version of the providers to avoid breaking changes causing problems
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "~> 4.0"
     }
   }
@@ -52,4 +52,3 @@ terraform {
   backend "s3" {
   }
 }
-

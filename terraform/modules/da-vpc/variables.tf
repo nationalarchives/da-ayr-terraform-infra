@@ -2,23 +2,23 @@
 # Environment Config
 ####################
 variable "environment" {
-  type = string
+  type        = string
   description = "Name of the environment being managed"
 }
 
 variable "project_name" {
   description = "Project Name"
-  type = string
+  type        = string
 }
 
 variable "aws_account_id" {
   description = "Aws acc id"
-  type = string
+  type        = string
 }
 
 variable "managment_id" {
   description = "Aws acc id"
-  type = string
+  type        = string
 }
 
 variable "vpc_cidr" {
@@ -40,7 +40,7 @@ variable "enable_vpn_gateway" {
 
 variable "app_vpc_dhcp_options_domain_name_servers" {
   description = "DNS Servers to use in application VPC, default to AWS provided"
-  type        = list
+  type        = list(any)
   default     = ["AmazonProvidedDNS"]
 }
 
@@ -50,22 +50,22 @@ variable "app_vpc_dhcp_options_domain_name_servers" {
 # ECS Task Config
 #################
 variable "image" {
-  type = string
+  type        = string
   description = "location and name of the container image for the ECS task"
 }
 
 variable "image_tag" {
-  type = string
+  type        = string
   description = "The tag (e.g. version or 'latest') to retrieve for this environment"
 }
 
 variable "app_port" {
-  type = number
+  type        = number
   description = "The port the application will listen on within its container"
-  default = 8000
+  default     = 8000
 }
 variable "fqdn" {
-  type = string
+  type        = string
   description = "The fully-qualified domain name to use for the frontend"
 }
 
@@ -73,22 +73,22 @@ variable "fqdn" {
 # ECS Task Config
 #################
 variable "image_keycloak" {
-  type = string
+  type        = string
   description = "location and name of the container image for the ECS task"
 }
 
 variable "image_tag_keycloak" {
-  type = string
+  type        = string
   description = "The tag (e.g. version or 'latest') to retrieve for this environment"
 }
 
 variable "app_port_keycloak" {
-  type = number
+  type        = number
   description = "The port the application will listen on within its container"
-  default = 8080
+  default     = 8080
 }
 
 variable "fqdn_keycloak" {
-  type = string
+  type        = string
   description = "The fully-qualified domain name to use for the frontend"
 }

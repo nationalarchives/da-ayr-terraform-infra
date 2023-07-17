@@ -20,7 +20,7 @@ EOF
 
 
 resource "aws_iam_policy" "policy_da_ayr_sf" {
-  name        = "stepFunctionSampleLambdaFunctionInvocationPolicy"
+  name = "stepFunctionSampleLambdaFunctionInvocationPolicy"
 
   policy = <<EOF
 {
@@ -55,8 +55,8 @@ EOF
 
 // Attach policy to IAM Role for Step Function
 resource "aws_iam_role_policy_attachment" "role_policy_attach" {
-  role       = "${aws_iam_role.role_da_ayr_sf.name}"
-  policy_arn = "${aws_iam_policy.policy_da_ayr_sf.arn}"
+  role       = aws_iam_role.role_da_ayr_sf.name
+  policy_arn = aws_iam_policy.policy_da_ayr_sf.arn
 }
 
 
@@ -65,7 +65,7 @@ resource "aws_iam_role_policy_attachment" "role_policy_attach" {
 // Create state machine for step function
 resource "aws_sfn_state_machine" "sfn_da_ayr_state_machine" {
   name     = "da-ayr-ingester-${var.environment}"
-  role_arn = "${aws_iam_role.role_da_ayr_sf.arn}"
+  role_arn = aws_iam_role.role_da_ayr_sf.arn
 
   definition = <<EOF
 {

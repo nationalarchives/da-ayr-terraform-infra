@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: Env is 
+        description: Env is
         default: dev
 
 jobs:

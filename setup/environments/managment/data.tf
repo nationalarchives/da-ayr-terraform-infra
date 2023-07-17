@@ -13,4 +13,3 @@ data "aws_iam_policy_document" "da_ayr_terraform_backend" {
     resources = ["*"]
   }
 }
-

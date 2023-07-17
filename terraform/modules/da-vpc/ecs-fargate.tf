@@ -8,10 +8,10 @@ resource "aws_ecs_cluster" "cluster" {
 
 data "aws_iam_policy_document" "ecs_task_role_assume" {
   statement {
-    actions = [ "sts:AssumeRole" ]
+    actions = ["sts:AssumeRole"]
     principals {
-      type = "Service"
-      identifiers = [ "ecs-tasks.amazonaws.com" ]
+      type        = "Service"
+      identifiers = ["ecs-tasks.amazonaws.com"]
     }
   }
 }
@@ -24,7 +24,7 @@ data "aws_iam_policy_document" "ecs_task_role_policy" {
       "ssmmessages:OpenControlChannel",
       "ssmmessages:OpenDataChannel"
     ]
-    resources = [ "*" ]
+    resources = ["*"]
   }
   statement {
     actions = [
@@ -33,13 +33,13 @@ data "aws_iam_policy_document" "ecs_task_role_policy" {
       "ecr:BatchGetImage",
       "ecr:BatchCheckLayerAvailability"
     ]
-    resources = [ "*" ]
+    resources = ["*"]
   }
   statement {
     actions = [
       "logs:DescribeLogGroups"
     ]
-    resources = [ "*" ]
+    resources = ["*"]
   }
   statement {
     actions = [
@@ -47,31 +47,31 @@ data "aws_iam_policy_document" "ecs_task_role_policy" {
       "logs:CreateLogStream",
       "logs:DescribeLogStreams"
     ]
-    resources = [ aws_cloudwatch_log_group.ecslogs.arn  ]
+    resources = [aws_cloudwatch_log_group.ecslogs.arn]
   }
   statement {
     actions = [
       "s3:PutObject"
     ]
-    resources = [ "${aws_s3_bucket.ecs_exec.arn}/*" ]
+    resources = ["${aws_s3_bucket.ecs_exec.arn}/*"]
   }
   statement {
     actions = [
       "s3:GetEncryptionConfiguration"
     ]
-    resources = [ aws_s3_bucket.ecs_exec.arn ]
+    resources = [aws_s3_bucket.ecs_exec.arn]
   }
   statement {
     actions = [
       "kms:Decrypt"
     ]
-    resources = [ aws_kms_key.ecs_exec.arn ]
+    resources = [aws_kms_key.ecs_exec.arn]
   }
   statement {
     actions = [
       "secretsmanager:GetSecretValue"
     ]
-    resources = [ "*" ]
+    resources = ["*"]
   }
   # uncomment to allow ecs exec command to be run for debug purposes
   #statement {
@@ -93,15 +93,15 @@ resource "aws_s3_bucket" "ecs_exec" {
 
 resource "aws_s3_bucket_acl" "ecs_exec" {
   bucket = aws_s3_bucket.ecs_exec.id
-  acl = "private"
+  acl    = "private"
 }
 
 resource "aws_s3_bucket_public_access_block" "ecs_exec" {
-  bucket = aws_s3_bucket.ecs_exec.id
-  block_public_acls = true
-  block_public_policy = true
+  bucket                  = aws_s3_bucket.ecs_exec.id
+  block_public_acls       = true
+  block_public_policy     = true
   restrict_public_buckets = true
-  ignore_public_acls = true
+  ignore_public_acls      = true
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "ecs_exec" {
@@ -110,15 +110,15 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "ecs_exec" {
   rule {
     apply_server_side_encryption_by_default {
       kms_master_key_id = aws_kms_key.ecs_exec.arn
-      sse_algorithm = "aws:kms"
+      sse_algorithm     = "aws:kms"
     }
   }
 }
 
 resource "aws_kms_key" "ecs_exec" {
-  description = "KMS key for ecs-exec"
+  description             = "KMS key for ecs-exec"
   deletion_window_in_days = 10
-  enable_key_rotation = true
+  enable_key_rotation     = true
 }
 
 data "aws_iam_policy_document" "ecs_task_execution_parameter_policy" {
@@ -128,22 +128,22 @@ data "aws_iam_policy_document" "ecs_task_execution_parameter_policy" {
       "kms:Decrypt"
     ]
     resources = ["*"]
-#    resources = [
-#     aws_ssm_parameter.config_string.arn,
-#      aws_ssm_parameter.master_realm.arn
-#    ]
+    #    resources = [
+    #     aws_ssm_parameter.config_string.arn,
+    #      aws_ssm_parameter.master_realm.arn
+    #    ]
   }
 }
 
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "ecs-task-execution-role-${var.environment}"
-  path = "/"
+  name               = "ecs-task-execution-role-${var.environment}"
+  path               = "/"
   assume_role_policy = data.aws_iam_policy_document.ecs_task_role_assume.json
 }
 
 resource "aws_iam_role" "ecs_task_role" {
-  name = "ecs-task-role-${var.environment}"
-  path = "/"
+  name               = "ecs-task-role-${var.environment}"
+  path               = "/"
   assume_role_policy = data.aws_iam_policy_document.ecs_task_role_assume.json
 }
 
@@ -152,44 +152,44 @@ data "aws_iam_policy" "ecs_task_execution_policy" {
 }
 
 resource "aws_iam_policy" "ecs_task_role_policy" {
-  name = "ecs-task-role-policy-${var.environment}"
-  path = "/"
+  name        = "ecs-task-role-policy-${var.environment}"
+  path        = "/"
   description = "AWS IAM Policy for ecs task"
-  policy = data.aws_iam_policy_document.ecs_task_role_policy.json
+  policy      = data.aws_iam_policy_document.ecs_task_role_policy.json
 }
 
 resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-policy-attachment" {
-  role = aws_iam_role.ecs_task_execution_role.name
+  role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = data.aws_iam_policy.ecs_task_execution_policy.arn
 }
 
 resource "aws_iam_policy" "ecs-task-execution-parameter-policy" {
-  name = "ecs-task-execution-parameters-policy-${var.environment}"
-  path = "/"
+  name        = "ecs-task-execution-parameters-policy-${var.environment}"
+  path        = "/"
   description = "AWS IAM Policy to allow ECS and FARGATE to fetch parameters and secrets"
-  policy = data.aws_iam_policy_document.ecs_task_execution_parameter_policy.json
+  policy      = data.aws_iam_policy_document.ecs_task_execution_parameter_policy.json
 }
 
 resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-parameters-policy" {
-  role = aws_iam_role.ecs_task_execution_role.name
+  role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = aws_iam_policy.ecs-task-execution-parameter-policy.arn
 }
 
 resource "aws_iam_role_policy_attachment" "ecs-task-role-policy-attachment" {
-  role = aws_iam_role.ecs_task_role.name
+  role       = aws_iam_role.ecs_task_role.name
   policy_arn = aws_iam_policy.ecs_task_role_policy.arn
 }
 
 resource "random_string" "session" {
-  length = 40
-  lower = true
-  min_lower = 4
-  upper = true
-  min_upper = 4
-  numeric = true
-  min_numeric = 4
-  special = true
-  min_special = 4
+  length           = 40
+  lower            = true
+  min_lower        = 4
+  upper            = true
+  min_upper        = 4
+  numeric          = true
+  min_numeric      = 4
+  special          = true
+  min_special      = 4
   override_special = "-#,"
 }
 
@@ -265,13 +265,13 @@ resource "aws_cloudwatch_log_group" "ecslogs" {
 }
 
 resource "aws_ecs_task_definition" "definition" {
-  family = "task_definition_name"
-  task_role_arn = aws_iam_role.ecs_task_role.arn
-  execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
-  network_mode = "awsvpc"
-  cpu = "512"
-  memory = "2048"
-  requires_compatibilities = [ "FARGATE" ]
+  family                   = "task_definition_name"
+  task_role_arn            = aws_iam_role.ecs_task_role.arn
+  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  network_mode             = "awsvpc"
+  cpu                      = "512"
+  memory                   = "2048"
+  requires_compatibilities = ["FARGATE"]
 
   container_definitions = <<DEFINITION
 [
@@ -288,23 +288,23 @@ resource "aws_ecs_task_definition" "definition" {
     },
     "environment": [
       {
-       "name": "WEBAPP_FORCE", 
+       "name": "WEBAPP_FORCE",
        "value": "nilnil"
       },
       {
-       "name": "WEBAPP_DB_NAME", 
+       "name": "WEBAPP_DB_NAME",
        "value": "${data.aws_ssm_parameter.web_db_name.value}"
       },
       {
-       "name": "WEBAPP_DB_USER", 
+       "name": "WEBAPP_DB_USER",
        "value": "${data.aws_ssm_parameter.web_db_user.value}"
       },
       {
-       "name": "WEBAPP_DB_HOST", 
+       "name": "WEBAPP_DB_HOST",
        "value": "${data.aws_ssm_parameter.web_db_host.value}"
       },
       {
-       "name": "WEBAPP_DEBUG", 
+       "name": "WEBAPP_DEBUG",
        "value": "${data.aws_ssm_parameter.web_debug.value}"
       },
       {
@@ -312,19 +312,19 @@ resource "aws_ecs_task_definition" "definition" {
        "value": "${data.aws_ssm_parameter.web_db_password.value}"
       },
       {
-       "name": "SECRET_KEY", 
+       "name": "SECRET_KEY",
        "value": "${data.aws_ssm_parameter.secret_key.value}"
       },
       {
-       "name": "KEYCLOACK_BASE_URI", 
-       "value": "${data.aws_ssm_parameter.keycloak_base_uri.value}"      
+       "name": "KEYCLOACK_BASE_URI",
+       "value": "${data.aws_ssm_parameter.keycloak_base_uri.value}"
       },
       {
-       "name": "KEYCLOACK_REALM_NAME", 
+       "name": "KEYCLOACK_REALM_NAME",
        "value": "${data.aws_ssm_parameter.keycloak_realm_name.value}"
       },
       {
-       "name": "OIDC_RP_CLIENT_ID", 
+       "name": "OIDC_RP_CLIENT_ID",
        "value": "${data.aws_ssm_parameter.oidc_rp_client_id.value}"
       },
       {
@@ -332,23 +332,23 @@ resource "aws_ecs_task_definition" "definition" {
        "value": "${data.aws_ssm_parameter.oidc_rp_client_secret_webapp.value}"
       },
       {
-       "name": "KEYCLOACK_DB_NAME", 
+       "name": "KEYCLOACK_DB_NAME",
        "value": "${data.aws_ssm_parameter.keycloak_db_name.value}"
       },
       {
-       "name": "KEYCLOACK_DB_USER", 
+       "name": "KEYCLOACK_DB_USER",
        "value": "${data.aws_ssm_parameter.keycloak_db_user.value}"
       },
       {
-       "name": "KEYCLOACK_DB_PASSWORD", 
+       "name": "KEYCLOACK_DB_PASSWORD",
        "value": "${data.aws_ssm_parameter.keycloak_db_password.value}"
       },
       {
-       "name": "KEYCLOAK_ADMIN", 
+       "name": "KEYCLOAK_ADMIN",
        "value": "${data.aws_ssm_parameter.keycloak_admin.value}"
       },
       {
-       "name": "KEYCLOAK_ADMIN_PASSWORD", 
+       "name": "KEYCLOAK_ADMIN_PASSWORD",
        "value": "${data.aws_ssm_parameter.keycloak_admin_password.value}"
       }
     ],
@@ -360,7 +360,7 @@ resource "aws_ecs_task_definition" "definition" {
       }
     ],
     "secrets": [],
-    "runtimePlatform": {	
+    "runtimePlatform": {
       "operatingSystemFamily": "LINUX"
     },
     "linuxParameters": {
@@ -373,63 +373,63 @@ DEFINITION
 
 #tfsec:ignore:aws-vpc-no-public-egress-sgr
 resource "aws_security_group" "ecs-sg" {
-  name = "${var.environment}-ecs-sg"
-  vpc_id = module.vpc.vpc_id
+  name        = "${var.environment}-ecs-sg"
+  vpc_id      = module.vpc.vpc_id
   description = "ecs security group"
   ingress {
-    description = "permit traffic from elb"
-    from_port = var.app_port
-    to_port = var.app_port
-    protocol = "tcp"
-    security_groups = [ aws_security_group.loadbalancer.id ]
+    description     = "permit traffic from elb"
+    from_port       = var.app_port
+    to_port         = var.app_port
+    protocol        = "tcp"
+    security_groups = [aws_security_group.loadbalancer.id]
   }
   egress {
-    description = ""
-    from_port = 8000
-    to_port = 8000
-    protocol = "tcp"
-    cidr_blocks = [ "0.0.0.0/0" ]
-    ipv6_cidr_blocks = [ "::/0" ]
+    description      = ""
+    from_port        = 8000
+    to_port          = 8000
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
   egress {
-    description = ""
-    from_port = 443
-    to_port = 443
-    protocol = "tcp"
-    cidr_blocks = [ "0.0.0.0/0" ]
-    ipv6_cidr_blocks = [ "::/0" ]
+    description      = ""
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
-    egress {
-    description = ""
-    from_port = 5432
-    to_port = 5432
-    protocol = "tcp"
-    cidr_blocks = [ "0.0.0.0/0" ]
-    ipv6_cidr_blocks = [ "::/0" ]
+  egress {
+    description      = ""
+    from_port        = 5432
+    to_port          = 5432
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 }
 
 resource "aws_ecs_service" "service" {
-  name = "${var.environment}-ecs-service"
-  cluster = aws_ecs_cluster.cluster.id
-  task_definition = aws_ecs_task_definition.definition.arn
-  desired_count = 1
-  launch_type = "FARGATE"
-  enable_ecs_managed_tags = true
-  enable_execute_command = true
+  name                              = "${var.environment}-ecs-service"
+  cluster                           = aws_ecs_cluster.cluster.id
+  task_definition                   = aws_ecs_task_definition.definition.arn
+  desired_count                     = 1
+  launch_type                       = "FARGATE"
+  enable_ecs_managed_tags           = true
+  enable_execute_command            = true
   health_check_grace_period_seconds = 300
 
   network_configuration {
-    subnets = module.vpc.private_subnets
-    security_groups = [ aws_security_group.ecs-sg.id ]
+    subnets          = module.vpc.private_subnets
+    security_groups  = [aws_security_group.ecs-sg.id]
     assign_public_ip = false
   }
 
   load_balancer {
     # target_group_arn = aws_lb_target_group.lbtargets.arn
     target_group_arn = aws_lb_target_group.lbtargets-1.arn
-    container_name = "project-container"
-    container_port = 8000
+    container_name   = "project-container"
+    container_port   = 8000
   }
 }
 
@@ -441,39 +441,39 @@ resource "aws_cloudwatch_log_group" "ecslogs-keycloak" {
 }
 
 resource "aws_security_group" "ecs-sg-keycloak" {
-  name = "${var.environment}-ecs-sg-keycloak"
-  vpc_id = module.vpc.vpc_id
+  name        = "${var.environment}-ecs-sg-keycloak"
+  vpc_id      = module.vpc.vpc_id
   description = "ecs security group"
   ingress {
-    description = "permit traffic from elb"
-    from_port = var.app_port_keycloak
-    to_port = var.app_port_keycloak
-    protocol = "tcp"
-    security_groups = [ aws_security_group.loadbalancer-keycloak.id ]
+    description     = "permit traffic from elb"
+    from_port       = var.app_port_keycloak
+    to_port         = var.app_port_keycloak
+    protocol        = "tcp"
+    security_groups = [aws_security_group.loadbalancer-keycloak.id]
   }
   egress {
-    description = ""
-    from_port = 8080
-    to_port = 8080
-    protocol = "tcp"
-    cidr_blocks = [ "0.0.0.0/0" ]
-    ipv6_cidr_blocks = [ "::/0" ]
+    description      = ""
+    from_port        = 8080
+    to_port          = 8080
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
   egress {
-    description = ""
-    from_port = 443
-    to_port = 443
-    protocol = "tcp"
-    cidr_blocks = [ "0.0.0.0/0" ]
-    ipv6_cidr_blocks = [ "::/0" ]
+    description      = ""
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
   egress {
-    description = ""
-    from_port = 5432
-    to_port = 5432
-    protocol = "tcp"
-    cidr_blocks = [ "0.0.0.0/0" ]
-    ipv6_cidr_blocks = [ "::/0" ]
+    description      = ""
+    from_port        = 5432
+    to_port          = 5432
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 }
 
@@ -509,13 +509,13 @@ resource "aws_security_group" "ecs-sg-keycloak" {
 # }
 
 resource "aws_ecs_task_definition" "definition-keycloak" {
-  family = "task_definition_name"
-  task_role_arn = aws_iam_role.ecs_task_role.arn
-  execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
-  network_mode = "awsvpc"
-  cpu = "512"
-  memory = "2048"
-  requires_compatibilities = [ "FARGATE" ]
+  family                   = "task_definition_name"
+  task_role_arn            = aws_iam_role.ecs_task_role.arn
+  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  network_mode             = "awsvpc"
+  cpu                      = "512"
+  memory                   = "2048"
+  requires_compatibilities = ["FARGATE"]
 
   container_definitions = <<DEFINITION
 [
@@ -543,61 +543,61 @@ resource "aws_ecs_task_definition" "definition-keycloak" {
         "containerPort": 8443
       }
     ],
-    "environment": [ 
+    "environment": [
       {
-       "name": "KEYCLOAK_FORCE", 
+       "name": "KEYCLOAK_FORCE",
        "value": "nilnilnil"
       },
       {
        "name": "OIDC_RP_CLIENT_SECRET",
-       "value": "${data.aws_ssm_parameter.oidc_rp_client_secret.value}"  
+       "value": "${data.aws_ssm_parameter.oidc_rp_client_secret.value}"
       },
       {
-       "name": "AES_GENERATED_SECRET", 
-       "value": "${data.aws_ssm_parameter.aes_generated_secret.value}"   
+       "name": "AES_GENERATED_SECRET",
+       "value": "${data.aws_ssm_parameter.aes_generated_secret.value}"
       },
       {
-       "name": "HMAC_GENERATED_SECRET", 
-       "value": "${data.aws_ssm_parameter.hmac_generated_secret.value}" 
+       "name": "HMAC_GENERATED_SECRET",
+       "value": "${data.aws_ssm_parameter.hmac_generated_secret.value}"
       },
       {
        "name": "RSA_GENERATED_PRIVATE_KEY",
-       "value": "${data.aws_ssm_parameter.rsa_generated_private_key.value}" 
+       "value": "${data.aws_ssm_parameter.rsa_generated_private_key.value}"
       },
       {
-       "name": "RSA_ENC_GENERATED_PRIVATE_KEY", 
-       "value": "${data.aws_ssm_parameter.rsa_enc_generated_private_key.value}" 
+       "name": "RSA_ENC_GENERATED_PRIVATE_KEY",
+       "value": "${data.aws_ssm_parameter.rsa_enc_generated_private_key.value}"
       },
       {
-       "name": "KC_HOSTNAME", 
-        "value": "${data.aws_ssm_parameter.kc_hostname.value}" 
+       "name": "KC_HOSTNAME",
+        "value": "${data.aws_ssm_parameter.kc_hostname.value}"
       },
       {
-       "name": "KC_DB_URL_HOST", 
-       "value": "${data.aws_ssm_parameter.kc_db_url_host.value}" 
+       "name": "KC_DB_URL_HOST",
+       "value": "${data.aws_ssm_parameter.kc_db_url_host.value}"
       },
       {
-       "name": "KC_DB_URL_DATABASE", 
-       "value": "${data.aws_ssm_parameter.kc_db_url_database.value}" 
+       "name": "KC_DB_URL_DATABASE",
+       "value": "${data.aws_ssm_parameter.kc_db_url_database.value}"
       },
       {
-       "name": "KC_DB_USERNAME", 
-       "value": "${data.aws_ssm_parameter.kc_db_username.value}" 
+       "name": "KC_DB_USERNAME",
+       "value": "${data.aws_ssm_parameter.kc_db_username.value}"
       },
       {
-       "name": "KC_DB_PASSWORD", 
-       "value": "${data.aws_ssm_parameter.kc_db_password.value}" 
+       "name": "KC_DB_PASSWORD",
+       "value": "${data.aws_ssm_parameter.kc_db_password.value}"
       },
       {
-       "name": "KEYCLOAK_ADMIN", 
-       "value": "${data.aws_ssm_parameter.keycloak_admin.value}" 
+       "name": "KEYCLOAK_ADMIN",
+       "value": "${data.aws_ssm_parameter.keycloak_admin.value}"
       },
       {
-       "name": "KEYCLOAK_ADMIN_PASSWORD", 
-       "value": "${data.aws_ssm_parameter.keycloak_admin.value}" 
+       "name": "KEYCLOAK_ADMIN_PASSWORD",
+       "value": "${data.aws_ssm_parameter.keycloak_admin.value}"
       }
     ],
-    "runtimePlatform": {	
+    "runtimePlatform": {
       "operatingSystemFamily": "LINUX"
     },
     "linuxParameters": {
@@ -609,18 +609,18 @@ DEFINITION
 }
 
 resource "aws_ecs_service" "service-keycloak" {
-  name = "${var.environment}-ecs-service-keycloak"
-  cluster = aws_ecs_cluster.cluster.id
-  task_definition = aws_ecs_task_definition.definition-keycloak.arn
-  desired_count = 1
-  launch_type = "FARGATE"
-  enable_ecs_managed_tags = true
-  enable_execute_command = true
+  name                              = "${var.environment}-ecs-service-keycloak"
+  cluster                           = aws_ecs_cluster.cluster.id
+  task_definition                   = aws_ecs_task_definition.definition-keycloak.arn
+  desired_count                     = 1
+  launch_type                       = "FARGATE"
+  enable_ecs_managed_tags           = true
+  enable_execute_command            = true
   health_check_grace_period_seconds = 300
 
   network_configuration {
-    subnets = module.vpc.private_subnets
-    security_groups = [ aws_security_group.ecs-sg-keycloak.id ]
+    subnets          = module.vpc.private_subnets
+    security_groups  = [aws_security_group.ecs-sg-keycloak.id]
     assign_public_ip = false
   }
 
@@ -631,4 +631,3 @@ resource "aws_ecs_service" "service-keycloak" {
     container_port = 8080
   }
 }
-

@@ -6,7 +6,7 @@ variable "prefix" {
 
 variable "da_ayr_repositories" {
   description = "List AYR repositories that require access to AYR AWS Accounts"
-  type = list(string)
+  type        = list(string)
 }
 
 

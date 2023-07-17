@@ -3,7 +3,7 @@ data "aws_availability_zones" "available" {
 }
 
 module "vpc" {
-  source = "terraform-aws-modules/vpc/aws"
+  source  = "terraform-aws-modules/vpc/aws"
   version = "3.14.2"
 
   name = "da-ayr-${var.environment}"
@@ -24,5 +24,3 @@ module "vpc" {
   enable_dns_support   = true
 
 }
-
-

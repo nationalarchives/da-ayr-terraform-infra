@@ -8,8 +8,8 @@ resource "aws_security_group" "vpc-default" {
     from_port        = 0
     to_port          = 0
     protocol         = "-1"
-    cidr_blocks      = [ "0.0.0.0/0" ]
-    ipv6_cidr_blocks = [ "::/0" ]
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   egress {
@@ -50,7 +50,7 @@ EOF
 
 
 resource "aws_iam_policy" "iam_lambda_policy" {
-  name = "${var.project_name}-l-${var.environment}-policy"
+  name   = "${var.project_name}-l-${var.environment}-policy"
   policy = <<POLICY
 {
   "Version": "2012-10-17",
@@ -124,7 +124,7 @@ POLICY
 }
 
 resource "aws_iam_policy_attachment" "iam_for_lambda_policy_attachment" {
-  name = "${var.project_name}-lambda-${var.environment}-policy-attachment"
+  name       = "${var.project_name}-lambda-${var.environment}-policy-attachment"
   roles      = [aws_iam_role.iam_for_lambda_role.name]
   policy_arn = aws_iam_policy.iam_lambda_policy.arn
 }

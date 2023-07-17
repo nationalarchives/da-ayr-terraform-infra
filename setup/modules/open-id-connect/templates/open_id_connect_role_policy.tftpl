@@ -24,7 +24,7 @@
                 "dynamodb:PutItem",
                 "dynamodb:DeleteItem",
                 "dynamodb:DescribeTable",
-                "dynamodb:GetItem" 
+                "dynamodb:GetItem"
             ],
             "Resource": [
                 "arn:aws:dynamodb:*:${account_id}:table/*"
@@ -41,6 +41,6 @@
             "Effect": "Allow",
             "Action": "sts:AssumeRole",
             "Resource": ${jsonencode(terraform_roles)}
-        }      
+        }
     ]
 }

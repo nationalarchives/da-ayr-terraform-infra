@@ -28,7 +28,7 @@
                 "iam:List*",
                 "iam:DeleteRole"
             ],
-            "Resource": "*"            
+            "Resource": "*"
         }
     ]
 }

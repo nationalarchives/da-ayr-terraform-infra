@@ -18,4 +18,3 @@ ls -alt
 cat backend-config.auto.tfvars
 
 echo "End ---------------- "
-

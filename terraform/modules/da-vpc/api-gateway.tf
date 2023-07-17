@@ -27,7 +27,7 @@ resource "aws_api_gateway_rest_api" "da-ayr" {
 EOF
 
   endpoint_configuration {
-    types = ["PRIVATE"]
+    types            = ["PRIVATE"]
     vpc_endpoint_ids = [aws_vpc_endpoint.da-ayr.id]
   }
 }
@@ -48,28 +48,28 @@ resource "aws_api_gateway_method" "da-ayr" {
 
 
 resource "aws_api_gateway_integration" "test_integration" {
-  rest_api_id             = "${aws_api_gateway_rest_api.da-ayr.id}"
-  resource_id             = "${aws_api_gateway_resource.da-ayr.id}" 
-  http_method             = "${aws_api_gateway_method.da-ayr.http_method}"
+  rest_api_id             = aws_api_gateway_rest_api.da-ayr.id
+  resource_id             = aws_api_gateway_resource.da-ayr.id
+  http_method             = aws_api_gateway_method.da-ayr.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-#   type                    = "MOCK"
-#   uri                     = "${aws_lambda_function.lambda_rest_api.invoke_arn}"
-  uri                     = "${aws_lambda_function.lambda_rest_api.invoke_arn}"
+  #   type                    = "MOCK"
+  #   uri                     = "${aws_lambda_function.lambda_rest_api.invoke_arn}"
+  uri = aws_lambda_function.lambda_rest_api.invoke_arn
 }
 
 resource "aws_api_gateway_deployment" "test" {
   rest_api_id = aws_api_gateway_rest_api.da-ayr.id
-  stage_name = "alpha"
+  stage_name  = "alpha"
 
   lifecycle {
     create_before_destroy = true
   }
 
   depends_on = [
-        aws_api_gateway_method.da-ayr,
-        aws_api_gateway_integration.test_integration
-      ]
+    aws_api_gateway_method.da-ayr,
+    aws_api_gateway_integration.test_integration
+  ]
 }
 
 output "api-url" {
@@ -77,13 +77,13 @@ output "api-url" {
 }
 
 resource "aws_api_gateway_authorizer" "da-ayr-authorizer" {
-  name                   = "da-ayr-authorizer-dev"
-  rest_api_id            = aws_api_gateway_rest_api.da-ayr.id
-  authorizer_uri         = aws_lambda_function.lambda_auth.invoke_arn
-  identity_source        = "method.request.header.Ayr-Access-Token"
-  type                   = "TOKEN"
+  name                             = "da-ayr-authorizer-dev"
+  rest_api_id                      = aws_api_gateway_rest_api.da-ayr.id
+  authorizer_uri                   = aws_lambda_function.lambda_auth.invoke_arn
+  identity_source                  = "method.request.header.Ayr-Access-Token"
+  type                             = "TOKEN"
   authorizer_result_ttl_in_seconds = 0
-  identity_validation_expression = ""
+  identity_validation_expression   = ""
 }
 
 resource "aws_api_gateway_method_response" "response_200" {
@@ -94,7 +94,7 @@ resource "aws_api_gateway_method_response" "response_200" {
 }
 
 resource "aws_api_gateway_account" "da-ayr" {
-  cloudwatch_role_arn = "${aws_iam_role.cloudwatch.arn}"
+  cloudwatch_role_arn = aws_iam_role.cloudwatch.arn
 }
 
 resource "aws_iam_role" "cloudwatch" {
@@ -119,7 +119,7 @@ EOF
 
 resource "aws_iam_role_policy" "cloudwatch" {
   name = "default"
-  role = "${aws_iam_role.cloudwatch.id}"
+  role = aws_iam_role.cloudwatch.id
 
   policy = <<EOF
 {
@@ -146,16 +146,16 @@ EOF
 
 resource "aws_api_gateway_method_settings" "general_settings" {
   # rest_api_id = "${aws_api_gateway_rest_api.rest_api.id}"
-  rest_api_id = "${aws_api_gateway_rest_api.da-ayr.id}"
+  rest_api_id = aws_api_gateway_rest_api.da-ayr.id
   # stage_name  = "${aws_api_gateway_deployment.deployment_production.stage_name}"
-  stage_name  = "${aws_api_gateway_deployment.test.stage_name}"
+  stage_name  = aws_api_gateway_deployment.test.stage_name
   method_path = "*/*"
 
   settings {
     # Enable CloudWatch logging and metrics
-    metrics_enabled        = true
-    data_trace_enabled     = true
-    logging_level          = "INFO"
+    metrics_enabled    = true
+    data_trace_enabled = true
+    logging_level      = "INFO"
 
     # Limit the rate of calls to prevent abuse and unwanted charges
     throttling_rate_limit  = 100

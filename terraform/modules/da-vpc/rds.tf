@@ -15,7 +15,7 @@ resource "aws_db_instance" "dbwebapp" {
   # db_subnet_group_name     = module.vpc.private_subnets
   # db_subnet_group_name     = "${var.rds_public_subnet_group}"
   engine         = "postgres"
-  engine_version = "14.5"
+  engine_version = "14.7"
   identifier     = "dbwebapp${var.environment}"
   #subnet_ids              =  aws_db_subnet_group.db_subnet_group_name.subnet_group.id
   db_subnet_group_name = aws_db_subnet_group.public_subnet_group.id
@@ -43,7 +43,7 @@ resource "aws_db_instance" "dbkeycloak" {
   # db_subnet_group_name     = module.vpc.private_subnets
   # db_subnet_group_name     = "${var.rds_public_subnet_group}"
   engine         = "postgres"
-  engine_version = "14.5"
+  engine_version = "14.7"
   identifier     = "dbkeycloak${var.environment}"
   #subnet_ids              =  aws_db_subnet_group.db_subnet_group_name.subnet_group.id
   db_subnet_group_name = aws_db_subnet_group.public_subnet_group.id
